@@ -140,7 +140,8 @@ def get_status():
 
 client = commands.Bot(command_prefix = '!redstone ')
 
-token = 'NzY5NzYxMjcwMjY5NDc2ODg3.X5TuDA.dd0uzRNkNssAaZwBwbt4GiB015c'
+# The secret bot token!
+token = 'bot_token_goes_here'
 
 # bot startup
 @client.event
