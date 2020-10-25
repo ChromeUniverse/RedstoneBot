@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,14 +9,20 @@ import time
 import discord
 from discord.ext import commands
 
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
 
 def get_status():
     # Change these placeholders with your actual PloudOS credentials
-    username = "Username"
-    password = "Password"
+    username = "username"
+    password = "password"
 
     PATH = "C:\Program Files (x86)\chromedriver.exe"
-    driver = webdriver.Chrome(PATH)
+    #driver = webdriver.Chrome(PATH)
+    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=PATH)
+
 
     driver.get("https://ploudos.com/login/")
     print(driver.title)
@@ -54,7 +61,7 @@ def get_status():
     except:
         print("Something went wrong")
 
-        
+
     driver.quit()
 
 
