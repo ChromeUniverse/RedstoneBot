@@ -7,12 +7,12 @@ This bot was built with [Python 3](http://python.org/), [Selenium for Python](ht
 ![image](https://i.imgur.com/PcRwByp.png)
 
 
-## Working commands
+## Commands
 
 * `!redstone ping` Replies with "Pong!" and show connection latency in miliseconds
 * `!redstone status` Shows current server status: "Online", "In queue", "Starting up", etc., along with additional info about server resources, number of online players, and more (see picure above for example)
 
-## To-do
+## To-do List
 
 * Migrate from Selenium to [Requests](https://requests.readthedocs.io/en/master/)
 * Commands to add:
