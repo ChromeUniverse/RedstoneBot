@@ -1,3 +1,5 @@
+# Broken
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -19,6 +21,8 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 
 # path to chromedriver
 PATH = "C:\Program Files (x86)\chromedriver.exe"
+
+# Good luck using these credentials :-)
 
 # PloudOS login
 username = "ChromeUniverse"
