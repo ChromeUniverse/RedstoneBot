@@ -99,6 +99,7 @@ def get_status(close_driver):
 
         message += 'Server name: **' + str(data["serverName"]) + '**'
         message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
+        message += '\n\n**Server Resources**\n'
         message += '\nCPU: **' + str(data["serverUsedCPU"]) + '%** in use'
         message += '\nMemory: **' + str(data["serverUsedRAM"]) + ' MB** in use out of **' + str(data["serverMaxRam"]) + ' MB** max'
         message += '\nSSD storage: **' + str(data["serverUsedSpace"]/1000) + ' GB** used out of **' + str(data["serverTotalSpace"]/1000) + ' GB** max'
