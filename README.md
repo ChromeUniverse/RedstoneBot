@@ -11,13 +11,13 @@ This bot was built with [Python 3](http://python.org/), [Selenium for Python](ht
 
 * `!redstone ping` Replies with "Pong!" and show connection latency in miliseconds
 * `!redstone status` Shows current server status: "Online", "In queue", "Starting up", etc., along with additional info about server resources, number of online players, and more (see picure above for example)
+* `!redstone open` - Activates the server (run twice: once when opening, once more when waiting for confirmation)
+* `!redstone close` - Deactivates the server
 
 ## To-do List
 
 * Migrate from Selenium to [Requests](https://requests.readthedocs.io/en/master/)
 * Commands to add:
-  * `!redstone open` - opens Chrome window using Selenium, logs in to PloudOS, accesses server admin page and activates the server.
-  * `!redstone close` - similar to the above command, deactivates the server
   * `!redstone stop` - similar to the above command, stops the server execution
   
 ## Usage
