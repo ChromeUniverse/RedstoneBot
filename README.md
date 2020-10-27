@@ -4,7 +4,7 @@ A Discord bot built for interacting with Minecraft servers hosted by [PloudOS](h
 
 This bot was built with [Python 3](http://python.org/), [Selenium for Python](https://selenium-python.readthedocs.io/#), [JSON](https://docs.python.org/3/library/json.html) and [Discord.py](https://github.com/Rapptz/discord.py)
 
-![image](https://i.imgur.com/PcRwByp.png)
+![image](https://i.imgur.com/Gcsp2Oc.png)
 
 
 ## Commands
