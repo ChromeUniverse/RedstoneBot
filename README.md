@@ -28,6 +28,8 @@ Deactivates the server.
 ## To-do List
 
 * Migrate from Selenium to [Requests](https://requests.readthedocs.io/en/master/)
+* Improve code robustness
+* Add a log file
 * Commands to add:
   * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
   * `!redstone stop` - similar to the `open` and `close`; stops the server.
