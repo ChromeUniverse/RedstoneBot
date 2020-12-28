@@ -27,7 +27,7 @@ Deactivates the server.
 
 ## To-do List
 
-* Migrate from Selenium to [Requests](https://requests.readthedocs.io/en/master/)
+* Migrate from Selenium to [Requests](https://requests.readthedocs.io/en/master/) - Check the `requests` branch for more details! 
 * Improve code robustness
 * Add a log file
 * Commands to add:
@@ -43,5 +43,9 @@ Coming soon!
 This bot isn't publicly available. It was made to be used exclusively by the SMP BR Discord. 
 
 If you want to use this bot in your own server, you easily create a clone (visit the [Discord Developers Portal](https://discord.com/developers/applications)) and host it yourself.
+
+## License
+
+This open-source project is released under the GNU GPL v3.0 license. Check the `LICENSE` file for more details.
 
 
