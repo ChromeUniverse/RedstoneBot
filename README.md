@@ -18,6 +18,8 @@ No commands use Requests, yet!
 
 ## To-do List
 
+* On `api_request.py`:
+  * Add support for "Curerntly in maintenance mode, check back later"
 * Integrate `api_request.py` into `bot.py`
 * Migrate from Selenium to Requests:
   * `login()` function
