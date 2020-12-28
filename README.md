@@ -1,6 +1,6 @@
 # RedstoneBot
 
-The goal of this branch is to migrate bot functionality from Selenium to [Requests](https://requests.readthedocs.io/en/master/), whenever possible. 
+The goal of this branch is to migrate web scraping functionality from Selenium to [Requests](https://requests.readthedocs.io/en/master/), whenever possible. 
 
 This should improve performance and reduce the number of dependencies.
 
@@ -11,6 +11,8 @@ No commands use Requests, yet!
 
 ## To-do List
 
+* On `api_request.py`:
+  * Decode response as JSON
 * Migrate from Selenium to Requests:
   * `login()` function
   * `!redstone status` command
