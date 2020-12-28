@@ -4,7 +4,7 @@ A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](ht
 
 This bot was built with [Python 3](http://python.org/), [Selenium for Python](https://selenium-python.readthedocs.io/#), [JSON](https://docs.python.org/3/library/json.html) (pre-installed with Python3), [Requests](https://requests.readthedocs.io/en/master/) and [discord.py](https://github.com/Rapptz/discord.py)
 
-Built (mostly) for educational purposes.
+Built (mostly) for educational purposes and for testing out some web scraping ideas.
 
 ## Gallery
 
