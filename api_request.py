@@ -19,7 +19,7 @@ data = {
         'password': password,
 }
 
-# Preforming POST request to login + printing status code
+# Performing POST request to login + printing status code
 r_login = session.post(login_url, data=data)
 print("\nStatus code: " + str(r_login.status_code) + '\n')
 
