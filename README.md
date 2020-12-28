@@ -1,11 +1,12 @@
 # RedstoneBot
 
-A Discord bot built for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
+A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
-This bot was built with [Python 3](http://python.org/), [Selenium for Python](https://selenium-python.readthedocs.io/#), [JSON](https://docs.python.org/3/library/json.html) and [Discord.py](https://github.com/Rapptz/discord.py)
+This bot was built with [Python 3](http://python.org/), [Selenium for Python](https://selenium-python.readthedocs.io/#), [JSON](https://docs.python.org/3/library/json.html) (pre-installed with Python3), [Requests](https://requests.readthedocs.io/en/master/) and [discord.py](https://github.com/Rapptz/discord.py)
+
+## Gallery
 
 ![image](https://i.imgur.com/Gcsp2Oc.png)
-
 
 ## Commands
 
@@ -42,7 +43,7 @@ Coming soon!
 
 This bot isn't publicly available. It was made to be used exclusively by the SMP BR Discord. 
 
-If you want to use this bot in your own server, you easily create a clone (visit the [Discord Developers Portal](https://discord.com/developers/applications)) and host it yourself.
+If you want to use this bot in your own Discord server, clone this repo, create a Discord bot (visit the [Discord Developers Portal](https://discord.com/developers/applications)) and host it or your local machine or VPS (AWS Lightsail, Linode, etc.)
 
 ## License
 
