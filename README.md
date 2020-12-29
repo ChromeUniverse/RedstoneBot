@@ -15,11 +15,12 @@ No commands use Requests, yet!
   * Succesfuly logs in
   * Gets response from internal PloudOS API
   * Decodes response using JSON
+  * Can deal with "Currently in maintenance mode, check back later" errors/messages
 
 ## To-do List
 
 * On `api_request.py`:
-  * Add support for "Currently in maintenance mode, check back later" errors/messages
+  * OK, for the time being.
 * Integrate `api_request.py` into `bot.py`
 * Migrate from Selenium to Requests:
   * `login()` function
