@@ -1,0 +1,193 @@
+A list of all possible JSON files returned by calling PloudOS's internal API.
+API endpoint: https://ploudos.com/manage/s10434/ajax2
+
+# running: "Ligado"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "READY",
+  "isInfinity": false,
+  "skip": false,
+  "isEditorMode": false,
+  "isRunning": true,
+  "isStarted": true,
+  "serverMaxRam": 1400,
+  "serverTimeout": 300,
+  "serverTimeoutFormatted": "5min, 0 sec",
+  "serverDynIP": "node.ploudos.com",
+  "serverDynPort": 25820,
+  "serverUsedSpace": 594,
+  "serverTotalSpace": 4857,
+  "onlineCount": 1,
+  "onlineMax": "40",
+  "serverUsedRAM": 936,
+  "serverUsedCPU": 21
+}
+
+# closing: "Servidor a fechar"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "CLOSING",
+  "isInfinity": false,
+  "skip": false
+}
+
+# offline: "Desligado"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "OFFLINE",
+  "isInfinity": false,
+  "skip": false
+}
+
+# setting up server: "A preparar o servidor"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "SETUP",
+  "isInfinity": false,
+  "skip": false
+}
+
+# Starting up server: "Servidor a iniciar"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "READY",
+  "isInfinity": false,
+  "skip": false,
+  "isEditorMode": false,
+  "isRunning": true,
+  "isStarted": false,
+  "serverMaxRam": 1400,
+  "serverTimeout": 300,
+  "serverTimeoutFormatted": "5min, 0 sec",
+  "serverDynIP": "potato.ploudos.com",
+  "serverDynPort": 27664,
+  "serverUsedSpace": 594,
+  "serverTotalSpace": 4857,
+  "onlineCount": null,
+  "onlineMax": "40",
+  "serverUsedRAM": 492,
+  "serverUsedCPU": 62.25
+
+}
+
+  # Server stopped: "Parado"
+
+  {
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "READY",
+  "isInfinity": false,
+  "skip": false,
+  "isEditorMode": false,
+  "isRunning": false,
+  "serverMaxRam": 1400,
+  "serverTimeout": 150,
+  "serverTimeoutFormatted": "2min, 30 sec",
+  "serverDynIP": "potato.ploudos.com",
+  "serverDynPort": 27664,
+  "serverUsedSpace": 594,
+  "serverTotalSpace": 4857,
+  "serverUsedRAM": null,
+  "serverUsedCPU": null
+}
+
+# Server running in Editor Mode: "Modo de Edição"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "READY",
+  "isInfinity": false,
+  "skip": false,
+  "isEditorMode": true,
+  "isRunning": false,
+  "serverMaxRam": 1400,
+  "serverTimeout": 3575,
+  "serverTimeoutFormatted": "59min, 35 sec",
+  "serverDynIP": "apple.ploudos.com",
+  "serverDynPort": 17152,
+  "serverUsedSpace": 0,
+  "serverTotalSpace": 0,
+  "serverUsedRAM": null,
+  "serverUsedCPU": null
+}
+
+# In queue: "Fila"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "QUEUE",
+  "isInfinity": false,
+  "skip": false,
+  "queueTime": 399,
+  "queueTimeFormatted": 6,
+  "queuePos": 22,
+  "queueSize": 24
+}
+
+# Waiting: "Aguardando confirmação"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "serveraddress.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.2",
+  "versionSupportUsage": true,
+  "status": "WAITING_FOR_ACCEPT",
+  "isInfinity": false,
+  "skip": false
+}
+
+# Generating World: "Gerando Mundo"
+
+{
+  "serverName": "BetaWorld",
+  "serverIP": "betaworld.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.3",
+  "versionSupportUsage": true,
+  "status": "GENERATING_WORLD",
+  "isInfinity": false,
+  "skip": false
+}
+
+"O teu servidor está de momento a gerar um mundo! Por favor aguarda enquanto ele é gerado.
+Infelizmente, enquanto isso, não poderás Administrar o servidor!"
+
+
+# Reallocating server: "Servidor a preparar"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "smpbrserver.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.3",
+  "versionSupportUsage": true,
+  "status": "PREPARE_SERVER_REALLOCATION",
+  "isInfinity": false,
+  "skip": false
+}
