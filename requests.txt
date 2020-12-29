@@ -1,0 +1,34 @@
+---- PloudOS Requests & Network Sniffing Analysis ----
+
+* Use persistent sessions with Python + Requests
+
+* TO LOGIN: POST request to Login URL with payload:
+	
+	* Login URL: https://ploudos.com/login
+	
+	* Payload:
+	{
+	  'username': Username
+	  'password': Password	
+
+	}
+
+* TO GET SERVER STATUS: GET request to API endpoint
+
+	* API Endpoint: https://ploudos.com/manage/(s + serverID)/ajax2
+		
+
+* TO ACTIVATE SERVER 
+
+	* TO GET SERVER LOCATION: GET request to location service
+		
+		* Request URL: https://ploudos.com/manage/(s + serverID)/ajax2/location
+
+	* TO SELECT LOCATION: GET request to Queue URL with selected location
+		
+		* Queue URL: https://ploudos.com/manage/(s + serverID)/ajax2/x
+		
+			* Additional parameters: x -> selected server
+				
+				* x = 1 -> Nuremberg, Germany
+				* x = 2 -> St. Louis, USA
