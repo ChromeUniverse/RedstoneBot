@@ -14,7 +14,7 @@ Built (mostly) for educational purposes and for testing out some web scraping id
 
 `!redstone ping` 
 
-Replies with "Pong!" and show connection latency in miliseconds.
+Replies with "Pong!" and shows connection latency in miliseconds.
 
 `!redstone status` 
 
@@ -36,10 +36,58 @@ Deactivates the server.
 * Commands to add:
   * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
   * `!redstone stop` - similar to the `open` and `close`; stops the server.
+* Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
   
 ## Usage
 
-Coming soon!
+* Install and set up dependencies: (Ubuntu Linux shown below)
+  * discord.py:
+  
+  ```
+  python3 -m pip install -U discord.py
+  ```
+  
+  * Selenium for Python:
+  
+  ```
+  python3 -m pip install selenium
+  ```
+  
+  * Chromium web browser:
+  
+  ```
+  sudo apt install chromium-browser
+  ```
+  
+  * Chrome webdriver (v87 shown below, check your version):
+  
+  ```
+  wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
+  ```
+  * Unzip `chromedriver.zip`:
+  
+  ```
+  sudo apt install unzip
+  unzip chromedriver.zip
+  ```
+  
+  * Copy PATH to `chromedriver` and paste in `bot.py`:
+  
+  ```
+  PATH = "path/to/webdriver/goes/here/chromedriver"
+  ```
+
+* Edit your credentials in `bot.py`:
+```
+# Change these placeholders with your actual PloudOS credentials
+username = "ChromeUniverse"
+password = "12345678"
+
+# The secret bot token!
+token = 'abcdefgh_12345678'
+```
+
+* After you registered your bot in the [Discord Developers Portal](https://discord.com/developers/applications) and added it to your server, run `bot.py`.
 
 ## Disclaimer
 
