@@ -17,6 +17,7 @@ token = 'bot_token_goes_here'
 # Enter your ServerID here!
 serverID = 's00000'
 
+
 # Important URLs!
 
 # Login page
@@ -42,8 +43,6 @@ start_url = api_endpoint + '/start'
 stop_url = api_endpoint + '/stop'
 
 
-# main async function definitions
-
 # Initializing persistent sessions
 session = requests.Session()
 
@@ -60,6 +59,86 @@ def login():
     r_login = session.post(login_url, data=data)
 
     return r_login.status_code
+
+# format Rich Embed message
+
+def format(data):
+
+    status = ''
+    message = '\n'
+    message += 'Server name: **' + str(data["serverName"]) + '**'
+    message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
+
+    if data["status"] == 'READY':
+
+        message += '\n\n**Server Resources**\n'
+        message += '\nCPU: **' + str(data["serverUsedCPU"]) + '%** in use'
+        message += '\nMemory: **' + str(data["serverUsedRAM"]) + ' MB** in use out of **' + str(data["serverMaxRam"]) + ' MB** max'
+        message += '\nSSD storage: **' + str(data["serverUsedSpace"]/1000) + ' GB** used out of **' + str(data["serverTotalSpace"]/1000) + ' GB** max'
+        message += '\n\n**Extra Info**\n'
+
+
+        if data["isRunning"] == False:
+
+            message = '\n'
+            message += 'Server name: **' + str(data["serverName"]) + '**'
+            message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
+
+            if data["isEditorMode"] == True:
+                # actually means that the Server is offline!
+                status = 'Server is offline.'
+
+            if data["isEditorMode"] == False:
+                status = 'Server stopped.'
+                message += '\nTimeout is **' + str(data["serverTimeout"]) + '** seconds or **' + str(data["serverTimeoutFormatted"]) + '**'
+
+
+        if data["isRunning"] == True:
+            if data["isStarted"] == True:
+                status = 'Server is up and running!'
+                message += '\nPlayers online: **' + str(data["onlineCount"]) + '** out of **' + str(data["onlineMax"]) + '** max'
+                message += '\nTimeout is **' + str(data["serverTimeout"]) + '** seconds or **' + str(data["serverTimeoutFormatted"]) + '**'
+
+            if data["isStarted"] == False:
+                status = 'Server is starting up!'
+
+
+
+    elif data["status"] == "SETUP":
+
+        status = 'Server is running setup!'
+
+
+    elif data["status"] == "CLOSING":
+
+        status = 'Server is closing'
+
+
+    elif data["status"] == "OFFLINE":
+
+        status = 'Server is offline.'
+
+
+    elif data["status"] == "QUEUE":
+
+        status = 'Server is in the queue!'
+
+        message += '\n\n**Queue Info**\n'
+        message += '\nQueue position: **' + str(data["queuePos"]) +'** out of **'+ str(data["queuePos"]) + '**'
+        message += '\nApproximate waiting time: **' + str(data["queueTimeFormatted"]) + ' minute(s)**'
+
+    elif data["status"] == "WAITING_FOR_ACCEPT":
+
+        status = 'Waiting for user confirmation on admin page.'
+
+        message += '\n\n**Use the `!redstone accept` command!**\n'
+
+    return status, message
+
+
+# -----------------------------------------------------------------
+# main async function definitions
+# -----------------------------------------------------------------
 
 
 async def get_status():
@@ -87,7 +166,9 @@ async def get_status():
         for key in data:
             print(key + ": " + str(data[key]))
 
-        return str(data)
+        title, content = format(data)
+
+        return title, content
 
 async def activate():
 
@@ -116,8 +197,12 @@ async def deactivate():
     message = 'Server deactivation in progress! Check server status with `!redstone status`.'
     return message
 
-def start():
-    print()
+async def reactivate():
+    r_start = session.get(start_url)
+    print(r_start.text)
+
+    message = 'Server reactivation in progress! Check server status with `!redstone status`.'
+    return message
 
 
 
@@ -127,7 +212,10 @@ def start():
 
 
 
-# Discord stuff below - not ready
+# -----------------------------------------------------------------
+# Discord stuff
+# -----------------------------------------------------------------
+
 
 # command prefix
 client = commands.Bot(command_prefix = '!redstone ')
@@ -146,18 +234,15 @@ async def ping(ctx):
 # status command - displays server status
 @client.command()
 async def status(ctx):
-    # Initial message
-    await ctx.send('Getting server status... please wait.')
-
     #start = time.time()
 
     # get server status
-    status = await get_status()
+    title, content = await get_status()
 
     # format and send rich embed
     page1=discord.Embed(
-        title='good luck reading this lol',
-        description=status,
+        title=title,
+        description=content,
         colour=discord.Colour.from_rgb(221,55,55)
     )
     await ctx.send(embed=page1)
@@ -179,10 +264,16 @@ async def open(ctx):
 # accept command - confirmation
 @client.command()
 async def accept(ctx):
-    await ctx.send('Please wait...')
+    await ctx.send('Sending confirmation... please wait.')
     message = await confirm()
     await ctx.send(message)
 
+# start command - reactivates the server
+@client.command()
+async def start(ctx):
+    await ctx.send('Reactivating server... please wait.')
+    message = await reactivate()
+    await ctx.send(message)
 
 # close command - deactivates the server
 @client.command()
@@ -190,7 +281,7 @@ async def stop(ctx):
     await ctx.send('Closing server... please wait.')
     message = await deactivate()
     await ctx.send(message)
-    
+
 """
 # info command - returns useful server info
 @client.command()
@@ -208,6 +299,5 @@ async def info(ctx):
     end = time.time()
     await ctx.send(f'\n\nServer info fetching took ~**{round(end - start + client.latency)} seconds**.')
 """
-
 # running the Discord bot with the provided token
 client.run(token)
