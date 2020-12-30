@@ -1,314 +1,204 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# This is RedstoneBot's source code!
+
 import json
+import requests
 import time
 import discord
 from discord.ext import commands
 
-chrome_options = Options()
-chrome_options.headless = True
-#prefs = {"profile.default_content_setting_values.notifications" : 2}
-#chrome_options.add_experimental_option("prefs",prefs)
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
 
-PATH = "C:\Program Files (x86)\chromedriver.exe"
+# Replace these with your actual PloudOS credentials
+username = 'username'
+password = 'password'
 
-# Change these placeholders with your actual PloudOS credentials
-username = "username"
-password = "password"
-
-# The secret bot token!
+# Enter your secret bot token here!
 token = 'bot_token_goes_here'
 
-#driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=PATH)
-#driver = webdriver.Chrome(PATH)
+# Enter your ServerID here!
+serverID = 's00000'
 
-def login(driver):
+# Important URLs!
 
-    driver.get("https://ploudos.com/login/")
-    print(driver.title)
+# Login page
+login_url = 'https://ploudos.com/login/'
 
-    # enter username and password
-    username_input = driver.find_element_by_name("username")
-    username_input.send_keys(username)
+# Internal API endpoint URL
+api_endpoint = 'https://ploudos.com/manage/' + serverID + '/ajax2'
 
-    password_input = driver.find_element_by_name("password")
-    password_input.send_keys(password)
+# Server locations
+location_url = api_endpoint + '/location'
 
-    source = ""
+# Queue
+choice = '0'
+queue_url = api_endpoint + '/queue/'
 
-    try:
-        # get rid of annoying privacy notice
-        annoying_button = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "sc-bwzfXH.jlyVur"))
-        )
-        annoying_button.click()
+# Accept
+accept_url = api_endpoint + '/accept'
 
-        print("Annoying button clicked!")
+# Start
+start_url = api_endpoint + '/start'
 
-        # login
-        login_button = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "btn.btn-primary"))
-        )
-
-        login_button.click()
-
-        print("Login button clicked")
-
-    except:
-        print("Something went wrong")
-        driver.quit()
+# Stop
+stop_url = api_endpoint + '/stop'
 
 
-def get_status(close_driver):
+# main async function definitions
 
-    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=PATH)
-    #driver = webdriver.Chrome(PATH)
-    login(driver)
-    # access ajax endpoint get JSON
-    driver.get("https://ploudos.com/manage/s10434/ajax2")
-    source = driver.page_source
+# Initializing persistent sessions
+session = requests.Session()
 
-    if close_driver == True:
-        driver.quit()
-        print('Status acquired and driver closes')
+# login to PloudOS.com
+def login():
+
+    # Payload with credentials
+    data = {
+            'username': username,
+            'password': password,
+    }
+
+    # Performing POST request to login + printing status code
+    r_login = session.post(login_url, data=data)
+
+    return r_login.status_code
+
+
+async def get_status():
+    # Requesting data to internal internal API
+    r_status = session.get(api_endpoint)
+    # check if we got some nonsense HTMl or a JSON
+    if r_status.text[2] == '<':
+        # very hacky solution, I know, I know :-\
+        # the third char of the HTML template for the PloudOS.com sites is always a '<'
+        # we'll use that to our advantage here
+
+        print("Tried to access API, got nonsense HTML. *sigh*")
+        print("Either RedstoneBot is broken or PloudOS is undergoing maintenance.")
+        print("Please login to PloudOS.com and visit https://ploudos.com/server for details.")
+        print("If you think this is RedstoneBot's fault, please visit github.com/ChromeUniverse/RedstoneBot and open an issue.")
+
+        return 'Something went wrong'
+
     else:
-        print('Status acquired and driver still open')
-    # "converting" page source to JSON
+        # decoding JSON response text
+        data = json.loads(r_status.text)
 
-    data = list(source)
-    for i in range(25):
-        data.pop(0)
-    for i in range(14):
-        data.pop()
+        print("Got the JSON data! Here it is: \n")
 
-    data = ''.join(data)
+        for key in data:
+            print(key + ": " + str(data[key]))
 
-    data = json.loads(data)
+        return str(data)
 
-    # printing useful data
+async def activate():
 
-    message = '\n'
+    """
+    r_location = session.get(location_url)
+    print(r_location.text)
+    """
 
-    if data["status"] == 'READY':
+    r_queue = session.get(queue_url + '1')
+    print(r_queue.text)
 
-        message += 'Server name: **' + str(data["serverName"]) + '**'
-        message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
-        message += '\n\n**Server Resources**\n'
-        message += '\nCPU: **' + str(data["serverUsedCPU"]) + '%** in use'
-        message += '\nMemory: **' + str(data["serverUsedRAM"]) + ' MB** in use out of **' + str(data["serverMaxRam"]) + ' MB** max'
-        message += '\nSSD storage: **' + str(data["serverUsedSpace"]/1000) + ' GB** used out of **' + str(data["serverTotalSpace"]/1000) + ' GB** max'
-        message += '\n\n**Extra Info**\n'
+    message = 'Server activation in progress! Check server status with `!redstone status`.'
+    return message
 
-        if data["isRunning"] == False:
-            if data["isEditorMode"] == True:
-                status = 'Server is running in Editor Mode.'
-            if data["isEditorMode"] == False:
-                status = 'Server stopped.'
-        if data["isRunning"] == True:
-            if data["isStarted"] == True:
-                status = 'Server is up and running!'
-                message += '\nPlayers online: **' + str(data["onlineCount"]) + '** out of **' + str(data["onlineMax"]) + '** max'
-            if data["isStarted"] == False:
-                status = 'Server is starting up!'
+async def confirm():
+    r_accept = session.get(accept_url)
+    print(r_accept.text)
 
-        message += '\nServer connection timeout is **' + str(data["serverTimeout"]) + '** seconds or **' + str(data["serverTimeoutFormatted"]) + '**'
+    message = 'Confirmation sent! Check server status with `!redstone status`.'
+    return message
 
-    elif data["status"] == "SETUP":
+async def deactivate():
+    r_stop = session.get(stop_url)
+    print(r_stop.text)
 
-        status = 'Server is running setup!'
+    message = 'Server deactivation in progress! Check server status with `!redstone status`.'
+    return message
 
-        message += 'Server name: **' + str(data["serverName"]) + '**'
-        message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
-
-    elif data["status"] == "CLOSING":
-
-        status = 'Server is closing'
-
-        message += 'Server name: **' + str(data["serverName"]) + '**'
-        message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
-
-    elif data["status"] == "OFFLINE":
-
-        status = 'Server is offline.'
-
-        message += 'Server name: **' + str(data["serverName"]) + '**'
-        message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
-
-    elif data["status"] == "QUEUE":
-
-        status = 'Server is in the queue!'
-
-        message += 'Server name: **' + str(data["serverName"]) + '**'
-        message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
-        message += '\n\n**Queue Info**\n'
-        message += '\nQueue position: **' + str(data["queuePos"]) +'** out of **'+ str(data["queuePos"]) + '**'
-        message += '\nApproximate waiting time: **' + str(data["queueTimeFormatted"]) + ' minute(s)**'
-
-    elif data["status"] == "WAITING_FOR_ACCEPT":
-
-        status = 'Waiting for user confirmation on admin page.'
-
-        message += 'Server name: **' + str(data["serverName"]) + '**'
-        message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
-        message += '\n**Visit the admin page!**\n'
-
-    if close_driver == False:
-        return status, message, driver
-    return status, message
-
-def open_server():
-    print("Fetching server status......")
-    status, message, driver = get_status(False)
-    if status == 'Server is running in Editor Mode.':
-        print('editorMode')
-        driver.quit()
-        return status
-    if status == 'Server stopped.':
-        print('stopped')
-        driver.quit()
-        return status
-    if status == 'Server is up and running!':
-        print('online')
-        driver.quit()
-        return status
-    if status == 'Server is starting up!':
-        print('start_up')
-        driver.quit()
-        return status
-    if status == 'Server is running setup!':
-        print('setup')
-        driver.quit()
-        return status
-    if status == 'Server is closing.':
-        print('closing')
-        driver.quit()
-        return status
-    if status == 'Server is offline.':
-        print('offline')
-        print("Proceeding to open server!")
-        #driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=PATH)
-        #driver = webdriver.Chrome(PATH)
-        #login(driver)
-        print('Login complete!')
-        driver.get("https://ploudos.com/manage/s10434/")
-        print('Got server admin page!')
-        try:
-            activate_button = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="buttons"]/a[1]'))
-            )
-            activate_button.click()
-            #driver.implicitly_wait(1)
-            print('Activate button clicked!')
-
-            DE_button = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '/html/body/div[5]/div/div/div[2]/div/div[1]/div/a'))
-            )
-            print('DE_button located')
-            DE_button.click()
-            print('DE_button clicked!')
-
-            return 'Server activation in progress! Check the server status with `!redstone status`.'
-
-        except:
-            print('Something went wrong with server opening')
-            return 'Something went wrong with server opening! Try again, maybe?'
-        driver.quit()
-
-    if status == 'Server is in the queue!':
-        print('queue')
-        driver.quit()
-        return status
-    if status == 'Waiting for user confirmation on admin page.':
-        print('waiting for accept')
-        #driver = webdriver.Chrome(PATH)
-        driver.get("https://ploudos.com/manage/s10434/")
-        try:
-            accept_button = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="buttons"]/a'))
-            )
-            accept_button.click()
-            #driver.implicitly_wait(1)
-            print('Accept button clicked!')
-        except:
-            print('Something went worng with accept')
-            return 'Something went wrong with confirmation! Try again, maybe?'
-        driver.quit()
-        return 'Server activation confirmed! Start up will commence shortly. Check the server status with `!redstone status`.'
-
-def close_server():
-    print("Fetching server status......")
-    status, message = get_status(True)
-    if status == 'Server is running in Editor Mode.':
-        print('editorMode')
-        return status
-    if status == 'Server stopped.':
-        print('stopped')
-        return status
-    if status == 'Server is up and running!':
-        print('online')
-        print("Proceeding to close server!")
-
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=PATH)
-        #driver = webdriver.Chrome(PATH)
-        login(driver)
-        driver.get("https://ploudos.com/manage/s10434/")
-
-        try:
-            activate_button = WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="buttons"]/a[2]'))
-            )
-            activate_button.click()
-
-            return 'Server deactivation in progress! Check the server status with `!redstone status`.'
-
-        except:
-            driver.quit()
-            print('Something went wrong with server closing')
-
-    if status == 'Server is starting up!':
-        print('start_up')
-        return status
-    if status == 'Server is running setup!':
-        print('setup')
-        return status
-    if status == 'Server is closing.':
-        print('closing')
-        return status
-    if status == 'Server is offline.':
-        print('offline')
-        return status
-    if status == 'Server is in the queue!':
-        print('queue')
-        return status
-    if status == 'Waiting for user confirmation on admin page.':
-        print('waiting for accept')
-        return status
+def start():
+    print()
 
 
 
+
+
+
+
+
+
+# Discord stuff below - not ready
+
+# command prefix
 client = commands.Bot(command_prefix = '!redstone ')
 
 # bot startup
 @client.event
 async def on_ready():
+    print('Login status code: ' + str(login()))
     print('Bot is ready.')
 
-# pinng command - replies with "Pong!" + connection latency in miliseconds
+# ping command - replies with "Pong!" + connection latency in miliseconds
 @client.command()
 async def ping(ctx):
     await ctx.send(f'Pong! :ping_pong: Connection latency is {round(client.latency * 1000)}ms')
 
+# status command - displays server status
 @client.command()
 async def status(ctx):
-    await ctx.send('Hold on to your hats! Fetching server status... this might take a while.')
+    # Initial message
+    await ctx.send('Getting server status... please wait.')
+
+    #start = time.time()
+
+    # get server status
+    status = await get_status()
+
+    # format and send rich embed
+    page1=discord.Embed(
+        title='good luck reading this lol',
+        description=status,
+        colour=discord.Colour.from_rgb(221,55,55)
+    )
+    await ctx.send(embed=page1)
+
+    #end = time.time()
+
+    # send time elapsed message
+    #await ctx.send(f'\n\nServer status fetching took ~**{round(end - start + client.latency)} seconds**.')
+
+opening = False
+
+# open command - activates the server
+@client.command()
+async def open(ctx):
+    await ctx.send('Activating server... please wait.')
+    message = await activate()
+    await ctx.send(message)
+
+# accept command - confirmation
+@client.command()
+async def accept(ctx):
+    await ctx.send('Please wait...')
+    message = await confirm()
+    await ctx.send(message)
+
+
+# close command - deactivates the server
+@client.command()
+async def stop(ctx):
+    await ctx.send('Closing server... please wait.')
+    message = await deactivate()
+    await ctx.send(message)
+    
+"""
+# info command - returns useful server info
+@client.command()
+async def info(ctx):
+    await ctx.send('Getting server info... please wait.')
     start = time.time()
-    status, message = get_status(True)
+    message = get_info()
+    print(message)
     page1=discord.Embed(
         title=status,
         description=message,
@@ -316,20 +206,8 @@ async def status(ctx):
     )
     await ctx.send(embed=page1)
     end = time.time()
-    await ctx.send(f'\n\nServer status fetching took ~**{round(end - start + client.latency)} seconds**.')
+    await ctx.send(f'\n\nServer info fetching took ~**{round(end - start + client.latency)} seconds**.')
+"""
 
-opening = False
-
-@client.command()
-async def open(ctx):
-    await ctx.send('Opening server... please wait.')
-    message = open_server()
-    await ctx.send(message)
-
-@client.command()
-async def close(ctx):
-    await ctx.send('Closing server... please wait.')
-    message = close_server()
-    await ctx.send(message)
-
+# running the Discord bot with the provided token
 client.run(token)
