@@ -7,23 +7,30 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 
 ## Commands that now use Requests
 
-No commands use Requests, yet!
+* `!redstone ping` 
+* `!redstone status` (lacking proper formatting)
+* `!redstone open`
+* `!redstone accept`
+* `!redstone stop`
 
 ## Progress
 
-* Created `api_request.py` for testing the Requests module on PloudOS.com
+* Created `api_request.py` to test the Requests module on PloudOS.com
   * Succesfuly logs in
   * Gets response from internal PloudOS API
   * Decodes response using JSON
   * Can deal with "Currently in maintenance mode, check back later" errors/messages
+  
+* Updated `bot.py`.
+  * Now handles all actions with calls to internal PloudOS API
+  * Async functions/API calls
+
 
 ## To-do List
 
-* On `api_request.py`:
-  * OK, for the time being.
-* Integrate `api_request.py` into `bot.py`
-* Migrate from Selenium to Requests:
-  * `login()` function
-  * `!redstone status` command
-* Do some more network sniffing in PloudOS.com!
-  * Find exactly what requests are performed to activate the server, enter the queue, authenticate, deactivate, etc.
+* In `bot.py`:
+  * `!redstone status`: Add proper rich embed formatting
+  * `!redstone open`: repeatedly call API, get status, and automatically run `!redstone accept` when necessary
+  
+* Do some more network sniffing!
+  * Find exactly which requests are performed to activate the server, enter the queue, authenticate, deactivate, etc.
