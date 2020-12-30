@@ -31,6 +31,6 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 * In `bot.py`:
   * `!redstone status`: Add proper rich embed formatting
   * `!redstone open`: repeatedly call API, get status, and automatically run `!redstone accept` when necessary
-  
+* Add separate `credentials.txt` file - stores Username, Password, serverID, Discord bot token
 * Do some more network sniffing!
   * Find exactly which requests are performed to activate the server, enter the queue, authenticate, deactivate, etc.
