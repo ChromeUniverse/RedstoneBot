@@ -8,7 +8,7 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 ## Commands that now use Requests
 
 * `!redstone ping` 
-* `!redstone status` (lacking proper formatting)
+* `!redstone status`
 * `!redstone open`
 * `!redstone accept`
 * `!redstone stop`
