@@ -17,7 +17,6 @@ token = 'bot_token_goes_here'
 # Enter your ServerID here!
 serverID = 's00000'
 
-
 # Important URLs!
 
 # Login page
@@ -124,7 +123,7 @@ def format(data):
         status = 'Server is in the queue!'
 
         message += '\n\n**Queue Info**\n'
-        message += '\nQueue position: **' + str(data["queuePos"]) +'** out of **'+ str(data["queuePos"]) + '**'
+        message += '\nQueue position: **' + str(data["queuePos"]) +'** out of **'+ str(data["queueSize"]) + '**'
         message += '\nApproximate waiting time: **' + str(data["queueTimeFormatted"]) + ' minute(s)**'
 
     elif data["status"] == "WAITING_FOR_ACCEPT":
@@ -282,22 +281,5 @@ async def stop(ctx):
     message = await deactivate()
     await ctx.send(message)
 
-"""
-# info command - returns useful server info
-@client.command()
-async def info(ctx):
-    await ctx.send('Getting server info... please wait.')
-    start = time.time()
-    message = get_info()
-    print(message)
-    page1=discord.Embed(
-        title=status,
-        description=message,
-        colour=discord.Colour.from_rgb(221,55,55)
-    )
-    await ctx.send(embed=page1)
-    end = time.time()
-    await ctx.send(f'\n\nServer info fetching took ~**{round(end - start + client.latency)} seconds**.')
-"""
 # running the Discord bot with the provided token
 client.run(token)
