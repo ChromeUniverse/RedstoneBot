@@ -3,6 +3,21 @@
 def format(data):
 
     status = ''
+
+    # status cheat sheet
+    #
+    # 0 -> offline
+    # 1 -> stopped execution
+    # 2 -> up and running
+    # 3 -> starting up
+    # 4 -> running setup
+    # 5 -> closing
+    # 6 -> in queue
+    # 7 -> waiting for accept
+    #
+
+
+    title = ''
     message = '\n'
     message += 'Server name: **' + str(data["serverName"]) + '**'
     message += '\nCurrently running **' + str(data["serverVersion"]) + '**'
@@ -13,7 +28,6 @@ def format(data):
         message += '\nCPU: **' + str(data["serverUsedCPU"]) + '%** in use'
         message += '\nMemory: **' + str(data["serverUsedRAM"]) + ' MB** in use out of **' + str(data["serverMaxRam"]) + ' MB** max'
         message += '\nSSD storage: **' + str(data["serverUsedSpace"]/1000) + ' GB** used out of **' + str(data["serverTotalSpace"]/1000) + ' GB** max'
-        message += '\n\n**Extra Info**\n'
 
 
         if data["isRunning"] == False:
@@ -24,51 +38,64 @@ def format(data):
 
             if data["isEditorMode"] == True:
                 # actually means that the Server is offline!
-                status = 'Server is offline.'
+                status = 0
+
+                title = 'Server is offline.'
 
             if data["isEditorMode"] == False:
-                status = 'Server stopped.'
+                status = 1
+
+                title = 'Server stopped.'
+                message += '\n\n**Extra Info**\n'
                 message += '\nTimeout is **' + str(data["serverTimeout"]) + '** seconds or **' + str(data["serverTimeoutFormatted"]) + '**'
+                message += '\nTo restart server, use `!redstone restart`'
 
 
         if data["isRunning"] == True:
             if data["isStarted"] == True:
-                status = 'Server is up and running!'
+                status = 2
+
+                title = 'Server is up and running!'
+                message += '\n\n**Extra Info**\n'
                 message += '\nPlayers online: **' + str(data["onlineCount"]) + '** out of **' + str(data["onlineMax"]) + '** max'
                 message += '\nTimeout is **' + str(data["serverTimeout"]) + '** seconds or **' + str(data["serverTimeoutFormatted"]) + '**'
 
             if data["isStarted"] == False:
-                status = 'Server is starting up!'
+                status = 3
+
+                title = 'Server is starting up!'
 
 
 
     elif data["status"] == "SETUP":
-
-        status = 'Server is running setup!'
+        status = 4
+        title = 'Server is running setup!'
 
 
     elif data["status"] == "CLOSING":
-
-        status = 'Server is closing'
+        status = 5
+        title = 'Server is closing'
 
 
     elif data["status"] == "OFFLINE":
-
-        status = 'Server is offline.'
+        status = 0
+        title = 'Server is offline.'
 
 
     elif data["status"] == "QUEUE":
+        status = 6
 
-        status = 'Server is in the queue!'
+        title = 'Server is in the queue!'
 
         message += '\n\n**Queue Info**\n'
         message += '\nQueue position: **' + str(data["queuePos"]) +'** out of **'+ str(data["queueSize"]) + '**'
         message += '\nApproximate waiting time: **' + str(data["queueTimeFormatted"]) + ' minute(s)**'
 
     elif data["status"] == "WAITING_FOR_ACCEPT":
+        status = 7
 
-        status = 'Waiting for user confirmation on admin page.'
+        title = 'Waiting for user confirmation on admin page.'
 
         message += '\n\n**Use the `!redstone accept` command!**\n'
 
-    return status, message
+    return status, title, message
