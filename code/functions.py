@@ -12,6 +12,17 @@ from urls import (
     stop_url,
 )
 
+# status cheat sheet
+#
+# 0 -> offline
+# 1 -> stopped execution
+# 2 -> online
+# 3 -> starting up
+# 4 -> running setup
+# 5 -> closing
+# 6 -> in queue
+# 7 -> waiting for accept
+
 async def get_status(session):
     # Requesting data to internal internal API
     r_status = session.get(api_endpoint)
@@ -37,34 +48,118 @@ async def get_status(session):
         for key in data:
             print(key + ": " + str(data[key]))
 
-        title, content = format(data)
+        status, title, content = format(data)
 
-        return title, content
+        return status, title, content
 
 async def activate(session):
-    r_queue = session.get(queue_url + '1')
-    print(r_queue.text)
 
-    message = 'Server activation in progress! Check server status with `!redstone status`.'
+    # getting status
+    status, title, content = await get_status(session)
+
+    # only run activation when the server is OFFLINE
+    if status == 0:
+
+        # performing GET request to queue_URl in order to enter the queue
+        r_queue = session.get(queue_url + '1')
+        print(r_queue.text)
+
+        # decoding JSON response text
+        data = json.loads(r_queue.text)
+        print(data)
+
+        if not data["error"]:
+            print('No errors')
+            message = 'Server activation sucessful! Check status with `!redstone status`.'
+        else:
+            message = 'Something went wrong! Please try again.'
+
+    # else, just send the title as the message
+    else:
+        message = title
+
     return message
 
 async def confirm(session):
-    r_accept = session.get(accept_url)
-    print(r_accept.text)
 
-    message = 'Confirmation sent! Check server status with `!redstone status`.'
+    # getting status
+    status, title, content = await get_status(session)
+
+    # only run activation when the server is AWAITING ACCEPT
+    if status == 7:
+
+        # performing GET request to accept_url to start up
+        r_accept = session.get(accept_url)
+        print(r_accept.text)
+
+        # decoding JSON response text
+        data = json.loads(r_accept.text)
+        print(data)
+
+        if not data["error"]:
+            print('No errors')
+            message = 'Confirmation sucessful! Server is starting up. Check status with `!redstone status`.'
+        else:
+            message = 'Something went wrong! Please try again.'
+
+    # else, just send the title as the message
+    else:
+        message = title
+
     return message
 
-async def deactivate(session):
-    r_stop = session.get(stop_url)
-    print(r_stop.text)
 
-    message = 'Server deactivation in progress! Check server status with `!redstone status`.'
+async def deactivate(session):
+
+    # getting status
+    status, title, content = await get_status(session)
+
+    # only run activation when the server is ONLINE
+    if status == 2:
+
+        # performing GET request to accept_url to start up
+        r_stop = session.get(stop_url)
+        print(r_stop.text)
+
+        # decoding JSON response text
+        data = json.loads(r_stop.text)
+        print(data)
+
+        if not data["error"]:
+            print('No errors')
+            message = 'Server halted! Check status with `!redstone status`.'
+        else:
+            message = 'Something went wrong! Please try again.'
+
+    # else, just send the title as the message
+    else:
+        message = title
+
     return message
 
 async def reactivate(session):
-    r_start = session.get(start_url)
-    print(r_start.text)
+    # getting status
+    status, title, content = await get_status(session)
 
-    message = 'Server reactivation in progress! Check server status with `!redstone status`.'
+    # only run activation when the server is STOPPED
+    if status == 1:
+
+        # performing GET request to accept_url to start up
+        r_start = session.get(start_url)
+        print(r_start.text)
+
+        # decoding JSON response text
+        data = json.loads(r_start.text)
+        print(data)
+
+        if not data['error']:
+            print('No errors')
+            message = 'Reactivation sucessful! Server is starting up. Check status with `!redstone status`.'
+        else:
+            message = 'Something went wrong! Please try again.'
+
+    # else, just send the title as the message
+    else:
+        message = title
+
     return message
