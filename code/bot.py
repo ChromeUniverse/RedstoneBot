@@ -50,7 +50,7 @@ async def ping(ctx):
 @client.command()
 async def status(ctx):
     # get server status
-    title, content = await get_status(session)
+    status, title, content = await get_status(session)
 
     # format and send rich embed
     page1=discord.Embed(
@@ -63,7 +63,7 @@ async def status(ctx):
 
 # open command - activates the server
 @client.command()
-async def open(ctx):
+async def activate(ctx):
     await ctx.send('Activating server... please wait.')
     message = await activate(session)
     await ctx.send(message)
@@ -77,7 +77,7 @@ async def accept(ctx):
 
 # start command - reactivates the server
 @client.command()
-async def start(ctx):
+async def restart(ctx):
     await ctx.send('Reactivating server... please wait.')
     message = await reactivate(session)
     await ctx.send(message)
@@ -91,4 +91,3 @@ async def stop(ctx):
 
 # running the Discord bot with the provided token
 client.run(token)
-
