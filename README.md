@@ -29,10 +29,10 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 
 * `!redstone ping` 
 * `!redstone status`
-* `!redstone open`
+* `!redstone activate`
 * `!redstone accept`
 * `!redstone stop`
-* `!redstone start`
+* `!redstone restart`
 
 ## Progress
 
@@ -47,6 +47,8 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
   * Async functions/API calls
   
 * Added new project folder structure - Special thanks to Kriasoft and their [Folder Structure Conventions](https://github.com/KriaSoft/Folder-Structure-Conventions)
+
+* Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
 
 
 
