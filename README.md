@@ -58,5 +58,3 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 
 * In `bot.py`:
   * `!redstone open`: repeatedly call API, get status, and automatically run `!redstone accept` when necessary
-* Do some more network sniffing!
-  * Find exactly which requests are performed to activate the server, enter the queue, authenticate, deactivate, etc.
