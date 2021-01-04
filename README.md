@@ -4,6 +4,26 @@ The goal of this branch is to migrate web scraping functionality from Selenium t
 
 This should improve performance, robustness, and reduce _RedstoneBot_'s dependencies.
 
+## Folder Structure
+
+```
+.
+├── code                    # source code folder
+|   ├── bot.py              # Discord commands, Requests session
+|   ├── credentials.py      # PloudOS credentials, Discord token
+|   ├── urls.py             # list of URLs 
+|   ├── login.py            # logs in to ploudos.com
+|   ├── functions.py        # main async function definitions
+|   └── format.py           # formats Rich Embeds
+|
+├── api.json                # collection of API calls and JSON responses
+├── api_request.py          # testing Requests
+├── requests.txt            # PloudOS network sniffing analysis report
+|
+├── LICENSE                 # GNU GPL v3.0 License
+└── README.md               # you're reading this right now! 
+```
+
 
 ## Commands that now use Requests
 
@@ -25,6 +45,9 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 * Updated `bot.py`.
   * Now handles all actions with calls to internal PloudOS API
   * Async functions/API calls
+  
+* Added new project folder structure - Special thanks to Kriasoft and their [Folder Structure Conventions](https://github.com/KriaSoft/Folder-Structure-Conventions)
+
 
 
 ## To-do List
