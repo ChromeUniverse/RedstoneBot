@@ -20,3 +20,6 @@ accept_url = api_endpoint + '/accept'
 
 # Start
 start_url = api_endpoint + '/start'
+
+# Stop
+stop_url = api_endpoint + '/stop'
