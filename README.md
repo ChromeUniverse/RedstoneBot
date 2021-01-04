@@ -46,6 +46,8 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
   * Now handles all actions with calls to internal PloudOS API
   * Async functions/API calls
   
+* Credentials now stored in separate file
+  
 * Added new project folder structure - Special thanks to Kriasoft and their [Folder Structure Conventions](https://github.com/KriaSoft/Folder-Structure-Conventions)
 
 * Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
@@ -56,6 +58,5 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 
 * In `bot.py`:
   * `!redstone open`: repeatedly call API, get status, and automatically run `!redstone accept` when necessary
-* Add separate `credentials.txt` file - stores Username, Password, serverID, Discord bot token
 * Do some more network sniffing!
   * Find exactly which requests are performed to activate the server, enter the queue, authenticate, deactivate, etc.
