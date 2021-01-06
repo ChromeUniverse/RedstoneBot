@@ -20,6 +20,8 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 ├── api_request.py          # testing Requests
 ├── requests.txt            # PloudOS network sniffing analysis report
 |
+├── requirements.txt        # pip packages
+|
 ├── LICENSE                 # GNU GPL v3.0 License
 └── README.md               # you're reading this right now! 
 ```
