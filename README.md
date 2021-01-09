@@ -1,5 +1,19 @@
 # RedstoneBot
 
+## 🛑 DEPRECATION NOTICE 🛑
+
+As of January 2021, Erik, creator and owner of PloudOS servers, has activated Cloudflare DDoS protection on the [PloudOS website](ploudos.com). 
+
+It consists mostly of a JavaScript challenge that can only be solved by regular web browsers and prevents crawlers, bots and webscrapers like _RedstoneBot_ to make requests and access web services.
+
+The _RedstoneBot_ team (myself and [Eduardo](https://github.com/qrno/)) is trying to find a way to bypass the JS challenge. Until then, _RedstoneBot_ is **deprecated**.
+
+We're trying to find a suitable dependency to bypass the challenge. In the worst case, we'll be conducting a fair amount of network sniffing and research to develop our own challenge solver.
+
+Thanks to [Steven](https://github.com/scaredos/) for his work on reverse engineering CloudFlare challenges. Check out his [cfresearch](https://github.com/scaredos/cfresearch) repo for more information.
+
+## Overview
+
 A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
 This bot was built with [Python 3](http://python.org/), [Selenium for Python](https://selenium-python.readthedocs.io/#), [JSON](https://docs.python.org/3/library/json.html) (pre-installed with Python3), [Requests](https://requests.readthedocs.io/en/master/) and [discord.py](https://github.com/Rapptz/discord.py)
