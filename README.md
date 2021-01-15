@@ -1,5 +1,7 @@
 # RedstoneBot
 
+<!--
+
 ## 🛑 DEPRECATION NOTICE 🛑
 
 As of January 2021, Erik, creator and owner of PloudOS servers, has activated Cloudflare DDoS protection on the [PloudOS website](ploudos.com). 
@@ -12,7 +14,12 @@ We're trying to find a suitable dependency to bypass the challenge. In the worst
 
 Thanks to [Steven](https://github.com/scaredos/) for his work on reverse engineering CloudFlare challenges. Check out his [cfresearch](https://github.com/scaredos/cfresearch) repo for more information.
 
+
+
+
 ## Overview
+
+-->
 
 A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
