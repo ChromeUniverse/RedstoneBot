@@ -61,13 +61,18 @@ async def status(ctx):
     )
     await ctx.send(embed=page1)
 
-
+looping = False
 # open command - activates the server
 @client.command()
 async def start(ctx):
     await ctx.send('Activating server... please wait.')
-
-    client.loop.create_task(activate(ctx, session))
+    
+    global looping
+    if looping == False:
+        client.loop.create_task(activate(ctx, session))
+        looping = True
+    else:
+        await ctx.send('Activation already in progress!')
 
 # accept command - confirmation
 @client.command()

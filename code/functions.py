@@ -57,7 +57,7 @@ async def activate(ctx, session):
             print("let's enter the queue")
 
             # performing GET request to queue_URl in order to enter the queue
-            r_queue = session.get(queue_url + '1')
+            r_queue = session.get(queue_url + '2')
             print(r_queue.text)
 
             # decoding JSON response text
@@ -105,7 +105,13 @@ async def activate(ctx, session):
         elif status == 2:
             print("Online!")
             message = 'Server is up and running, @everyone! Check status with `!redstone status`.'
+
+            # resetting the looping check
+            global looping
+            looping = False
+            # sending message
             await ctx.send(message)
+            # breaking the loop
             break
 
         """
