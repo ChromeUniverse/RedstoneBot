@@ -1,4 +1,5 @@
 import json
+import asyncio
 
 from format import format
 
@@ -14,13 +15,13 @@ from urls import (
 
 # status cheat sheet
 #
-# 0 -> offline
+# 0 -> offline                  *
 # 1 -> stopped execution
-# 2 -> online
+# 2 -> online                   *
 # 3 -> starting up
 # 4 -> running setup
 # 5 -> closing
-# 6 -> in queue
+# 6 -> in queue                 *
 # 7 -> waiting for accept
 
 async def get_status(session):
@@ -31,54 +32,93 @@ async def get_status(session):
         # very hacky solution, I know, I know :-\
         # the third char of the HTML template for the PloudOS.com sites is always a '<'
         # we'll use that to our advantage here
-
         print("Tried to access API, got nonsense HTML. *sigh*")
-        print("Either RedstoneBot is broken or PloudOS is undergoing maintenance.")
-        print("Please login to PloudOS.com and visit https://ploudos.com/server for details.")
-        print("If you think this is RedstoneBot's fault, please visit github.com/ChromeUniverse/RedstoneBot and open an issue.")
 
         return 'Something went wrong'
 
     else:
         # decoding JSON response text
         data = json.loads(r_status.text)
-
-        print("Got the JSON data! Here it is: \n")
-
-        for key in data:
-            print(key + ": " + str(data[key]))
+        print("Got the JSON!")
 
         status, title, content = format(data)
 
         return status, title, content
 
-async def activate(session):
+async def activate(ctx, session):
+    while True:
+        print("new loop iteration")
 
-    # getting status
-    status, title, content = await get_status(session)
+        # getting status
+        status, title, content = await get_status(session)
 
-    # only run activation when the server is OFFLINE
-    if status == 0:
+        # only run activation when the server is OFFLINE
+        if status == 0:
+            print("let's enter the queue")
 
-        # performing GET request to queue_URl in order to enter the queue
-        r_queue = session.get(queue_url + '1')
-        print(r_queue.text)
+            # performing GET request to queue_URl in order to enter the queue
+            r_queue = session.get(queue_url + '1')
+            print(r_queue.text)
 
-        # decoding JSON response text
-        data = json.loads(r_queue.text)
-        print(data)
+            # decoding JSON response text
+            data = json.loads(r_queue.text)
 
-        if not data["error"]:
-            print('No errors')
-            message = 'Server activation sucessful! Check status with `!redstone status`.'
+            if not data["error"]:
+                print('No errors')
+                message = 'Activation sucessful! Check status with `!redstone status`.'
+            else:
+                message = 'Something went wrong! Please try again.'
+                break
+            # sending message
+            await ctx.send(message)
+
+        # need to include sent_once = True / False here
+        # for status == 3 and status == 4
+
+        # if in queue
+        elif status == 6:
+            print("waiting in queue")
+            message = title
+            print(content)
+            # sending message
+            #await ctx.send(message)
+
+        elif status == 7:
+            print("let's confirm and activate the server")
+
+            # performing GET request to accept_url to start up
+            r_accept = session.get(accept_url)
+            print(r_accept.status_code)
+
+            # decoding JSON response text
+            data = json.loads(r_accept.text)
+
+            if not data["error"]:
+                print('No errors')
+                message = 'Confirmation sucessful! Server is starting up. Check status with `!redstone status`.'
+            else:
+                message = 'Something went wrong! Please try again.'
+                break
+            # sending message
+            await ctx.send(message)
+
+        elif status == 2:
+            print("Online!")
+            message = 'Server is up and running, @everyone! Check status with `!redstone status`.'
+            await ctx.send(message)
+            break
+
+        """
+
+        # else, just send the title as the message
         else:
-            message = 'Something went wrong! Please try again.'
+            message = title
+            # sending message
+            await ctx.send(message)
+        """
 
-    # else, just send the title as the message
-    else:
-        message = title
-
-    return message
+        # async sleep for 2 seconds
+        await asyncio.sleep(2)
 
 async def confirm(session):
 

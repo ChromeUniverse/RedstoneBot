@@ -1,4 +1,5 @@
 # module imports
+import asyncio
 import json
 import requests
 import discord
@@ -63,10 +64,10 @@ async def status(ctx):
 
 # open command - activates the server
 @client.command()
-async def activate(ctx):
+async def start(ctx):
     await ctx.send('Activating server... please wait.')
-    message = await activate(session)
-    await ctx.send(message)
+
+    client.loop.create_task(activate(ctx, session))
 
 # accept command - confirmation
 @client.command()
