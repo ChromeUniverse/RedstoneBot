@@ -35,7 +35,7 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 
 * `!redstone ping`
 * `!redstone status`
-* `!redstone activate`
+* `!redstone start`
 * `!redstone accept`
 * `!redstone stop`
 * `!redstone restart`
@@ -43,24 +43,24 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 ## Progress
 
 * Created `api_request.py` to test the Requests module on PloudOS.com
-  * Succesfuly logs in
+  * Succesfully logs in
   * Gets response from internal PloudOS API
   * Decodes response using JSON
   * Can deal with "Currently in maintenance mode, check back later" errors/messages
 
 * Updated `bot.py`.
   * Now handles all actions with calls to internal PloudOS API
-  * Async functions/API calls
+  * Async functions/API calls _(needs refinement)_
+  * Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
+  * Auto-confirm on `!redstone start` _(needs refinement)_
 
 * Credentials now stored in separate file
 
 * Added new project folder structure - Special thanks to Kriasoft and their [Folder Structure Conventions](https://github.com/KriaSoft/Folder-Structure-Conventions)
 
-* Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
-
-
 
 ## To-do List
 
 * In `bot.py`:
-  * `!redstone open`: repeatedly call API, get status, and automatically run `!redstone accept` when necessary
+  * Refine some stuff here and there - mostly Async code and auto-confirm
+* Scalability 
