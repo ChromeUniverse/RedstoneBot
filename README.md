@@ -139,6 +139,7 @@ token = 'abcdefgh_12345678'
 ## To-do List
 
 * In `bot.py`:
+  * Add location selection and display queue time estimate
   * Refine some stuff here and there - mostly Async code and auto-confirm
   * Add separate files for each command/main Async function
   * Switch from Requests to aiohttp? (does this even make sense?)
