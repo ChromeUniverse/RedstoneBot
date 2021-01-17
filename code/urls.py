@@ -12,8 +12,14 @@ api_endpoint = 'https://ploudos.com/manage/' + serverID + '/ajax2'
 # Server locations
 location_url = api_endpoint + '/location'
 
+# locations:
+# 1 -> Nuremberg, Germany
+# 2 -> St. Louis, USA
+
+location = 1
+
 # Queue
-queue_url = api_endpoint + '/queue/'
+queue_url = api_endpoint + '/queue/' + str(location)
 
 # Accept
 accept_url = api_endpoint + '/accept'
