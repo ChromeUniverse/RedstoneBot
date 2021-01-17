@@ -36,7 +36,6 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 * `!redstone ping`
 * `!redstone status`
 * `!redstone start`
-* `!redstone accept`
 * `!redstone stop`
 * `!redstone restart`
 
@@ -52,7 +51,7 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
   * Now handles all actions with calls to internal PloudOS API
   * Async functions/API calls _(needs refinement)_
   * Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
-  * Auto-confirm on `!redstone start` _(needs refinement)_
+  * Auto-confirm on `!redstone start`
 
 * Credentials now stored in separate file
 
@@ -64,5 +63,5 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 * In `bot.py`:
   * Refine some stuff here and there - mostly Async code and auto-confirm
   * Add separate files for each command/main Async function
-  * Switch from Requests to aiohttp? (does this even make sense)
+  * Switch from Requests to aiohttp? (does this even make sense?)
 * Scalability
