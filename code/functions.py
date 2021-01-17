@@ -23,6 +23,7 @@ from urls import (
 # 5 -> closing
 # 6 -> in queue                 *
 # 7 -> waiting for accept
+# 8 -> preparing server reallocation
 
 async def get_status(session):
     # Requesting data to internal internal API
@@ -46,18 +47,24 @@ async def get_status(session):
         return status, title, content
 
 async def activate(ctx, session):
+
+    # stores server status from previous loop iteration
+    # itialized as an invalid status (-1; see cheat sheet above)
+    previous = -1
+
     while True:
         print("new loop iteration")
 
         # getting status
         status, title, content = await get_status(session)
 
+
         # only run activation when the server is OFFLINE
         if status == 0:
             print("let's enter the queue")
 
             # performing GET request to queue_URl in order to enter the queue
-            r_queue = session.get(queue_url + '2')
+            r_queue = session.get(queue_url)
             print(r_queue.text)
 
             # decoding JSON response text
@@ -104,15 +111,17 @@ async def activate(ctx, session):
 
         elif status == 2:
             print("Online!")
-            message = 'Server is up and running, @everyone! Check status with `!redstone status`.'
 
-            # resetting the looping check
-            global looping
-            looping = False
+            # if going from 'start up' to 'online', then alert people
+            if previous == 3:
+                message = 'Server is up and running, @everyone! Check status with `!redstone status`.'
+            else:
+                message = 'Server is up and running!'
+
             # sending message
             await ctx.send(message)
             # breaking the loop
-            break
+            return False
 
         """
 
@@ -122,37 +131,11 @@ async def activate(ctx, session):
             # sending message
             await ctx.send(message)
         """
+        # setting previous state
+        previous = status
 
         # async sleep for 2 seconds
         await asyncio.sleep(2)
-
-async def confirm(session):
-
-    # getting status
-    status, title, content = await get_status(session)
-
-    # only run activation when the server is AWAITING ACCEPT
-    if status == 7:
-
-        # performing GET request to accept_url to start up
-        r_accept = session.get(accept_url)
-        print(r_accept.text)
-
-        # decoding JSON response text
-        data = json.loads(r_accept.text)
-        print(data)
-
-        if not data["error"]:
-            print('No errors')
-            message = 'Confirmation sucessful! Server is starting up. Check status with `!redstone status`.'
-        else:
-            message = 'Something went wrong! Please try again.'
-
-    # else, just send the title as the message
-    else:
-        message = title
-
-    return message
 
 
 async def deactivate(session):
