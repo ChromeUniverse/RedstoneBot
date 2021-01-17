@@ -14,7 +14,7 @@ def format(data):
     # 5 -> closing
     # 6 -> in queue
     # 7 -> waiting for accept
-    #
+    # 8 -> preparing server reallocation
 
 
     title = ''
@@ -97,5 +97,13 @@ def format(data):
         title = 'Waiting for user confirmation on admin page.'
 
         message += '\n\n**Use the `!redstone accept` command!**\n'
+
+    elif data["status"] == "PREPARE_SERVER_REALLOCATION":
+        status = 8
+
+        title = 'Preparing server for reallocation.'
+
+        message += '\n\nPlease wait while PloudOS does its thing.\n'
+        message += 'Use `!redstone status` to check server status'
 
     return status, title, message
