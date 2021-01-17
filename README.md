@@ -63,4 +63,5 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 
 * In `bot.py`:
   * Refine some stuff here and there - mostly Async code and auto-confirm
-* Scalability 
+  * Add separate files for each command/main Async function
+* Scalability
