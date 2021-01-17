@@ -11,7 +11,6 @@ from login import login
 from functions import (
     get_status,
     activate,
-    confirm,
     deactivate,
     reactivate,
 )
@@ -66,20 +65,16 @@ looping = False
 @client.command()
 async def start(ctx):
     await ctx.send('Activating server... please wait.')
-    
+
     global looping
+    print("bot.py looping is..." + str(looping))
+
     if looping == False:
-        client.loop.create_task(activate(ctx, session))
         looping = True
+        # client.loop.create_task(activate(ctx, session))
+        looping = await activate(ctx, session)
     else:
         await ctx.send('Activation already in progress!')
-
-# accept command - confirmation
-@client.command()
-async def accept(ctx):
-    await ctx.send('Sending confirmation... please wait.')
-    message = await confirm(session)
-    await ctx.send(message)
 
 # start command - reactivates the server
 @client.command()
@@ -94,6 +89,7 @@ async def stop(ctx):
     await ctx.send('Closing server... please wait.')
     message = await deactivate(session)
     await ctx.send(message)
+
 
 # running the Discord bot with the provided token
 client.run(token)
