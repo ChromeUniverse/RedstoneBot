@@ -1,35 +1,15 @@
 # RedstoneBot
 
-<!--
-
-## 🛑 DEPRECATION NOTICE 🛑
-
-As of January 2021, Erik, creator and owner of PloudOS servers, has activated Cloudflare DDoS protection on the [PloudOS website](ploudos.com). 
-
-It consists mostly of a JavaScript challenge that can only be solved by regular web browsers and prevents crawlers, bots and webscrapers like _RedstoneBot_ to make requests and access web services.
-
-The _RedstoneBot_ team (myself and [Eduardo](https://github.com/qrno/)) is trying to find a way to bypass the JS challenge. Until then, _RedstoneBot_ is **deprecated**.
-
-We're trying to find a suitable dependency to bypass the challenge. In the worst case, we'll be conducting a fair amount of network sniffing and research to develop our own challenge solver.
-
-Thanks to [Steven](https://github.com/scaredos/) for his work on reverse engineering CloudFlare challenges. Check out his [cfresearch](https://github.com/scaredos/cfresearch) repo for more information.
-
-
-
-
-## Overview
-
--->
-
 A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
-This bot was built with [Python 3](http://python.org/), [Selenium for Python](https://selenium-python.readthedocs.io/#), [JSON](https://docs.python.org/3/library/json.html) (pre-installed with Python3), [Requests](https://requests.readthedocs.io/en/master/) and [discord.py](https://github.com/Rapptz/discord.py)
+This bot was built with [Python 3](http://python.org/), [Requests](https://requests.readthedocs.io/en/master/) and [discord.py](https://github.com/Rapptz/discord.py)
 
 Built (mostly) for educational purposes.
 
 ## Gallery
 
 ![image](https://i.imgur.com/Gcsp2Oc.png)
+
 
 ## Commands
 
@@ -39,27 +19,54 @@ Replies with "Pong!" and shows connection latency in miliseconds.
 
 `!redstone status` 
 
-Shows current server status: "Online", "In queue", "Starting up", etc., along with additional info about server resources, number of online players, and more (see picure above for example).
+Shows current server status: "Online", "In queue", "Starting up", etc. 
 
-`!redstone open` 
+Shows additional info about server resources, number of online players, and more (see picure above for example).
 
-Activates the server (run twice: once when opening, once more when waiting for confirmation).
+`!redstone start` 
 
-`!redstone close` 
+Puts your server in the activation queue. 
 
-Deactivates the server.
+You only need to run this once: it automatically sends user confirmation when you reach the top spot of the queue.
 
-## To-do List
+`!redstone stop` 
 
-* Migrate from Selenium to [Requests](https://requests.readthedocs.io/en/master/) - Check the `requests` branch for more details! 
-* Improve code robustness
-* Add a log file
-* Commands to add:
-  * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
-  * `!redstone stop` - similar to the `open` and `close`; stops the server.
-* Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
-  
+If the server is 'Online', this will deactivate the server.
+
+`!redstone restart`
+
+If the server is 'Stopped', this will reactivate the server.
+
+## Folder Structure
+
+```
+.
+├── code                    # source code
+|   ├── bot.py              # Discord commands, Requests session
+|   ├── credentials.py      # PloudOS credentials, Discord token
+|   ├── urls.py             # list of URLs
+|   ├── login.py            # logs in to ploudos.com
+|   ├── functions.py        # main async function definitions
+|   └── format.py           # formats Rich Embeds
+|
+├── experiments             # Python files for experiments
+|   ├── api_request.py      # testing requests and API calls
+|   ├── autostart.py        # automatically enters queue and starts server
+|   ├── credentials.py      # see 'code' folder above
+|   └── format.py           # see 'code' folder above
+|
+├── api.json                # collection of API calls and JSON responses
+├── requests.txt            # PloudOS network sniffing analysis report
+├── requirements.txt        # pip packages
+|
+├── LICENSE                 # GNU GPL v3.0 License
+└── README.md               # you're reading this right now!
+```
+
+
 ## Usage
+
+**WARNING: DEPRECATED AS OF JAN. '21**
 
 * Install and set up dependencies: (Ubuntu Linux shown below)
   * discord.py:
@@ -110,6 +117,39 @@ token = 'abcdefgh_12345678'
 
 * After you registered your bot in the [Discord Developers Portal](https://discord.com/developers/applications) and added it to your server, run `bot.py`.
 
+## Progress
+
+* Created `api_request.py` to test the Requests module on PloudOS.com
+  * Succesfully logs in
+  * Gets response from internal PloudOS API
+  * Decodes response using JSON
+  * Can deal with "Currently in maintenance mode, check back later" errors/messages
+
+* Updated `bot.py`.
+  * Now handles all actions with calls to internal PloudOS API
+  * Async functions/API calls _(needs refinement)_
+  * Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
+  * Auto-confirm on `!redstone start`
+
+* Credentials now stored in separate file
+
+* Added new project folder structure - Special thanks to Kriasoft and their [Folder Structure Conventions](https://github.com/KriaSoft/Folder-Structure-Conventions)
+
+
+## To-do List
+
+* In `bot.py`:
+  * Refine some stuff here and there - mostly Async code and auto-confirm
+  * Add separate files for each command/main Async function
+  * Switch from Requests to aiohttp? (does this even make sense?)
+* Scalability 
+* Improve code robustness
+* Add a log file
+* Commands to add:
+  * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
+* Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
+  
+
 ## Disclaimer
 
 This bot isn't publicly available. It was made to be used exclusively by the SMP BR Discord. 
@@ -119,5 +159,4 @@ If you want to use this bot in your own Discord server, clone this repo, create 
 ## License
 
 This open-source project is released under the GNU GPL v3.0 license. Check the `LICENSE` file for more details.
-
 

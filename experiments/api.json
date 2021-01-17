@@ -88,6 +88,7 @@ API endpoint: https://ploudos.com/manage/s10434/ajax2
   "serverUsedRAM": 492,
   "serverUsedCPU": 62.25
 
+}
 
   # Server stopped: "Parado"
 
@@ -159,6 +160,34 @@ API endpoint: https://ploudos.com/manage/s10434/ajax2
   "serverVersion": "PaperSpigot 1.16.2",
   "versionSupportUsage": true,
   "status": "WAITING_FOR_ACCEPT",
+  "isInfinity": false,
+  "skip": false
+}
+
+# Generating World: "Gerando Mundo"
+
+{
+  "serverName": "BetaWorld",
+  "serverIP": "betaworld.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.3",
+  "versionSupportUsage": true,
+  "status": "GENERATING_WORLD",
+  "isInfinity": false,
+  "skip": false
+}
+
+"O teu servidor está de momento a gerar um mundo! Por favor aguarda enquanto ele é gerado.
+Infelizmente, enquanto isso, não poderás Administrar o servidor!"
+
+
+# Reallocating server: "Servidor a preparar"
+
+{
+  "serverName": "SMP BR",
+  "serverIP": "smpbrserver.ploudos.me",
+  "serverVersion": "PaperSpigot 1.16.3",
+  "versionSupportUsage": true,
+  "status": "PREPARE_SERVER_REALLOCATION",
   "isInfinity": false,
   "skip": false
 }
