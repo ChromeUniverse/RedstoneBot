@@ -13,29 +13,36 @@ Built (mostly) for educational purposes.
 
 ## Commands
 
-`!redstone ping` 
+`!redstone help`
+
+Shows help page and commands.
+
+`!redstone ping`
 
 Replies with "Pong!" and shows connection latency in miliseconds.
 
-`!redstone status` 
+`!redstone status`
 
-Shows current server status: "Online", "In queue", "Starting up", etc. 
+Shows current server status: "Online", "In queue", "Starting up", etc.
 
-Shows additional info about server resources, number of online players, and more (see picure above for example).
+Shows additional info about server resources, number of online players, and more.
 
-`!redstone start` 
+`!redstone queueTime`
 
-Puts your server in the activation queue. 
+Shows server locations and queue waiting times.
+
+`!redstone start [location]`
+
+Puts your server in the activation queue. Specify the server location with `[1]` (Nuremberg) or `[2]` (St. Louis).
 
 You only need to run this once: it automatically sends user confirmation when you reach the top spot of the queue.
 
-`!redstone stop` 
-
-If the server is 'Online', this will deactivate the server.
+`!redstone stop`
+If the server is "Online", this will deactivate the server.
 
 `!redstone restart`
+If the server is "Stopped", this will reactivate the server.
 
-If the server is 'Stopped', this will reactivate the server.
 
 ## Folder Structure
 
@@ -52,6 +59,7 @@ If the server is 'Stopped', this will reactivate the server.
 ├── experiments             # Python files for experiments
 |   ├── api_request.py      # testing requests and API calls
 |   ├── autostart.py        # automatically enters queue and starts server
+|   ├── queuetime.py        # scrapes ploudos.com for queue waiting times
 |   ├── credentials.py      # see 'code' folder above
 |   └── format.py           # see 'code' folder above
 |
@@ -70,37 +78,37 @@ If the server is 'Stopped', this will reactivate the server.
 
 * Install and set up dependencies: (Ubuntu Linux shown below)
   * discord.py:
-  
+
   ```
   python3 -m pip install -U discord.py
   ```
-  
+
   * Selenium for Python:
-  
+
   ```
   python3 -m pip install selenium
   ```
-  
+
   * Chromium web browser:
-  
+
   ```
   sudo apt install chromium-browser
   ```
-  
+
   * Chrome webdriver (v87 shown below, check your version):
-  
+
   ```
   wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
   ```
   * Unzip `chromedriver.zip`:
-  
+
   ```
   sudo apt install unzip
   unzip chromedriver.zip
   ```
-  
+
   * Copy PATH to `chromedriver` and paste in `bot.py`:
-  
+
   ```
   PATH = "path/to/webdriver/goes/here/chromedriver"
   ```
@@ -130,6 +138,8 @@ token = 'abcdefgh_12345678'
   * Async functions/API calls _(needs refinement)_
   * Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
   * Auto-confirm on `!redstone start`
+  * Server location selector
+  * Displays queue waiting times
 
 * Credentials now stored in separate file
 
@@ -139,25 +149,23 @@ token = 'abcdefgh_12345678'
 ## To-do List
 
 * In `bot.py`:
-  * Add location selection and display queue time estimate
   * Refine some stuff here and there - mostly Async code and auto-confirm
   * Add separate files for each command/main Async function
   * Switch from Requests to aiohttp? (does this even make sense?)
-* Scalability 
+* Scalability
 * Improve code robustness
 * Add a log file
 * Commands to add:
   * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
 * Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
-  
+
 
 ## Disclaimer
 
-This bot isn't publicly available. It was made to be used exclusively by the SMP BR Discord. 
+This bot isn't publicly available. It was made to be used exclusively by the SMP BR Discord.
 
 If you want to use this bot in your own Discord server, clone this repo, create a Discord bot (visit the [Discord Developers Portal](https://discord.com/developers/applications)) and host it or your local machine or VPS (AWS Lightsail, Linode, etc.)
 
 ## License
 
 This open-source project is released under the GNU GPL v3.0 license. Check the `LICENSE` file for more details.
-
