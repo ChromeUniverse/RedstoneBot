@@ -1,8 +1,41 @@
 # RedstoneBot
 
-The goal of this branch is to migrate web scraping functionality from Selenium to [Requests](https://requests.readthedocs.io/en/master/), whenever possible.
+A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
-This should improve performance, robustness, and reduce _RedstoneBot_'s dependencies.
+This bot was built with [Python 3](http://python.org/), [Requests](https://requests.readthedocs.io/en/master/) and [discord.py](https://github.com/Rapptz/discord.py)
+
+Built (mostly) for educational purposes.
+
+## Gallery
+
+![image](https://i.imgur.com/Gcsp2Oc.png)
+
+
+## Commands
+
+`!redstone ping` 
+
+Replies with "Pong!" and shows connection latency in miliseconds.
+
+`!redstone status` 
+
+Shows current server status: "Online", "In queue", "Starting up", etc. 
+
+Shows additional info about server resources, number of online players, and more (see picure above for example).
+
+`!redstone start` 
+
+Puts your server in the activation queue. 
+
+You only need to run this once: it automatically sends user confirmation when you reach the top spot of the queue.
+
+`!redstone stop` 
+
+If the server is 'Online', this will deactivate the server.
+
+`!redstone restart`
+
+If the server is 'Stopped', this will reactivate the server.
 
 ## Folder Structure
 
@@ -31,13 +64,58 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 ```
 
 
-## Commands that now use Requests
+## Usage
 
-* `!redstone ping`
-* `!redstone status`
-* `!redstone start`
-* `!redstone stop`
-* `!redstone restart`
+**WARNING: DEPRECATED AS OF JAN. '21**
+
+* Install and set up dependencies: (Ubuntu Linux shown below)
+  * discord.py:
+  
+  ```
+  python3 -m pip install -U discord.py
+  ```
+  
+  * Selenium for Python:
+  
+  ```
+  python3 -m pip install selenium
+  ```
+  
+  * Chromium web browser:
+  
+  ```
+  sudo apt install chromium-browser
+  ```
+  
+  * Chrome webdriver (v87 shown below, check your version):
+  
+  ```
+  wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
+  ```
+  * Unzip `chromedriver.zip`:
+  
+  ```
+  sudo apt install unzip
+  unzip chromedriver.zip
+  ```
+  
+  * Copy PATH to `chromedriver` and paste in `bot.py`:
+  
+  ```
+  PATH = "path/to/webdriver/goes/here/chromedriver"
+  ```
+
+* Edit your credentials in `bot.py`:
+```
+# Change these placeholders with your actual PloudOS credentials
+username = "ChromeUniverse"
+password = "12345678"
+
+# The secret bot token!
+token = 'abcdefgh_12345678'
+```
+
+* After you registered your bot in the [Discord Developers Portal](https://discord.com/developers/applications) and added it to your server, run `bot.py`.
 
 ## Progress
 
@@ -61,7 +139,25 @@ This should improve performance, robustness, and reduce _RedstoneBot_'s dependen
 ## To-do List
 
 * In `bot.py`:
+  * Add location selection and display queue time estimate
   * Refine some stuff here and there - mostly Async code and auto-confirm
   * Add separate files for each command/main Async function
   * Switch from Requests to aiohttp? (does this even make sense?)
-* Scalability
+* Scalability 
+* Improve code robustness
+* Add a log file
+* Commands to add:
+  * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
+* Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
+  
+
+## Disclaimer
+
+This bot isn't publicly available. It was made to be used exclusively by the SMP BR Discord. 
+
+If you want to use this bot in your own Discord server, clone this repo, create a Discord bot (visit the [Discord Developers Portal](https://discord.com/developers/applications)) and host it or your local machine or VPS (AWS Lightsail, Linode, etc.)
+
+## License
+
+This open-source project is released under the GNU GPL v3.0 license. Check the `LICENSE` file for more details.
+
