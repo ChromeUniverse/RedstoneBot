@@ -19,7 +19,7 @@ location_url = api_endpoint + '/location'
 location = 1
 
 # Queue
-queue_url = api_endpoint + '/queue/' + str(location)
+queue_url = api_endpoint + '/queue/'
 
 # Accept
 accept_url = api_endpoint + '/accept'
