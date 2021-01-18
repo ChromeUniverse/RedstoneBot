@@ -2,7 +2,7 @@
 
 A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
-This bot was built with [Python 3](http://python.org/), [Requests](https://requests.readthedocs.io/en/master/) and [discord.py](https://github.com/Rapptz/discord.py)
+This bot was built with [Python 3](http://python.org/), [Requests](https://requests.readthedocs.io/en/master/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
 
 Built (mostly) for educational purposes.
 
@@ -46,7 +46,9 @@ If the server is "Online", this will deactivate the server.
 If the server is "Stopped", this will reactivate the server.
 
 
-## Folder Structure
+## Folder Structure 
+
+### DEPRECATED
 
 ```
 .
