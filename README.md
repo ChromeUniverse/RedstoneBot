@@ -38,9 +38,11 @@ Puts your server in the activation queue. Specify the server location with `[1]`
 You only need to run this once: it automatically sends user confirmation when you reach the top spot of the queue.
 
 `!redstone stop`
+
 If the server is "Online", this will deactivate the server.
 
 `!redstone restart`
+
 If the server is "Stopped", this will reactivate the server.
 
 
