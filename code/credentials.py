@@ -8,4 +8,3 @@ token = 'bot_token_goes_here'
 
 # Enter your ServerID here!
 serverID = 's00000'
-
