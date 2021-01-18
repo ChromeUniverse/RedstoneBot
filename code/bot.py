@@ -111,7 +111,7 @@ async def start(ctx, arg=None):
 
 
     await ctx.send(message + ' Activating server... please wait.')
-    return None
+    
     global looping
     print("bot.py looping is..." + str(looping))
 
