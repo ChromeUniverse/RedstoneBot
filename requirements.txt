@@ -6,3 +6,4 @@ discord.py==1.5.1
 idna==3.1
 multidict==4.7.6
 yarl==1.5.1
+beautifulsoup4==4.9.3
