@@ -152,6 +152,8 @@ token = 'abcdefgh_12345678'
 
 ## To-do List
 
+* Add serverID customization/set-up
+* Add instructions on how to add RedstoneBot to other servers
 * In `bot.py`:
   * Refine some stuff here and there - mostly Async code and auto-confirm
   * Add separate files for each command/main Async function
