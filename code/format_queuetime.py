@@ -13,7 +13,7 @@ def format_queuetime(nuremberg_time, stlouis_time):
     if int(nuremberg_time) > 20 or int(stlouis_time) > 20:
         message += '\n\n_The waiting times are pretty long. Server activation might take a while._'
 
-    message += '\n\n**To activate your server, user `!redstone start [location]`**'
+    message += '\n\n**To activate your server, use `!redstone start [location]`**'
 
 
 
