@@ -1,6 +1,4 @@
 # module imports
-import asyncio
-import json
 import requests
 import discord
 from discord.ext import commands
@@ -8,13 +6,21 @@ from discord.ext import commands
 # function imports
 from login import login
 from format_help import format_help
-
 from functions import (
     get_status,
+    get_times,
     activate,
     deactivate,
     reactivate,
-    get_times
+    register,
+)
+
+# database functions
+from db_functions import (
+    link,
+    guild_in_db,
+    IP_in_db,
+    get_serverID,
 )
 
 # credentials import
@@ -68,73 +74,121 @@ async def ping(ctx):
 # status command - displays server status
 @client.command()
 async def status(ctx):
-    # get server status
-    status, title, content = await get_status(session)
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        return None
+    else:
+        serverID = result
 
-    # format and send rich embed
-    page=discord.Embed(
-        title=title,
-        description=content,
-        colour=discord.Colour.from_rgb(221,55,55)
-    )
-    await ctx.send(embed=page)
+        # get server status
+        status, title, content = await get_status(session, serverID)
+
+        # format and send rich embed
+        page=discord.Embed(
+            title=title,
+            description=content,
+            colour=discord.Colour.from_rgb(221,55,55)
+        )
+        await ctx.send(embed=page)
 
 # queueTime command- displays queue waiting times
 @client.command()
 async def queueTime(ctx):
-    # get queue times
-    title, content = await get_times(session)
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        return None
+    else:
+        serverID = result
 
-    # format and send rich embed
-    page=discord.Embed(
-        title=title,
-        description=content,
-        colour=discord.Colour.from_rgb(221,55,55)
-    )
-    await ctx.send(embed=page)
+        # get queue times
+        title, content = await get_times(session, serverID)
+
+        # format and send rich embed
+        page=discord.Embed(
+            title=title,
+            description=content,
+            colour=discord.Colour.from_rgb(221,55,55)
+        )
+        await ctx.send(embed=page)
 
 
 looping = False
 # open command - activates the server
 @client.command()
 async def start(ctx, arg=None):
-
-    if arg == '1':
-        message = 'Nuremberg selected.'
-
-    elif arg == '2':
-        message = 'St. Louis selected.'
-
-    else:
-        await ctx.send('You forgot to specify a location! The syntax for this command is: ```!redstone start [location]\n[location] = 1 🠖 Nuremberg, Germany\n[location] = 2 🠖 St. Louis, USA```')
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
         return None
-
-
-    await ctx.send(message + ' Activating server... please wait.')
-    
-    global looping
-    print("bot.py looping is..." + str(looping))
-
-    if looping == False:
-        looping = True
-        # client.loop.create_task(activate(ctx, session))
-        looping = await activate(ctx, session, arg)
     else:
-        await ctx.send('Activation already in progress!')
+        serverID = result
+
+        # checking for valid argument
+        if arg == '1':
+            message = 'Nuremberg selected.'
+        elif arg == '2':
+            message = 'St. Louis selected.'
+        else:
+            await ctx.send('You forgot to specify a valid location! The syntax for this command is: ```!redstone start [location]\n[location] = 1 🠖 Nuremberg, Germany\n[location] = 2 🠖 St. Louis, USA```')
+            return None
+
+        # message
+        await ctx.send(message + ' Activating server... please wait.')
+
+        global looping
+        print("bot.py looping is..." + str(looping))
+
+        if looping == False:
+            looping = True
+            # client.loop.create_task(activate(ctx, session))
+            looping = await activate(ctx, session, serverID, arg)
+        else:
+            await ctx.send('Activation already in progress!')
 
 # start command - reactivates the server
 @client.command()
 async def restart(ctx):
-    await ctx.send('Reactivating server... please wait.')
-    message = await reactivate(session)
-    await ctx.send(message)
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        return None
+    else:
+        serverID = result
+
+        await ctx.send('Reactivating server... please wait.')
+        message = await reactivate(session, serverID)
+        await ctx.send(message)
 
 # close command - deactivates the server
 @client.command()
 async def stop(ctx):
-    await ctx.send('Closing server... please wait.')
-    message = await deactivate(session)
-    await ctx.send(message)
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        return None
+    else:
+        serverID = result
+
+        await ctx.send('Closing server... please wait.')
+        message = await deactivate(session, serverID)
+        await ctx.send(message)
+
+@client.command()
+async def setup(ctx, setupIP=None):
+    # getting Discord guild ('server') ID
+    guildID = str(ctx.guild.id)
+    # member admin status bool
+    is_admin = ctx.author.guild_permissions.administrator
+
+    # run registration
+    await register(ctx, session, guildID, is_admin, setupIP)
 
 
 # running the Discord bot with the provided token
