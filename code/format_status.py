@@ -104,6 +104,16 @@ def format_status(data):
         title = 'Preparing server for reallocation.'
 
         message += '\n\nPlease wait while PloudOS does its thing.\n'
-        message += 'Use `!redstone status` to check server status'
+        message += 'Use `!redstone status` to check server status.'
+
+
+    elif data["status"] == "GENERATING_WORLD":
+        status = 9
+
+        title = 'Generating world.'
+
+        message += '\n\n**This might take a while.**\n'
+        message += 'Please wait while PloudOS does its thing.\n'
+        message += 'Use `!redstone status` to check server status.'
 
     return status, title, message
