@@ -6,6 +6,9 @@ from credentials import serverID
 # Login page
 login_url = 'https://ploudos.com/login/'
 
+# Server list 
+server_url = 'https://ploudos.com/server/'
+
 # Internal API endpoint URL
 api_endpoint = 'https://ploudos.com/manage/' + serverID + '/ajax2'
 
