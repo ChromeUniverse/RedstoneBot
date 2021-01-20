@@ -8,7 +8,7 @@ Built (mostly) for educational purposes.
 
 ## Gallery
 
-![image](https://i.imgur.com/Gcsp2Oc.png)
+![image](https://i.postimg.cc/vm24YCqR/redstone2-1.png)
 
 
 ## Commands
