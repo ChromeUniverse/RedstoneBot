@@ -13,6 +13,8 @@ Built (mostly) for educational purposes.
 
 ## Commands
 
+### DEPRECATED
+
 `!redstone help`
 
 Shows help page and commands.
