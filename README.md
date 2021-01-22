@@ -10,43 +10,13 @@ Built (mostly) for educational purposes.
 
 ![image](https://i.postimg.cc/vm24YCqR/redstone2-1.png)
 
+## Disclaimer
 
-## Commands
+This bot isn't available for public use, at least not yet. It was made to be used exclusively by the SMP BR Discord.
 
-### DEPRECATED
+RedstoneBot is under contant development and refinement. Once it's ready for public use, this section will be updated and a public link to add this bot to your own server will be at the very top of this README.
 
-`!redstone help`
-
-Shows help page and commands.
-
-`!redstone ping`
-
-Replies with "Pong!" and shows connection latency in miliseconds.
-
-`!redstone status`
-
-Shows current server status: "Online", "In queue", "Starting up", etc.
-
-Shows additional info about server resources, number of online players, and more.
-
-`!redstone queueTime`
-
-Shows server locations and queue waiting times.
-
-`!redstone start [location]`
-
-Puts your server in the activation queue. Specify the server location with `[1]` (Nuremberg) or `[2]` (St. Louis).
-
-You only need to run this once: it automatically sends user confirmation when you reach the top spot of the queue.
-
-`!redstone stop`
-
-If the server is "Online", this will deactivate the server.
-
-`!redstone restart`
-
-If the server is "Stopped", this will reactivate the server.
-
+For now, if you want to use this bot in your own Discord server, you can follow the `USAGE` section below.
 
 ## Folder Structure 
 
@@ -167,12 +137,6 @@ token = 'abcdefgh_12345678'
   * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
 * Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
 
-
-## Disclaimer
-
-This bot isn't publicly available. It was made to be used exclusively by the SMP BR Discord.
-
-If you want to use this bot in your own Discord server, clone this repo, create a Discord bot (visit the [Discord Developers Portal](https://discord.com/developers/applications)) and host it or your local machine or VPS (AWS Lightsail, Linode, etc.)
 
 ## License
 
