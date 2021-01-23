@@ -43,6 +43,9 @@ session = requests.Session()
 # command prefix
 client = commands.Bot(command_prefix = '!redstone ')
 
+# Redstone Red color for Rich Embeds
+redstoneRed = discord.Colour.from_rgb(221,55,55)
+
 # bot startup
 @client.event
 async def on_ready():
@@ -60,7 +63,7 @@ async def help(ctx):
     page=discord.Embed(
         title=title,
         description=content,
-        colour=discord.Colour.from_rgb(221,55,55)
+        colour=redstoneRed
     )
     await ctx.send(embed=page)
 
@@ -89,7 +92,7 @@ async def status(ctx):
         page=discord.Embed(
             title=title,
             description=content,
-            colour=discord.Colour.from_rgb(221,55,55)
+            colour=redstoneRed
         )
         await ctx.send(embed=page)
 
@@ -111,7 +114,7 @@ async def queueTime(ctx):
         page=discord.Embed(
             title=title,
             description=content,
-            colour=discord.Colour.from_rgb(221,55,55)
+            colour=redstoneRed
         )
         await ctx.send(embed=page)
 
