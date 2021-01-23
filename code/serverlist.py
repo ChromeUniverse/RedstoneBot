@@ -1,12 +1,12 @@
+# module imports
 import json
 import requests
 from bs4 import BeautifulSoup
 
-from urls import server_url
-
 async def serverlist(session, setupIP):
+    serverlist_url = 'https://ploudos.com/server/'
     # Requesting data to internal internal API
-    r_server = session.get(server_url)
+    r_server = session.get(serverlist_url)
     print('got server list')
 
     # using BS4 to parse the response
