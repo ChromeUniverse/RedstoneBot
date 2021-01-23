@@ -1,10 +1,9 @@
+# module import
 import requests
-from urls import login_url
-
-# login to PloudOS.com
 
 # args: Username, Password and Requests Session object
 def login(username, password, session):
+    login_url = 'https://ploudos.com/login/'
 
     # Payload with credentials
     data = {
