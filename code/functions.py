@@ -58,7 +58,8 @@ async def get_status(session, serverID):
     else:
         # decoding JSON response text
         data = json.loads(r_status.text)
-        print("Got the JSON!")
+        print("Got the status JSON!")
+        print(data)
 
         status, title, content = format_status(data)
 
@@ -171,7 +172,6 @@ async def activate(ctx, session, serverID, arg):
         elif status == 6:
             print("waiting in queue")
             message = title
-            print(content)
             # sending message
             #await ctx.send(message)
 
