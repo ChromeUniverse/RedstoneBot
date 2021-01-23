@@ -6,14 +6,12 @@ from discord.ext import commands
 # function imports
 from login import login
 from format_help import format_help
-from functions import (
-    get_status,
-    get_times,
-    activate,
-    deactivate,
-    reactivate,
-    register,
-)
+from get_status import get_status
+from get_times import get_times
+from activate import activate
+from deactivate import deactivate
+from reactivate import reactivate
+from register import register
 
 # database functions
 from db_functions import (
@@ -23,20 +21,18 @@ from db_functions import (
     get_serverID,
 )
 
-# credentials import
+# credentials
 from credentials import (
     username,
     password,
     token,
 )
 
-
-# Initializing persistent sessions
+# Initializing persistent Requests session
 session = requests.Session()
 
-
 # -----------------------------------------------------------------
-# Discord commands
+# Discord stuff
 # -----------------------------------------------------------------
 
 
