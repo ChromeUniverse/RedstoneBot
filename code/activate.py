@@ -1,6 +1,6 @@
 # module imports
 import json
-import requests
+import aiohttp
 import asyncio
 
 # importing status fetch function
@@ -26,11 +26,12 @@ async def activate(ctx, session, serverID, arg):
             queue_url = 'https://ploudos.com/manage/s' + serverID + '/ajax2/queue/' + arg
 
             # performing GET request to queue_URl in order to enter the queue
-            r_queue = session.get(queue_url)
-            print(r_queue.text)
+            r_queue = await session.get(queue_url)
+            html = await r_queue.text()
+            print(html)
 
             # decoding JSON response text
-            data = json.loads(r_queue.text)
+            data = json.loads(html)
 
             if not data["error"]:
                 print('No errors')
@@ -52,18 +53,22 @@ async def activate(ctx, session, serverID, arg):
             # sending message
             #await ctx.send(message)
 
+        # if waiting for accept
         elif status == 7:
             print("let's confirm and activate the server")
             # building accept url
             accept_url = 'https://ploudos.com/manage/s' + serverID + '/ajax2/accept'
 
             # performing GET request to accept_url to start up
-            r_accept = session.get(accept_url)
-            print('accept status code: ' + str(r_accept.status_code))
-            print('json response text: ' + str(r_accept.text))
+            r_accept = await session.get(accept_url)
+
+            html = await r_accept.text()
+
+            print('accept status code: ' + str(r_accept.status))
+            print('json response text: ' + str(html))
 
             # decoding JSON response text
-            data = json.loads(r_accept.text)
+            data = json.loads(html)
             print('json decoded')
 
             if not data["error"]:
@@ -77,6 +82,7 @@ async def activate(ctx, session, serverID, arg):
             # sending message
             await ctx.send(message)
 
+        # if online
         elif status == 2:
             print("Online!")
 
@@ -92,14 +98,7 @@ async def activate(ctx, session, serverID, arg):
             return False
             break
 
-        """
 
-        # else, just send the title as the message
-        else:
-            message = title
-            # sending message
-            await ctx.send(message)
-        """
         # setting previous state
         previous = status
 
