@@ -1,5 +1,6 @@
 # module imports
 import json
+import aiohttp
 import requests
 
 # importing status fetch function
@@ -15,11 +16,12 @@ async def deactivate(session, serverID):
         stop_url = 'https://ploudos.com/manage/s' + serverID + '/ajax2/stop'
 
         # performing GET request to accept_url to start up
-        r_stop = session.get(stop_url)
-        print(r_stop.text)
+        r_stop = await session.get(stop_url)
+
+        html = await r_stop.text()
 
         # decoding JSON response text
-        data = json.loads(r_stop.text)
+        data = json.loads(html)
         print(data)
 
         if not data["error"]:
