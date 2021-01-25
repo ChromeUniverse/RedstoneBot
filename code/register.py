@@ -9,7 +9,7 @@ from db_functions import (
     link,
 )
 
-async def register(ctx, session, guildID, is_admin, setupIP):
+async def register(ctx, session, guildID, guildName, is_admin, setupIP):
 
     # check if member is admin
     if is_admin == True:
@@ -19,13 +19,13 @@ async def register(ctx, session, guildID, is_admin, setupIP):
 
             # check that server isn't already in DB
             if guild_in_db(guildID) == True:
-                await ctx.send('This Discord server is already linked to a PloudOS server.')
-                return None
+                await ctx.send('**' + guildName + '** is already linked to a PloudOS server.')
+                return None, None
             else:
                 # check that IP isn't already in DB
                 if IP_in_db(setupIP) == True:
                     await ctx.send('This server IP is already linked to another Discord server.')
-                    return None
+                    return None, None
                 else:
                     # Got valid argument
                     await ctx.send("Running setup... please wait.")
@@ -41,15 +41,27 @@ async def register(ctx, session, guildID, is_admin, setupIP):
                         # write data to DB
                         link(guildID, setupIP, serverID)
 
-                        # sending message
-                        await ctx.send('Setup successful! **' + serverName + '** has been linked to this Discord server.')
+                        title = 'Setup successful!'
+                        content = '**' + serverName + '** has been linked to **' + guildName + '**.'
+
+                        return title, content
 
                     else:
                         # couldn't match user input IP and IPs on server list
-                        await ctx.send('Incorrect server IP, try again.')
+                        title = '**Incorrect server IP.**'
+                        content = ''
+                        content += "This IP wasn't found in Redstone's server list.\n\n"
+                        content += 'Make sure that Redstone has permissions to open and close this server.\n\n'
+                        content += 'Learn more here: https://example.com\n\n'
+                        content += '**Please try again.**'
+
+                        return title, content
+
         else:
             # invalid argument!
             await ctx.send('Argument error!')
+            return None, None
     else:
-        # user doesn't have server admin
+        # user doesn't have guild admin permission
         await ctx.send('Only users with admin permissions can use this command.')
+        return None, None 
