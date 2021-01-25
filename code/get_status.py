@@ -1,6 +1,6 @@
 # module imports
 import json
-import requests
+import aiohttp
 
 # format function import
 from format_status import format_status
@@ -10,23 +10,35 @@ async def get_status(session, serverID):
     api_endpoint = 'https://ploudos.com/manage/s' + serverID + '/ajax2'
 
     # Requesting data to internal internal API
-    r_status = session.get(api_endpoint)
+    r_status = await session.get(api_endpoint)
 
+    data = await r_status.text()
+    
     # check if we got some nonsense HTMl or a JSON
-    if r_status.text[2] == '<':
+    if data[2] == '<':
         # very hacky solution, I know, I know :-\
         # the third char of the HTML template for the PloudOS.com sites is always a '<'
         # we'll use that to our advantage here
         print("Tried to access API, got nonsense HTML. *sigh*")
 
-        return 'Something went wrong'
+        # according to statusCheatSheet
+        status = 9
+
+        title = "Something went wrong. This ain't good."
+
+        content = ''
+        content += "Either PloudOS is in maintenance mode or Redstone is broken.\n\n "
+        content += "Please visit https://ploudos.com/server/ to see if PloudOS is undergoing maintenance. \n\n"
+        content += "If you think this is Redstone's fault, then please open a new issue at https://github.com/ChromeUniverse/RedstoneBot."
+
 
     else:
         # decoding JSON response text
-        data = json.loads(r_status.text)
+        status_json = json.loads(str(data))
         print("Got the status JSON!")
-        print(data)
+        print(status_json)
 
-        status, title, content = format_status(data)
+        # formatting Rich Embed
+        status, title, content = format_status(status_json)
 
-        return status, title, content
+    return status, title, content
