@@ -1,17 +1,18 @@
 # module import
-import requests
+import aiohttp
 
 # args: Username, Password and Requests Session object
-def login(username, password, session):
+async def login(username, password, session):
+    # login url
     login_url = 'https://ploudos.com/login/'
 
     # Payload with credentials
-    data = {
+    payload = {
             'username': username,
             'password': password,
     }
 
-    # Performing POST request to login
-    r_login = session.post(login_url, data=data)
+    # POST request to login url
+    r_login = await session.post(login_url, data=payload)
 
-    return r_login.status_code
+    return r_login.status
