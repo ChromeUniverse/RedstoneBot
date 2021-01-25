@@ -31,6 +31,36 @@ def IP_in_db(inputIP):
 
     dbFile.close()
 
+def serverID_in_db(inputServerID):
+    cwd = os.getcwd()
+    dbpath = os.path.join(cwd, 'db.csv')
+
+    dbFile = open(dbpath, 'r')
+    dbReader = csv.reader(dbFile)
+
+    for row in dbReader:
+        # if guildID is already in DB
+        if inputServerID == row[2]:
+            return True
+    return False
+
+    dbFile.close()
+
+def get_IP(inputServerID):
+    cwd = os.getcwd()
+    dbpath = os.path.join(cwd, 'db.csv')
+
+    dbFile = open(dbpath, 'r')
+    dbReader = csv.reader(dbFile)
+
+    for row in dbReader:
+        # if guildID is already in DB
+        if inputServerID == row[2]:
+            IP = row[1]
+            return IP
+    return False
+
+
 def get_serverID(inputGuildID):
     cwd = os.getcwd()
     dbpath = os.path.join(cwd, 'db.csv')
