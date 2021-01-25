@@ -2,7 +2,7 @@
 
 A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
-This bot was built with [Python 3](http://python.org/), [Requests](https://requests.readthedocs.io/en/master/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
+This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
 
 Built (mostly) for educational purposes.
 
