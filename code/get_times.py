@@ -1,6 +1,6 @@
 # module imports
 import json
-import requests
+import aiohttp
 from bs4 import BeautifulSoup
 
 # format function import
@@ -11,10 +11,12 @@ async def get_times(session, serverID):
     location_url = 'https://ploudos.com/manage/s' + serverID + '/ajax2/location'
 
     # Requesting data to internal  API
-    r_times = session.get(location_url)
+    r_times = await session.get(location_url)
+
+    html = await r_times.text()
 
     # check if we got some nonsense HTMl or a JSON
-    if r_times.text[2] == '<':
+    if html == '<':
         # very hacky solution, I know, I know :-\
         # the third char of the HTML template for the PloudOS.com sites is always a '<'
         # we'll use that to our advantage here
@@ -24,8 +26,7 @@ async def get_times(session, serverID):
 
     else:
         # using BS4 to parse the response
-        src = r_times.content
-        soup = BeautifulSoup(src, 'html.parser')
+        soup = BeautifulSoup(html, 'html.parser')
 
         # Nuremberg
 
