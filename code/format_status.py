@@ -4,19 +4,6 @@ def format_status(data):
 
     status = ''
 
-    # status cheat sheet
-    #
-    # 0 -> offline
-    # 1 -> stopped execution
-    # 2 -> up and running
-    # 3 -> starting up
-    # 4 -> running setup
-    # 5 -> closing
-    # 6 -> in queue
-    # 7 -> waiting for accept
-    # 8 -> preparing server reallocation
-
-
     title = ''
     message = '\n'
     message += 'Server name: **' + str(data["serverName"]) + '**'
@@ -77,7 +64,7 @@ def format_status(data):
         title = 'Server is closing'
 
 
-    elif data["status"] == "OFFLINE":
+    elif data["status"] == "OFFLINE" or data["status"] == None:
         status = 0
         title = 'Server is offline.'
 
