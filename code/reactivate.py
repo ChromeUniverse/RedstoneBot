@@ -1,5 +1,6 @@
 # module imports
 import json
+import aiohttp
 import requests
 
 # importing status fetch function
@@ -15,11 +16,12 @@ async def reactivate(session, serverID):
         start_url = 'https://ploudos.com/manage/s' + serverID + '/ajax2/start'
 
         # performing GET request to accept_url to start up
-        r_start = session.get(start_url)
-        print(r_start.text)
+        r_start = await session.get(start_url)
+
+        html = await r_start.text()
 
         # decoding JSON response text
-        data = json.loads(r_start.text)
+        data = json.loads(html)
         print(data)
 
         if not data['error']:
