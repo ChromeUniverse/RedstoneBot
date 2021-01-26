@@ -1,6 +1,6 @@
 # RedstoneBot
 
-A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
+A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR Discord community.
 
 This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
 
