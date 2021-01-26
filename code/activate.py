@@ -39,6 +39,7 @@ async def activate(ctx, session, serverID, arg):
             else:
                 message = 'Something went wrong! Please try again.'
                 await ctx.send(message)
+                return False
                 break
             # sending message
             await ctx.send(message)
@@ -77,6 +78,7 @@ async def activate(ctx, session, serverID, arg):
             else:
                 print('oppsie poopsie!')
                 message = 'Something went wrong! Please try again.'
+                return False
                 await ctx.send(message)
                 break
             # sending message
