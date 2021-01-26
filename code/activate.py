@@ -6,14 +6,24 @@ import asyncio
 # importing status fetch function
 from get_status import get_status
 
-async def activate(ctx, session, serverID, arg):
+# importing database function
+from db_functions import get_looping
 
+async def activate(ctx, session, serverID, arg, guildID):
     # stores server status from previous loop iteration
     # itialized as an invalid status (-1; see cheat sheet above)
     previous = -1
 
     while True:
-        print("new loop iteration")
+
+        # get looping variable
+        looping = get_looping(guildID)
+        # looping was modified from outside the activation command
+        if looping == 'False':
+            # abort activation loop
+            return False
+
+        # only proceed if looping is True
 
         # getting status
         status, title, content = await get_status(session, serverID)
