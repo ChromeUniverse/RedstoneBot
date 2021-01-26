@@ -42,7 +42,7 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
                         link(guildID, setupIP, serverID)
 
                         title = 'Setup successful!'
-                        content = '**' + serverName + '** has been linked to **' + guildName + '**.'
+                        content = '**' + serverName + '** has been linked to this Discord server.'
 
                         return title, content
 
@@ -59,9 +59,13 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
 
         else:
             # invalid argument!
-            await ctx.send('Argument error!')
+            message = ''
+            message += 'Invalid IP. The syntax for this command is:\n'
+            message += '```!redstone setup [IP address]\n\n[IP address] 🠖 mycoolserver.ploudos.me```'
+
+            await ctx.send(message)
             return None, None
     else:
         # user doesn't have guild admin permission
         await ctx.send('Only users with admin permissions can use this command.')
-        return None, None 
+        return None, None
