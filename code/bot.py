@@ -20,6 +20,8 @@ from db_functions import (
     guild_in_db,
     IP_in_db,
     get_serverID,
+    get_looping,
+    update_looping,
 )
 
 # credentials
@@ -149,7 +151,7 @@ async def queueTime(ctx):
 
 
 
-looping = False
+
 # open command - activates the server
 @client.command()
 async def start(ctx, arg=None):
@@ -157,8 +159,11 @@ async def start(ctx, arg=None):
     global session_list
     session = session_list[0]
 
+    # get discord guildID
+    guildID = str(ctx.guild.id)
+
     # get server ID
-    result = get_serverID(str(ctx.guild.id))
+    result = get_serverID(guildID)
     if result == False:
         await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
         return None
@@ -177,13 +182,18 @@ async def start(ctx, arg=None):
         # message
         await ctx.send(message + ' Activating server... please wait.')
 
-        global looping
+        # get looping status for this Guild
+        looping = get_looping(guildID)
         print("bot.py looping is..." + str(looping))
 
-        if looping == False:
+        # yep, string, not boolean
+        if looping == 'False':
             looping = True
-            # client.loop.create_task(activate(ctx, session))
+            update_looping(guildID, looping)
+
+            # start server activatation loop
             looping = await activate(ctx, session, serverID, arg)
+            update_looping(guildID, looping)
         else:
             await ctx.send('Activation already in progress!')
 
