@@ -14,6 +14,7 @@ from deactivate import deactivate
 from reactivate import reactivate
 from register import register
 from leave_queue import leave_queue
+from unregister import unregister
 
 # database functions
 from db_functions import (
@@ -313,16 +314,12 @@ async def reset(ctx):
 
         # getting Discord guild ('server') ID
         guildID = str(ctx.guild.id)
-
-        # getting Discord guild ('server') Name
+        # getting Discord guild ('server') name
         guildName = str(ctx.guild.name)
+        # checking if member is a guild admin
+        is_admin = ctx.author.guild_permissions.administrator
 
-        # deleting this guild's entry in the DB
-        deleteEntry(guildID)
-
-        message = ''
-        message += 'Successfully unlinked **' + guildName + '** from PloudOS. '
-        message += 'Use `!redstone setup` to link to a new PloudOS server.'
+        message = await unregister(guildID, guildName, is_admin)
 
         await ctx.send(message)
 
