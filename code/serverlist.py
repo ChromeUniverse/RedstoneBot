@@ -22,13 +22,11 @@ async def serverlist(session, setupIP):
     # list of servers on server list
     servers = soup.find_all(class_="menu")
 
-    print(servers)
-
     # looping through server entries on server list page
     for i in range(1, len(servers)):
         # parsing link to get serverIDs
-        link = servers[i].a['href']
-        serverID = link[10:16]
+        anchorTag = servers[i].a['href']
+        serverID = anchorTag[10:16]
         print('trying serverID: ' + serverID)
 
         # if someone hasn't registerd this server
