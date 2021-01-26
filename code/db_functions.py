@@ -100,6 +100,39 @@ def link(guildID, setupIP, serverID):
     #closing log file
     dbFile.close()
 
+
+def deleteEntry(guildID):
+    cwd = os.getcwd()
+    dbPath = os.path.join(cwd, 'db.csv')
+
+    # opening database and spliting it into lines
+    dbFile = open(dbPath)
+    dbReader = csv.reader(dbFile)
+
+    # creating a copy of the DB
+    dbCopy = []
+
+    for row in dbReader:
+        # found the guild's entry in database
+        if row[0] == guildID:
+            # skip this! on to the next row
+            continue
+        # add this row to the DB copy
+        dbCopy.append(row)
+        
+    dbFile.close()
+
+    # writing DB copy to DB file
+    dbFile = open(dbPath, 'w', newline='')
+    dbWriter = csv.writer(dbFile)
+
+    for row in dbCopy:
+        # paste dbCopy into DB file
+        dbWriter.writerow(row)
+
+    dbFile.close()
+
+
 def get_looping(guildID):
     cwd = os.getcwd()
     dbPath = os.path.join(cwd, 'db.csv')
@@ -140,6 +173,7 @@ def update_looping(guildID, looping):
         dbCopy.append(row)
     dbFile.close()
 
+    # writing DB copy to DB file
     dbFile = open(dbPath, 'w', newline='')
     dbWriter = csv.writer(dbFile)
 
