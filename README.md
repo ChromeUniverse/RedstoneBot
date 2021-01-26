@@ -2,7 +2,7 @@
 
 A Discord bot made for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR community.
 
-This bot was built with [Python 3](http://python.org/), [Requests](https://requests.readthedocs.io/en/master/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
+This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
 
 Built (mostly) for educational purposes.
 
@@ -116,6 +116,9 @@ token = 'abcdefgh_12345678'
   * Auto-confirm on `!redstone start`
   * Server location selector
   * Displays queue waiting times
+  * Add Discord to PloudOS server linking (only one PloudOS server per guild, currently)
+  * Async requests with AIOHTTP
+  * Separate files for most important functions
 
 * Credentials now stored in separate file
 
@@ -124,17 +127,19 @@ token = 'abcdefgh_12345678'
 
 ## To-do List
 
-* Add serverID customization/set-up
 * Add instructions on how to add RedstoneBot to other servers
 * In `bot.py`:
   * Refine some stuff here and there - mostly Async code and auto-confirm
-  * Add separate files for each command/main Async function
-  * Switch from Requests to aiohttp? (does this even make sense?)
+    * Async JSON parsing?
+    * Async CSV/Database reading/writing?
+  * Add multiple activation loops - one per Discord guild
+* Switch databases from CSV to SQLite3 (would this make sense?)
 * Scalability
 * Improve code robustness
 * Add a log file
 * Commands to add:
   * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
+  * `!redstone reset` - resets setup and clears database entry for the Discord guild
 * Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
 
 
