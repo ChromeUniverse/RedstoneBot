@@ -1,7 +1,6 @@
 # module imports
 import json
 import aiohttp
-import requests
 
 # importing status fetch function
 from get_status import get_status
