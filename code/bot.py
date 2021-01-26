@@ -13,6 +13,7 @@ from activate import activate
 from deactivate import deactivate
 from reactivate import reactivate
 from register import register
+from leave_queue import leave_queue
 
 # database functions
 from db_functions import (
@@ -22,6 +23,7 @@ from db_functions import (
     get_serverID,
     get_looping,
     update_looping,
+    deleteEntry,
 )
 
 # credentials
@@ -176,7 +178,11 @@ async def start(ctx, arg=None):
         elif arg == '2':
             message = 'St. Louis selected.'
         else:
-            await ctx.send('You forgot to specify a valid location! The syntax for this command is: ```!redstone start [location]\n[location] = 1 🠖 Nuremberg, Germany\n[location] = 2 🠖 St. Louis, USA```')
+            message = ''
+            message += 'Invalid location. The syntax for this command is:'
+            message += '```!redstone start [location]\n\n[location] = 1 🠖 Nuremberg, Germany\n[location] = 2 🠖 St. Louis, USA```'
+
+            await ctx.send(message)
             return None
 
         # message
@@ -192,11 +198,33 @@ async def start(ctx, arg=None):
             update_looping(guildID, looping)
 
             # start server activatation loop
-            looping = await activate(ctx, session, serverID, arg)
+            looping = await activate(ctx, session, serverID, arg, guildID)
             update_looping(guildID, looping)
         else:
             await ctx.send('Activation already in progress!')
 
+
+# exit command - leaves the queue
+@client.command()
+async def exit(ctx):
+    # getting the guildID
+    guildID = str(ctx.guild.id)
+
+    # retrieving aiohttp ClientSession
+    global session_list
+    session = session_list[0]
+
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        return None
+    else:
+        serverID = result
+
+        await ctx.send('Exiting queue... please wait.')
+        message = await leave_queue(session, serverID, guildID)
+        await ctx.send(message)
 
 
 
@@ -245,6 +273,7 @@ async def restart(ctx):
 
 
 
+# links Discord server and PloudOS server
 @client.command()
 async def setup(ctx, setupIP=None):
     # retrieving aiohttp ClientSession
@@ -269,6 +298,33 @@ async def setup(ctx, setupIP=None):
             colour=redstoneRed
         )
         await ctx.send(embed=page)
+
+
+# reset command - resets setup
+@client.command()
+async def reset(ctx):
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        return None
+    else:
+        serverID = result
+
+        # getting Discord guild ('server') ID
+        guildID = str(ctx.guild.id)
+
+        # getting Discord guild ('server') Name
+        guildName = str(ctx.guild.name)
+
+        # deleting this guild's entry in the DB
+        deleteEntry(guildID)
+
+        message = ''
+        message += 'Successfully unlinked **' + guildName + '** from PloudOS. '
+        message += 'Use `!redstone setup` to link to a new PloudOS server.'
+
+        await ctx.send(message)
 
 
 
