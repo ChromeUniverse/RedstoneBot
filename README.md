@@ -6,17 +6,14 @@ This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs
 
 Built (mostly) for educational purposes.
 
+_Want to add this bot to your Discord server?_ [Now you can!](https://discord.com/api/oauth2/authorize?client_id=769761270269476887&permissions=8&scope=bot) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
+
+_Want to create you own clone of this bot?_ Head over to the `USAGE` section below.
+
 ## Gallery
 
 ![image](https://i.postimg.cc/vm24YCqR/redstone2-1.png)
 
-## Disclaimer
-
-This bot isn't available for public use, at least not yet. It was made to be used exclusively by the SMP BR Discord.
-
-RedstoneBot is under contant development and refinement. Once it's ready for public use, this section will be updated and a public link to add this bot to your own server will be at the very top of this README.
-
-For now, if you want to use this bot in your own Discord server, you can follow the `USAGE` section below.
 
 ## Folder Structure 
 
@@ -48,48 +45,42 @@ For now, if you want to use this bot in your own Discord server, you can follow 
 ```
 
 
-## Usage
+## Usage (Ubuntu Linux)
 
-**WARNING: DEPRECATED AS OF JAN. '21**
+Follow these steps to create a clone of RedstoneBot.
 
-* Install and set up dependencies: (Ubuntu Linux shown below)
-  * discord.py:
+**0. Register your bot app in the [Discord Developers Portal](https://discord.com/developers/applications)** 
 
-  ```
-  python3 -m pip install -U discord.py
-  ```
+**1. Make sure you have Python 3 and Pip installed on your machine**
 
-  * Selenium for Python:
+`python3 --version`
 
-  ```
-  python3 -m pip install selenium
-  ```
+`pip3 --version`
 
-  * Chromium web browser:
+If you don't, install them:
 
-  ```
-  sudo apt install chromium-browser
-  ```
+`sudo apt update`
 
-  * Chrome webdriver (v87 shown below, check your version):
+`sudo apt install python3`
 
-  ```
-  wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
-  ```
-  * Unzip `chromedriver.zip`:
+`sudo apt install pip3`
 
-  ```
-  sudo apt install unzip
-  unzip chromedriver.zip
-  ```
+**2. Clone this repo**
 
-  * Copy PATH to `chromedriver` and paste in `bot.py`:
+`git clone https://github.com/ChromeUniverse/RedstoneBot.git`
 
-  ```
-  PATH = "path/to/webdriver/goes/here/chromedriver"
-  ```
+**3. Install and set up dependencies with Pip**
+  
+`pip3 install -r requirements.txt`
 
-* Edit your credentials in `bot.py`:
+**5. Change directory**
+
+`cd RedstoneBot/code/`
+
+**6. Edit your credentials in `credentials.py`**
+
+`nano credentials.py`
+
 ```
 # Change these placeholders with your actual PloudOS credentials
 username = "ChromeUniverse"
@@ -99,7 +90,10 @@ password = "12345678"
 token = 'abcdefgh_12345678'
 ```
 
-* After you registered your bot in the [Discord Developers Portal](https://discord.com/developers/applications) and added it to your server, run `bot.py`.
+**7. Run the Bash script with `nohup`**
+
+`nohup bash script.sh`
+
 
 ## Progress
 
