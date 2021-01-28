@@ -4,11 +4,13 @@ A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https:/
 
 This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
 
-Built (mostly) for educational purposes.
-
-_Want to add this bot to your Discord server?_ [Now you can!](https://discord.com/api/oauth2/authorize?client_id=769761270269476887&permissions=8&scope=bot) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
+_Want to add this bot to your Discord server?_ [Now you can!](https://chromeuniverse.github.io/RedstoneBot/manual) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
 
 _Want to create you own clone of this bot?_ Head over to the `USAGE` section below.
+
+More non-technical info available at [RedstoneBot's official website](https://chromeuniverse.github.io/RedstoneBot/).
+
+Note: This bot was built for educational purposes.
 
 ## Gallery
 
