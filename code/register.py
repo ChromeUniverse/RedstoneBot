@@ -52,7 +52,7 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
                         content = ''
                         content += "This IP wasn't found in Redstone's server list.\n\n"
                         content += 'Make sure that Redstone has permissions to open and close this server.\n\n'
-                        content += 'Learn more here: https://example.com\n\n'
+                        content += 'Learn more here: https://chromeuniverse.github.io/RedstoneBot/manual.html\n\n'
                         content += '**Please try again.**'
 
                         return title, content
