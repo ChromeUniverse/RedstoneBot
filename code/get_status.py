@@ -13,7 +13,7 @@ async def get_status(session, serverID):
     r_status = await session.get(api_endpoint)
 
     data = await r_status.text()
-    
+
     # check if we got some nonsense HTMl or a JSON
     if data[2] == '<':
         # very hacky solution, I know, I know :-\
@@ -22,7 +22,7 @@ async def get_status(session, serverID):
         print("Tried to access API, got nonsense HTML. *sigh*")
 
         # according to statusCheatSheet
-        status = 9
+        status = 10
 
         title = "Something went wrong. This ain't good."
 
