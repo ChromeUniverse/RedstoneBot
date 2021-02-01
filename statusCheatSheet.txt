@@ -1,12 +1,13 @@
 Quick reference for PloudOS server status code
 
-0 -> offline
-1 -> stopped execution
-2 -> up and running
-3 -> starting up
-4 -> running setup
-5 -> closing
-6 -> in queue
-7 -> waiting for accept
-8 -> preparing server reallocation
-9 -> maintenance mode
+ 0 -> offline
+ 1 -> stopped execution
+ 2 -> online
+ 3 -> starting up
+ 4 -> running setup
+ 5 -> closing (defunct)
+ 6 -> in queue
+ 7 -> waiting for accept
+ 8 -> preparing server reallocation
+ 9 -> generating world
+10 -> maintenance mode
