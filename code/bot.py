@@ -313,7 +313,7 @@ async def setup(ctx, setupIP=None):
     # getting Discord guild ('server') name
     guildName = str(ctx.guild.name)
     # checking if member is a guild admin
-    is_admin = ctx.author.guild_permissions.administrator
+    is_admin = check_admin(ctx)
 
     # run registration
     title, content = await register(ctx, session, guildID, guildName, is_admin, setupIP)
@@ -344,7 +344,7 @@ async def reset(ctx):
         # getting Discord guild ('server') name
         guildName = str(ctx.guild.name)
         # checking if member is a guild admin
-        is_admin = ctx.author.guild_permissions.administrator
+        is_admin = check_admin(ctx)
 
         message = await unregister(guildID, guildName, is_admin)
 
