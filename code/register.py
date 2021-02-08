@@ -67,5 +67,5 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
             return None, None
     else:
         # user doesn't have guild admin permission
-        await ctx.send('Only users with admin permissions can use this command.')
+        await ctx.send('Only members with the `Redstone Admin` role can use this command.')
         return None, None
