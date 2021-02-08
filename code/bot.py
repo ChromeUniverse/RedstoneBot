@@ -16,6 +16,12 @@ from register import register
 from leave_queue import leave_queue
 from unregister import unregister
 
+# member role functions
+from role_functions import (
+    check_user,
+    check_admin,
+)
+
 # database functions
 from db_functions import (
     link,
@@ -104,6 +110,7 @@ async def status(ctx):
 
     # get server ID
     result = get_serverID(str(ctx.guild.id))
+
     if result == False:
         await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
         return None
@@ -165,6 +172,11 @@ async def start(ctx, arg=None):
     # get discord guildID
     guildID = str(ctx.guild.id)
 
+    # checking if member is a Redstone User
+    if check_user(ctx) == False:
+        await ctx.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
+        return None
+
     # get server ID
     result = get_serverID(guildID)
     if result == False:
@@ -215,6 +227,11 @@ async def exit(ctx):
     global session_list
     session = session_list[0]
 
+    # check if member is a Redstone/guild admin
+    if check_admin(ctx) == False:
+        await ctx.send("Only members with the `Redstone Admin` role can use this command.\nThis is due to the fact that players sometimes have to wait *hours* before their server gets to the top of the PloudOS activation queue.")
+        return None
+
     # get server ID
     result = get_serverID(str(ctx.guild.id))
     if result == False:
@@ -237,6 +254,11 @@ async def stop(ctx):
     global session_list
     session = session_list[0]
 
+    # checking if member is a Redstone User
+    if check_user(ctx) == False:
+        await ctx.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
+        return None
+
     # get server ID
     result = get_serverID(str(ctx.guild.id))
     if result == False:
@@ -245,8 +267,8 @@ async def stop(ctx):
     else:
         serverID = result
 
-        await ctx.send('Closing server... please wait.')
-        message = await deactivate(session, serverID)
+        # check if there are people online, if member has admin, stop the server
+        message = await deactivate(session, serverID, ctx)
         await ctx.send(message)
 
 
@@ -258,6 +280,11 @@ async def restart(ctx):
     # retrieving aiohttp ClientSession
     global session_list
     session = session_list[0]
+
+    # checking if member is a Redstone User
+    if check_user(ctx) == False:
+        await ctx.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
+        return None
 
     # get server ID
     result = get_serverID(str(ctx.guild.id))
