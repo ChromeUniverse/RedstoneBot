@@ -188,12 +188,10 @@ async def start(ctx, arg=None):
         # checking for valid argument
         if arg == '1':
             message = 'Nuremberg selected.'
-        elif arg == '2':
-            message = 'St. Louis selected.'
         else:
             message = ''
             message += 'Invalid location. The syntax for this command is:'
-            message += '```!redstone start [location]\n\n[location] = 1 🠖 Nuremberg, Germany\n[location] = 2 🠖 St. Louis, USA```'
+            message += '```!redstone start [location]\n\n[location] = 1 🠖 Nuremberg, Germany```'
 
             await ctx.send(message)
             return None
