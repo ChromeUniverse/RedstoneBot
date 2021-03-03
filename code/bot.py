@@ -131,9 +131,9 @@ async def status(ctx):
 
 
 
-# queueTime command- displays queue waiting times
+# time command- displays queue waiting times
 @client.command()
-async def queueTime(ctx):
+async def time(ctx):
     # retrieving aiohttp ClientSession
     global session_list
     session = session_list[0]
