@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from format_queuetime import format_queuetime
 
 async def get_times(session, serverID):
-    # buuilding queue waiting time URL
+    # building queue waiting time URL
     location_url = 'https://ploudos.com/manage/s' + serverID + '/ajax2/location'
 
     # Requesting data to internal  API
@@ -30,8 +30,6 @@ async def get_times(session, serverID):
 
         # Nuremberg
 
-        print("Here's the nuremberg_time:")
-
         things = soup.div.div.a.b.i.text
 
         timestr = []
@@ -45,26 +43,9 @@ async def get_times(session, serverID):
                 break
 
         nuremberg_time = ''.join(timestr)
+
+        print("Here's the nuremberg_time:")
         print(nuremberg_time)
 
-        # St. Louis
-
-        print("Here's the stlouis_time:")
-
-        things = soup.div.div.i.i.i.div.div.a.text
-
-        timestr = []
-        i = 125
-        while True:
-            newchar = things[i]
-            if newchar != ' ':
-                timestr.append(newchar)
-                i += 1
-            else:
-                break
-
-        stlouis_time = ''.join(timestr)
-        print(stlouis_time)
-
-        title, content = format_queuetime(nuremberg_time, stlouis_time)
+        title, content = format_queuetime(nuremberg_time)
         return title, content
