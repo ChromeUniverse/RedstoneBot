@@ -62,22 +62,3 @@ else:
 
     nuremberg_time = ''.join(timestr)
     print(nuremberg_time)
-
-    # St. Louis
-
-    print("Here's the stlouis_time:")
-
-    things = soup.div.div.i.i.i.div.div.a.text
-
-    timestr = []
-    i = 125
-    while True:
-        newchar = things[i]
-        if newchar != ' ':
-            timestr.append(newchar)
-            i += 1
-        else:
-            break
-
-    stlouis_time = ''.join(timestr)
-    print(stlouis_time)
