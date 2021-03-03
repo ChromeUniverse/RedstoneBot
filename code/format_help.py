@@ -21,7 +21,7 @@ def format_help():
 
     content += '`!redstone start [location]`\n\n'
     content += 'Puts your server in the activation queue.\n\n'
-    content += 'Specify the server location with `[1]` (Nuremberg) or `[2]` (St. Louis).\n\n'
+    content += 'Specify the server location with `[1]` (Nuremberg).\n\n'
     content += 'You only need to run this once: it automatically sends user confirmation when you reach the top spot of the queue.\n\n'
 
     content += '`!redstone exit`\n\n'
