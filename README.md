@@ -123,20 +123,15 @@ token = 'abcdefgh_12345678'
 
 ## To-do List
 
-* Add instructions on how to add RedstoneBot to other servers
 * In `bot.py`:
   * Refine some stuff here and there - mostly Async code and auto-confirm
     * Async JSON parsing?
     * Async CSV/Database reading/writing?
   * Add multiple activation loops - one per Discord guild
 * Switch databases from CSV to SQLite3 (would this make sense?)
-* Scalability
-* Improve code robustness
 * Add a log file
 * Commands to add:
   * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
-  * `!redstone reset` - resets setup and clears database entry for the Discord guild
-* Prepare a Release to deploy *RedstoneBot* to AWS Lightsail
 
 
 ## License
