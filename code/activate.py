@@ -83,16 +83,14 @@ async def activate(ctx, session, serverID, arg, guildID):
             print('json decoded')
 
             if not data["error"]:
-                print('No errors')
-                message = 'Confirmation successful! Server is starting up. Check status with `!redstone status`.'
+                print('Confirmation successful! Server is starting up')            
             else:
                 print('oppsie poopsie!')
                 message = 'Something went wrong! Please try again.'
-                return False
+                # sending message
                 await ctx.send(message)
+                return False                
                 break
-            # sending message
-            await ctx.send(message)
 
         # if online
         elif status == 2:
