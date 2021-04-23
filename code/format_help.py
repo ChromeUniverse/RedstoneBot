@@ -16,6 +16,9 @@ def format_help():
     content += 'Displays current server status: "Online", "In queue", "Starting up", etc.\n\n'
     content += 'Also shows additional info about server resources, number of online players, and more.\n\n'
 
+    content += '`!redstone list`\n\n'
+    content += 'Shows a list of online players.\n\n'
+
     content += '`!redstone time`\n\n'
     content += 'Shows server locations and queue waiting times.\n\n'
 
