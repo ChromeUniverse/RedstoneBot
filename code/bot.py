@@ -15,6 +15,7 @@ from reactivate import reactivate
 from register import register
 from leave_queue import leave_queue
 from unregister import unregister
+from get_list import get_list
 
 # member role functions
 from role_functions import (
@@ -47,7 +48,7 @@ from credentials import (
 
 
 # command prefix
-client = commands.Bot(command_prefix = '!redstone ')
+client = commands.Bot(command_prefix = '!test ')
 
 # Redstone dust reddish color for Rich Embeds
 redstoneRed = discord.Colour.from_rgb(221,55,55)
@@ -128,7 +129,27 @@ async def status(ctx):
         await ctx.send(embed=page)
 
 
+# list command - shows list of online players
+@client.command(name='list')
+async def _list(ctx):
+    # retrieving aiohttp ClientSession
+    global session_list
+    session = session_list[0]
 
+    # get server ID
+    result = get_serverID(str(ctx.guild.id))
+    if result == False:
+        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        return None
+    else:
+      serverID = result
+
+      # get online player list
+      message = await get_list(session, serverID, ctx)      
+
+      if message != '':
+        await(ctx.send(message))
+      
 
 
 # time command- displays queue waiting times
