@@ -14,7 +14,7 @@ async def deactivate(session, serverID, ctx):
     # getting status
     status, title, content = await get_status(session, serverID)
 
-    # only run activation when the server is ONLINE
+    # only run deactivation when the server is ONLINE
     if status == 2:
 
         # get the number of players connected to the server

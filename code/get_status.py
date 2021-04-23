@@ -24,7 +24,7 @@ async def get_status(session, serverID):
         # according to statusCheatSheet
         status = 10
 
-        title = "Something went wrong. This ain't good."
+        title = "Something went wrong. That ain't good."
 
         content = ''
         content += "Either PloudOS is in maintenance mode or Redstone is broken.\n\n "
