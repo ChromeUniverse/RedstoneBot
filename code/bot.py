@@ -48,7 +48,7 @@ from credentials import (
 
 
 # command prefix
-client = commands.Bot(command_prefix = '!test ')
+client = commands.Bot(command_prefix = '!redstone ')
 
 # Redstone dust reddish color for Rich Embeds
 redstoneRed = discord.Colour.from_rgb(221,55,55)
