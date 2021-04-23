@@ -2,10 +2,14 @@ import discord
 
 # format online player list rich embed
 
-async def format_list(players, ctx):
+from server_name import server_name
+
+async def format_list(players, ctx, session, serverID):
+
+  name = await server_name(session, serverID)
 
   title = 'Online players'
-  content = 'There are **' + str(len(players)) + '** players online on **' + str(ctx.guild.name) + '** right now.\n\n'
+  content = 'There are **' + str(len(players)) + '** players online on **' + name + '** right now.\n\n'
 
   if len(players) != 0:
     for player in players:

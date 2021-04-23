@@ -10,7 +10,6 @@ from get_status import get_status
 async def get_list(session, serverID, ctx):
   # getting status
   status, title, content = await get_status(session, serverID)
-  print(status)
 
   # only attempt to get list when the server is ONLINE
   if status == 2:
@@ -43,8 +42,14 @@ async def get_list(session, serverID, ctx):
     # creating player list
     
     players = []
-    for i in range(12, len(words)):
+    for i in range(len(words)-1, 0, -1):
       player = words[i]
+
+      # found last word before player list
+      if 'online' in player:
+        break
+      
+      # parsing player name and pushing it to list
       if player[-1] == ',':
         player = player[:-1]
 
@@ -52,7 +57,7 @@ async def get_list(session, serverID, ctx):
 
     print(players)
     
-    await format_list(players, ctx)    
+    await format_list(players, ctx, session, serverID)    
 
     message = ''
 
