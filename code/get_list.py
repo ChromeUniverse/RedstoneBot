@@ -36,25 +36,12 @@ async def get_list(session, serverID, ctx):
       else:
         entry = line
         break
-    
-    words = entry.split(' ')
 
     # creating player list
     
-    players = []
-    for i in range(len(words)-1, 0, -1):
-      player = words[i]
-
-      # found last word before player list
-      if 'online' in player:
-        break
-      
-      # parsing player name and pushing it to list
-      if player[-1] == ',':
-        player = player[:-1]
-
-      players.append(player)
-
+    x = entry.find(':', 20)
+    substring = entry[x+2:]
+    players = substring.split(', ')
     print(players)
     
     await format_list(players, ctx, session, serverID)    
