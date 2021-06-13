@@ -1,6 +1,11 @@
-# Replace these with your actual PloudOS credentials
+# Replace these with your actual PloudOS credentials:
 username = 'username'
 password = 'password'
 
-# Enter your secret bot token here!
-token = 'bot_token_goes_here'
+# Replace this with your secret bot token:
+
+token = '1234567890abcdefghijklmn.opqrst.uvwxyzabcdefghijklmnopqrstu'
+
+# Replace this with your chosen prefix:
+
+prefix = '!'
