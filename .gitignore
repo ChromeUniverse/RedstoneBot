@@ -1,9 +1,10 @@
 code/__pycache__/
+experiments/__pycache__/
 experiments/credentials.py
 code/db.csv
 code/credentials.py
 code/deactivate.py
 code/credentials_copy.py
-code/db.csv
 experiments/credentials.py
 code/glowstone.py
+
