@@ -45,7 +45,7 @@ async def activate(ctx, session, serverID, arg, guildID):
 
             if not data["error"]:
                 print('No errors')
-                message = 'Activation sucessful! Check status with `!redstone status`.'
+                message = 'Activation successful! Check status with `!redstone status`.'
             else:
                 message = 'Something went wrong! Please try again.'
                 await ctx.channel.send(message)
