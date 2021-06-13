@@ -123,6 +123,10 @@ token = 'abcdefgh_12345678'
 
 ## To-do List
 
+* Add some CI/CD
+  * Bot testing
+  * GitHub Actions?
+  * Automatically deploy code to Lightsail VPS 
 * In `bot.py`:
   * Refine some stuff here and there - mostly Async code and auto-confirm
     * Async JSON parsing?
