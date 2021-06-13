@@ -1,10 +1,3 @@
-"""
-A functional demo of all possible test cases. This is the format you will want to use with your testing bot.
-
-    Run with:
-        python example_tests.py TARGET_NAME TESTER_TOKEN
-"""
-
 # module imports
 import asyncio
 import sys
@@ -27,7 +20,8 @@ from bot_setup import (
 from tester_setup import (
   target_id,
   tester_token,
-  channel_id
+  channel_id,
+  ploudos_ip
 )
 
 
@@ -35,10 +29,13 @@ from tester_setup import (
 
 test_collector = TestCollector()
 
+
+
 # test `ping` command 
 @test_collector()
 async def test_ping(interface):
   await interface.assert_reply_contains(prefix + " ping", "Pong!")
+
 
 # test `help` command with embed check
 @test_collector()
@@ -46,12 +43,65 @@ async def test_help(interface):
   patterns = {"title": "Help Page"}
   await interface.assert_reply_embed_regex(prefix + " help", patterns)
 
+
+# test `time` command with embed check
+@test_collector()
+async def test_time(interface):
+  patterns = {"title": "Server locations & Queue waiting times"}
+  await interface.assert_reply_embed_regex(prefix + " time", patterns)
+  
+
+
+# test status command with embed check
+@test_collector()
+async def test_status(interface):
+  patterns = {"description": "Server name:"}
+  await interface.assert_reply_embed_regex(prefix + " status", patterns)
+
+
+
 # test invalid start commands
 @test_collector()
 async def test_invalid_start(interface):
   await interface.assert_reply_contains(prefix + " start", "Invalid")
   await interface.assert_reply_contains(prefix + " start 2", "Invalid")
   await interface.assert_reply_contains(prefix + " start 69", "Invalid")
+
+
+# test valid start command
+@test_collector()
+async def test_start(interface):  
+  await interface.assert_reply_contains(prefix + " start 1", "Nuremberg")
+  await interface.get_delayed_reply(7, interface.assert_message_contains, 'Activation successful')
+
+
+
+
+# test reset command with embed check
+@test_collector()
+async def test_reset(interface):
+  await interface.assert_reply_contains(prefix + " reset", "Successfully unlinked")
+
+
+# test invalid setup commands
+@test_collector()
+async def test_invalid_setup(interface):
+  # simple replies
+  await interface.assert_reply_contains(prefix + " setup", "!redstone setup [IP address]")
+  await interface.assert_reply_contains(prefix + " setup whatever", "!redstone setup [IP address]")
+  # embed replies
+  patterns = {"title": "Incorrect server IP."}  
+  await interface.send_message(prefix + " setup justarandomIP.ploudos.me")
+  await interface.get_delayed_reply(7, interface.assert_embed_regex, patterns)
+  # await interface.assert_reply_contains(prefix + " setup justarandomIP.ploudos.me", "Running setup... please wait.")
+
+
+# test valid setup command
+@test_collector()
+async def test_setup(interface):
+  patterns = {"title": "Setup successful!"}  
+  await interface.send_message(prefix + " setup " + ploudos_ip)
+  await interface.get_delayed_reply(7, interface.assert_embed_regex, patterns)
 
 
 # Actually run the bot
