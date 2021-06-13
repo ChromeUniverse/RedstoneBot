@@ -1,3 +1,19 @@
+"""
+
+    * REDSTONEBOT - Discord Bot for PloudOS servers *
+
+Copyright (C) 2021 Lucca Rodrigues - All Rights Reserved
+
+You may use, distribute and modify this code under the terms
+of the GNU CPL v3.0 license. You should have received a copy 
+of the license with this file and accompanying source code. 
+If not, please visit:
+
+https://github.com/ChromeUniverse/RedstoneBot/
+
+"""
+
+
 # module imports
 import asyncio
 import aiohttp
@@ -387,7 +403,20 @@ async def setup(ctx):
   is_admin = check_admin(ctx)
 
   # run registration
-  setupIP = ctx.content.split()[2]
+
+  # checking for valid argument
+  try:
+    setupIP = ctx.content.split()[2]    
+  
+  except:
+    msg = ''
+    msg += 'Invalid location. The syntax for this command is:'
+    msg += '```!redstone setup [IP address]\n\n[IP address] 🠖 mycoolserver.ploudos.me```'
+
+    await ctx.channel.send(msg)
+    return
+
+  
   title, content = await register(ctx, session, guildID, guildName, is_admin, setupIP)
 
   if title != None:

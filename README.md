@@ -141,3 +141,5 @@ token = 'abcdefgh_12345678'
 ## License
 
 This open-source project is released under the GNU GPL v3.0 license. Check the `LICENSE` file for more details.
+
+© Lucca Rodrigues 2021. All rights reserved. 
