@@ -6,6 +6,11 @@ password = 'password'
 
 token = '1234567890abcdefghijklmn.opqrst.uvwxyzabcdefghijklmnopqrstu'
 
-# Replace this with your chosen prefix:
+# Replace this with your choice of bot prefix:
 
-prefix = '!'
+prefix = '!redstone'
+
+# Replace this with your choice of Rich Embed color highlight: 
+# (Note: must be an 8-bit RGB color formatted as a tuple!)
+
+embedColor = (221,55,55)
