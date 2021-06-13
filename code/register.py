@@ -19,16 +19,16 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
 
             # check that server isn't already in DB
             if guild_in_db(guildID) == True:
-                await ctx.send('**' + guildName + '** is already linked to a PloudOS server.')
+                await ctx.channel.send('**' + guildName + '** is already linked to a PloudOS server.')
                 return None, None
             else:
                 # check that IP isn't already in DB
                 if IP_in_db(setupIP) == True:
-                    await ctx.send('This server IP is already linked to another Discord server.')
+                    await ctx.channel.send('This server IP is already linked to another Discord server.')
                     return None, None
                 else:
                     # Got valid argument
-                    await ctx.send("Running setup... please wait.")
+                    await ctx.channel.send("Running setup... please wait.")
 
                     # looping through online server list to get serverID
                     return1, return2 = await serverlist(session, setupIP)
@@ -63,9 +63,9 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
             message += 'Invalid IP. The syntax for this command is:\n'
             message += '```!redstone setup [IP address]\n\n[IP address] 🠖 mycoolserver.ploudos.me```'
 
-            await ctx.send(message)
+            await ctx.channel.send(message)
             return None, None
     else:
         # user doesn't have guild admin permission
-        await ctx.send('Only members with the `Redstone Admin` role can use this command.')
+        await ctx.channel.send('Only members with the `Redstone Admin` role can use this command.')
         return None, None

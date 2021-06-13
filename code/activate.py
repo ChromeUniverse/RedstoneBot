@@ -48,11 +48,11 @@ async def activate(ctx, session, serverID, arg, guildID):
                 message = 'Activation sucessful! Check status with `!redstone status`.'
             else:
                 message = 'Something went wrong! Please try again.'
-                await ctx.send(message)
+                await ctx.channel.send(message)
                 return False
                 break
             # sending message
-            await ctx.send(message)
+            await ctx.channel.send(message)
 
         # need to include sent_once = True / False here
         # for status == 3 and status == 4
@@ -61,8 +61,6 @@ async def activate(ctx, session, serverID, arg, guildID):
         elif status == 6:
             print("waiting in queue")
             message = title
-            # sending message
-            #await ctx.send(message)
 
         # if waiting for accept
         elif status == 7:
@@ -88,7 +86,7 @@ async def activate(ctx, session, serverID, arg, guildID):
                 print('oppsie poopsie!')
                 message = 'Something went wrong! Please try again.'
                 # sending message
-                await ctx.send(message)
+                await ctx.channel.send(message)
                 return False                
                 break
 
@@ -103,7 +101,7 @@ async def activate(ctx, session, serverID, arg, guildID):
                 message = 'Server is up and running!'
 
             # sending message
-            await ctx.send(message)
+            await ctx.channel.send(message)
             # breaking the loop
             return False
             break

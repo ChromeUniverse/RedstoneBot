@@ -7,7 +7,7 @@ from format_list import format_list
 
 from get_status import get_status
 
-async def get_list(session, serverID, ctx):
+async def get_list(session, serverID, message):
   # getting status
   status, title, content = await get_status(session, serverID)
 
@@ -44,7 +44,7 @@ async def get_list(session, serverID, ctx):
     players = substring.split(', ')
     print(players)
     
-    await format_list(players, ctx, session, serverID)    
+    await format_list(players, message, session, serverID)    
 
     message = ''
 

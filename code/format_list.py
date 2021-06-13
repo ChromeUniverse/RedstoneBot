@@ -4,7 +4,7 @@ import discord
 
 from server_name import server_name
 
-async def format_list(players, ctx, session, serverID):
+async def format_list(players, message, session, serverID):
 
   name = await server_name(session, serverID)
 
@@ -23,6 +23,6 @@ async def format_list(players, ctx, session, serverID):
       description=content,
       colour=discord.Colour.from_rgb(221,55,55)
   )
-  await ctx.send(embed=page)
+  await message.channel.send(embed=page)
 
   return page

@@ -17,152 +17,207 @@ from leave_queue import leave_queue
 from unregister import unregister
 from get_list import get_list
 
-# member role functions
+# server member role functions
 from role_functions import (
-    check_user,
-    check_admin,
+  check_user,
+  check_admin,
 )
 
 # database functions
 from db_functions import (
-    link,
-    guild_in_db,
-    IP_in_db,
-    get_serverID,
-    get_looping,
-    update_looping,
-    deleteEntry,
+  link,
+  guild_in_db,
+  IP_in_db,
+  get_serverID,
+  get_looping,
+  update_looping,
+  deleteEntry,
 )
 
 # credentials
-from credentials import (
-    username,
-    password,
-    token,
+from bot_setup import (
+  username,
+  password,
+  token,
+  prefix,
+  embedColor
 )
 
+
+
+
 # -----------------------------------------------------------------
-# Discord setup
+# Discord bot setup
 # -----------------------------------------------------------------
 
 
 
-# command prefix
-client = commands.Bot(command_prefix = '!redstone ')
 
-# Redstone dust reddish color for Rich Embeds
-redstoneRed = discord.Colour.from_rgb(221,55,55)
-
-# removing default Help command
-client.remove_command('help')
+# Create Discord bot client 
+client = discord.Client()
 
 # bot startup
 @client.event
 async def on_ready():
-    # retrieving aiohttp ClientSession
-    global session_list
-    session = session_list[0]
 
-    # logging in to ploudos.com
-    login_status_code = await login(username, password, session)
-    print('\nLogin status code: ' + str(login_status_code))
+  # retrieving aiohttp ClientSession
+  global session_list
+  session = session_list[0]
 
-    print('Bot is ready to roll!\n')
+  # logging in to ploudos.com
+  login_status_code = await login(username, password, session)
+  print('\nLogin status code: ' + str(login_status_code))
+
+  print('Bot is ready to roll!\n')
+
+
 
 
 
 # -----------------------------------------------------------------
-# Discord commands
+# Discord commands handling
 # -----------------------------------------------------------------
 
 
-# help command - shows useful help page w/ commands + other things
-@client.command()
-async def help(ctx):
 
-    title, content = format_help()
-    # format and send rich embed
-    page=discord.Embed(
+@client.event
+async def on_message(message):
+  if message.author == client.user:
+    return
+
+  # split message contents, get arguments
+
+  args = message.content.split()
+
+  if args[0] == prefix:
+
+    # ping command
+    if args[1] == 'ping':
+        await message.channel.send(f'Pong! :ping_pong: Connection latency is {round(client.latency * 1000)}ms')
+
+    # help command
+    if args[1] == 'help':
+
+      title, content = format_help()
+      # format and send rich embed
+      page=discord.Embed(
         title=title,
         description=content,
-        colour=redstoneRed
-    )
-    await ctx.send(embed=page)
+        colour=embedColor
+      )
+
+      await message.channel.send(embed=page)
+
+    # status command 
+    if args[1] == 'status':
+      await status(message)
+
+    # list command 
+    if args[1] == 'list':
+      await _list(message)
+
+    # time command 
+    if args[1] == 'time':
+      await time(message)
+
+    # start command 
+    if args[1] == 'start':
+      await start(message)
+
+    # exit command 
+    if args[1] == 'exit':
+      await _exit(message)
+
+    # stop command 
+    if args[1] == 'stop':
+      await stop(message)
+
+    # restart command 
+    if args[1] == 'restart':
+      await restart(message)
+
+    # setup command 
+    if args[1] == 'setup':
+      await setup(message)
+
+    # reset command 
+    if args[1] == 'reset':
+      await reset(message)
+  
 
 
 
 
-
-# ping command - replies with "Pong!" + connection latency in miliseconds
-@client.command()
-async def ping(ctx):
-    await ctx.send(f'Pong! :ping_pong: Connection latency is {round(client.latency * 1000)}ms')
-
+# -----------------------------------------------------------------
+# Discord command functions
+# -----------------------------------------------------------------
 
 
 
 
 # status command - displays server status
-@client.command()
-async def status(ctx):
-    # retrieving aiohttp ClientSession
-    global session_list
-    session = session_list[0]
+async def status(message):
+  # retrieving aiohttp ClientSession
+  global session_list
+  session = session_list[0]
 
-    # get server ID
-    result = get_serverID(str(ctx.guild.id))
+  # get server ID
+  result = get_serverID(str(message.guild.id))
 
-    if result == False:
-        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
-        return None
-    else:
-        serverID = result
+  if result == False:
+    await message.channel.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+    return 
+  else:
+    serverID = result
 
-        # get server status
-        status, title, content = await get_status(session, serverID)
+    # get server status
+    status, title, content = await get_status(session, serverID)
 
-        page=discord.Embed(
-            title=title,
-            description=content,
-            colour=redstoneRed
-        )
-        await ctx.send(embed=page)
+    page=discord.Embed(
+        title=title,
+        description=content,
+        colour=embedColor
+    )
+    await message.channel.send(embed=page)
+    return 
+
+
 
 
 # list command - shows list of online players
-@client.command(name='list')
-async def _list(ctx):
-    # retrieving aiohttp ClientSession
-    global session_list
-    session = session_list[0]
+async def _list(message):
+  # retrieving aiohttp ClientSession
+  global session_list
+  session = session_list[0]
 
-    # get server ID
-    result = get_serverID(str(ctx.guild.id))
-    if result == False:
-        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
-        return None
-    else:
-      serverID = result
+  # get server ID
+  result = get_serverID(str(message.guild.id))
+  if result == False:
+    await message.channel.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+    return 
+  else:
+    serverID = result
 
-      # get online player list
-      message = await get_list(session, serverID, ctx)      
+    # get online player list
+    msg = await get_list(session, serverID, message)      
 
-      if message != '':
-        await(ctx.send(message))
+    if msg != '':
+      await(message.channel.send(msg))
+
+    return
       
 
 
 # time command- displays queue waiting times
-@client.command()
-async def time(ctx):
+async def time(message):
     # retrieving aiohttp ClientSession
     global session_list
     session = session_list[0]
 
     # get server ID
-    result = get_serverID(str(ctx.guild.id))
+    result = get_serverID(str(message.guild.id))
     if result == False:
-        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+        await message.channel.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
         return None
     else:
         serverID = result
@@ -174,18 +229,15 @@ async def time(ctx):
         page=discord.Embed(
             title=title,
             description=content,
-            colour=redstoneRed
+            colour=embedColor
         )
-        await ctx.send(embed=page)
+        await message.channel.send(embed=page)
 
 
 
 
-
-
-# open command - activates the server
-@client.command()
-async def start(ctx, arg=None):
+# start command - activates the server
+async def start(ctx):
     # retrieving aiohttp ClientSession
     global session_list
     session = session_list[0]
@@ -195,7 +247,7 @@ async def start(ctx, arg=None):
 
     # checking if member is a Redstone User
     if check_user(ctx) == False:
-        await ctx.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
+        await ctx.channel.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
         return None
 
     # get server ID
@@ -207,18 +259,23 @@ async def start(ctx, arg=None):
         serverID = result
 
         # checking for valid argument
-        if arg == '1':
-            message = 'Nuremberg selected.'
-        else:
-            message = ''
-            message += 'Invalid location. The syntax for this command is:'
-            message += '```!redstone start [location]\n\n[location] = 1 🠖 Nuremberg, Germany```'
+        try:
+          arg = ctx.content.split()[2]
+          if arg == '1':
+            msg = 'Nuremberg selected.'
+          else:
+            raise Exception("Not a valid location!")
+        
+        except:
+          msg = ''
+          msg += 'Invalid location. The syntax for this command is:'
+          msg += '```!redstone start [location]\n\n[location] = 1 🠖 Nuremberg, Germany```'
 
-            await ctx.send(message)
-            return None
+          await ctx.channel.send(msg)
+          return
 
         # message
-        await ctx.send(message + ' Activating server... please wait.')
+        await ctx.channel.send(msg + ' Activating server... please wait.')
 
         # get looping status for this Guild
         looping = get_looping(guildID)
@@ -233,99 +290,124 @@ async def start(ctx, arg=None):
             looping = await activate(ctx, session, serverID, arg, guildID)
             update_looping(guildID, looping)
         else:
-            await ctx.send('Activation already in progress!')
+            await ctx.channel.send('Activation already in progress!')
 
 
 # exit command - leaves the queue
-@client.command()
-async def exit(ctx):
-    # getting the guildID
-    guildID = str(ctx.guild.id)
+async def _exit(ctx):
+  # getting the guildID
+  guildID = str(ctx.guild.id)
 
-    # retrieving aiohttp ClientSession
-    global session_list
-    session = session_list[0]
+  # retrieving aiohttp ClientSession
+  global session_list
+  session = session_list[0]
 
-    # check if member is a Redstone/guild admin
-    if check_admin(ctx) == False:
-        await ctx.send("Only members with the `Redstone Admin` role can use this command.\nThis is due to the fact that players sometimes have to wait *hours* before their server gets to the top of the PloudOS activation queue.")
-        return None
+  # check if member is a Redstone/guild admin
+  if check_admin(ctx) == False:
+    await ctx.channel.send("Only members with the `Redstone Admin` role can use this command.\nThis is due to the fact that players sometimes have to wait *hours* before their server gets to the top of the PloudOS activation queue.")
+    return None
 
-    # get server ID
-    result = get_serverID(str(ctx.guild.id))
-    if result == False:
-        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
-        return None
-    else:
-        serverID = result
+  # get server ID
+  result = get_serverID(str(ctx.guild.id))
+  if result == False:
+    await ctx.channel.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+    return None
+  else:
+    serverID = result
 
-        await ctx.send('Exiting queue... please wait.')
-        message = await leave_queue(session, serverID, guildID)
-        await ctx.send(message)
-
+    await ctx.channel.send('Exiting queue... please wait.')
+    message = await leave_queue(session, serverID, guildID)
+    await ctx.channel.send(message)
 
 
 
-# close command - deactivates the server
-@client.command()
+# stop command - deactivates the server
 async def stop(ctx):
-    # retrieving aiohttp ClientSession
-    global session_list
-    session = session_list[0]
+  # retrieving aiohttp ClientSession
+  global session_list
+  session = session_list[0]
 
-    # checking if member is a Redstone User
-    if check_user(ctx) == False:
-        await ctx.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
-        return None
+  # checking if member is a Redstone User
+  if check_user(ctx) == False:
+    await ctx.channel.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
+    return None
 
-    # get server ID
-    result = get_serverID(str(ctx.guild.id))
-    if result == False:
-        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
-        return None
-    else:
-        serverID = result
+  # get server ID
+  result = get_serverID(str(ctx.guild.id))
+  if result == False:
+    await ctx.channel.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+    return None
+  else:
+    serverID = result
 
-        # check if there are people online, if member has admin, stop the server
-        message = await deactivate(session, serverID, ctx)
-        await ctx.send(message)
-
-
+    # check if there are people online, if member has admin, stop the server
+    message = await deactivate(session, serverID, ctx)
+    await ctx.channel.send(message)
 
 
-# start command - reactivates the server
-@client.command()
+
+# restart command - reactivates the server
 async def restart(ctx):
-    # retrieving aiohttp ClientSession
-    global session_list
-    session = session_list[0]
+  # retrieving aiohttp ClientSession
+  global session_list
+  session = session_list[0]
 
-    # checking if member is a Redstone User
-    if check_user(ctx) == False:
-        await ctx.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
-        return None
+  # checking if member is a Redstone User
+  if check_user(ctx) == False:
+    await ctx.channel.send("Only designated Redstone Users can use this command.\nPlease ask your Discord server admin to give you the `Redstone User` role.")
+    return None
 
-    # get server ID
-    result = get_serverID(str(ctx.guild.id))
-    if result == False:
-        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
-        return None
-    else:
-        serverID = result
+  # get server ID
+  result = get_serverID(str(ctx.guild.id))
+  if result == False:
+    await ctx.channel.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+    return None
+  else:
+    serverID = result
 
-        await ctx.send('Reactivating server... please wait.')
-        message = await reactivate(session, serverID)
-        await ctx.send(message)
-
+    await ctx.channel.send('Reactivating server... please wait.')
+    message = await reactivate(session, serverID)
+    await ctx.channel.send(message)
 
 
 
 # links Discord server and PloudOS server
-@client.command()
-async def setup(ctx, setupIP=None):
-    # retrieving aiohttp ClientSession
-    global session_list
-    session = session_list[0]
+async def setup(ctx):
+  # retrieving aiohttp ClientSession
+  global session_list
+  session = session_list[0]
+
+  # getting Discord guild ('server') ID
+  guildID = str(ctx.guild.id)
+  # getting Discord guild ('server') name
+  guildName = str(ctx.guild.name)
+  # checking if member is a guild admin
+  is_admin = check_admin(ctx)
+
+  # run registration
+  setupIP = ctx.content.split()[2]
+  title, content = await register(ctx, session, guildID, guildName, is_admin, setupIP)
+
+  if title != None:
+    # format and send rich embed
+    page=discord.Embed(
+      title=title,
+      description=content,
+      colour=embedColor
+    )
+    await ctx.channel.send(embed=page)
+
+
+
+# reset command - resets setup
+async def reset(ctx):
+  # get server ID
+  result = get_serverID(str(ctx.guild.id))
+  if result == False:
+    await ctx.channel.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
+    return None
+  else:
+    serverID = result
 
     # getting Discord guild ('server') ID
     guildID = str(ctx.guild.id)
@@ -334,40 +416,9 @@ async def setup(ctx, setupIP=None):
     # checking if member is a guild admin
     is_admin = check_admin(ctx)
 
-    # run registration
-    title, content = await register(ctx, session, guildID, guildName, is_admin, setupIP)
+    message = await unregister(guildID, guildName, is_admin)
 
-    if title != None:
-        # format and send rich embed
-        page=discord.Embed(
-            title=title,
-            description=content,
-            colour=redstoneRed
-        )
-        await ctx.send(embed=page)
-
-
-# reset command - resets setup
-@client.command()
-async def reset(ctx):
-    # get server ID
-    result = get_serverID(str(ctx.guild.id))
-    if result == False:
-        await ctx.send("This Discord server isn't linked to PloudOS yet. Use `!redstone setup [serverip]`.")
-        return None
-    else:
-        serverID = result
-
-        # getting Discord guild ('server') ID
-        guildID = str(ctx.guild.id)
-        # getting Discord guild ('server') name
-        guildName = str(ctx.guild.name)
-        # checking if member is a guild admin
-        is_admin = check_admin(ctx)
-
-        message = await unregister(guildID, guildName, is_admin)
-
-        await ctx.send(message)
+    await ctx.channel.send(message)
 
 
 
@@ -376,11 +427,11 @@ async def reset(ctx):
 # -----------------------------------------------------------------
 
 async def create_session(sess_list):
-    # creates new aiohttp ClientSession
-    new_sess = aiohttp.ClientSession()
-    # adds new session to session list
-    sess_list.append(new_sess)
-    return new_sess
+  # creates new aiohttp ClientSession
+  new_sess = aiohttp.ClientSession()
+  # adds new session to session list
+  sess_list.append(new_sess)
+  return new_sess
 
 # storing aiohttp ClientSession in a list to make persistent sessions
 # basically accessing a global variable
@@ -388,10 +439,10 @@ session_list = []
 
 # main aynsc coroutine
 async def main():
-    # create new persistent aiohttp session
-    session = await create_session(session_list)
-    # client login + connect with token
-    await client.start(token)
+  # create new persistent aiohttp session
+  session = await create_session(session_list)
+  # client login + connect with token
+  await client.start(token)
 
 # running asyncio event loop
 loop = asyncio.get_event_loop()

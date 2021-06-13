@@ -34,7 +34,7 @@ async def deactivate(session, serverID, ctx):
         # OR if:
         # the member is Redstone/Guild admin...
         # then just keep going!
-        await ctx.send('Closing server... please wait.')
+        await ctx.channel.send('Closing server... please wait.')
 
         # building stop url
         stop_url = 'https://ploudos.com/manage/s' + serverID + '/ajax2/stop'
