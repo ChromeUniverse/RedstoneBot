@@ -52,9 +52,11 @@ from bot_setup import (
 
 
 
-
 # Create Discord bot client 
 client = discord.Client()
+
+# Create color for Rich Embeds
+embedColor = discord.Colour.from_rgb(embedColor[0], embedColor[1], embedColor[2])
 
 # bot startup
 @client.event
