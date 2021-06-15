@@ -49,6 +49,8 @@ Note: This bot was built for educational purposes.
 
 ## Usage (Ubuntu Linux)
 
+### DEPRECATED
+
 Follow these steps to create a clone of RedstoneBot.
 
 **0. Register your bot app in the [Discord Developers Portal](https://discord.com/developers/applications)** 
