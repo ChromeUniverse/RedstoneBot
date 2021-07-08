@@ -1,0 +1,72 @@
+#
+# This is a GitHub Actions workflow for building, testing and deploying RedstoneBot.
+#
+# Author: Lucca Rodrigues
+#
+
+name: RedstoneBot CI/CD
+
+on: [push]
+
+jobs:
+
+  # main job
+  build-test-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      # check out code
+      - uses: actions/checkout@v2
+
+      # install Python 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+        
+      # install PyPI libraries
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # run intergration testing with distest
+      - name: Run tests 
+
+        # get tester bot token and test server address from repo secrets        
+        # store them in environment variables
+        env:        
+          TESTER_TOKEN: ${{ secrets.TESTER_TOKEN }}
+          PLOUDOS_IP: ${{ secrets.PLOUDOS_IP }}
+
+        # run testing script
+        run: |
+          python3 ./code/tester.py $TESTER_TOKEN $PLOUDOS_IP
+
+      # Creating SSH private key
+    - name: Create SSH identity file
+
+      # Get BASE64-encoded private key stored in repo secret
+      env:        
+        DEPLOYMENTKEY: ${{ secrets.DEPLOYKEY }}
+
+      # Decode with BASE64, change permissions with chmod        
+      run: | 
+        echo "$DEPLOYMENTKEY" | base64 --decode  >deployment.key
+        chmod 400 deployment.key
+
+    # Rsync over SSH
+    - name: Sync files with AWS Lightsail      
+
+      # Login with deployment.key
+      run: |
+        # tranfer files 
+        rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64: /home/ubuntu/RedstoneBot
+        # restart bot
+        ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 "pm2 restart bot"
+     
+
+
+
