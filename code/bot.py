@@ -18,7 +18,7 @@ https://github.com/ChromeUniverse/RedstoneBot/
 import asyncio
 import aiohttp
 import discord
-from discord.ext import commands
+import os
 
 # function imports from files
 from login import login
@@ -50,16 +50,11 @@ from db_functions import (
   deleteEntry,
 )
 
-# credentials
-from bot_setup import (
-  username,
-  password,
-  token,
-  prefix,
-  embedColor
-)
-
-
+# fetching environment variables
+prefix   = os.environ.get('BOT_PREFIX')
+token    = os.environ.get('BOT_TOKEN')
+username = os.environ.get('PLOUDOS_USERNAME')
+password = os.environ.get('PLOUDOS_PASSWORD')
 
 
 # -----------------------------------------------------------------
@@ -72,6 +67,7 @@ from bot_setup import (
 client = discord.Client()
 
 # Create color for Rich Embeds
+embedColor = (221,55,55)
 embedColor = discord.Colour.from_rgb(embedColor[0], embedColor[1], embedColor[2])
 
 # bot startup
