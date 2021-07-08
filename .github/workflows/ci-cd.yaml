@@ -63,7 +63,7 @@ jobs:
         # Login with deployment.key
         run: |
           # tranfer files 
-          rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64: /home/ubuntu/RedstoneBot
+          rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64:home/ubuntu/RedstoneBot
           # restart bot
           ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 "pm2 restart bot"
      
