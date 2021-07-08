@@ -32,12 +32,25 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # run intergration testing with distest
+      # launch bot for testing
+      - name: Start CI bot
+        env:
+          BOT_TOKEN: ${{ secrets.CI_TOKEN }}
+          BOT_PREFIX: '!ci'         
+          PLOUDOS_USERNAME: ${{ secrets.PLOUDOS_USERNAME }}
+          PLOUDOS_PASSWORD: ${{ secrets.PLOUDOS_PASSWORD }}
+
+        # run in the background
+        run: |          
+          cd ./code/
+          nohup python3 bot.py &
+
+      # run integration testing with distest
       - name: Run tests 
 
         # get tester bot token and test server address from repo secrets        
         # store them in environment variables
-        env:        
+        env:               
           TESTER_TOKEN: ${{ secrets.TESTER_TOKEN }}
           PLOUDOS_IP: ${{ secrets.PLOUDOS_IP }}
 
@@ -60,12 +73,18 @@ jobs:
       # Rsync over SSH
       - name: Sync files with AWS Lightsail      
 
-        # Login with deployment.key
+        # tranfer files  with deployment.key and restart bot
+        run:           
+          rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64:/home/ubuntu/RedstoneBot/    
+
+      # SSH commands
+      - name: Restart bot      
+              
         run: |
-          # tranfer files 
-          rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64:home/ubuntu/RedstoneBot
-          # restart bot
-          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 "pm2 restart bot"
+          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'cd /home/ubuntu/RedstoneBot/code'
+          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'pwd'
+          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'killall python3'      
+          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'nohup bot.py &"
      
 
 
