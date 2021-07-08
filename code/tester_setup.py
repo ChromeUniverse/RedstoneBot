@@ -1,9 +1,8 @@
 # Replace this with the RedstoneBot clone's ID
-target_id = '123456789012345678'
-
-# Replace this with the tester bot's auth token
-tester_token = '1234567890abcdefghijklmn.opqrst.uvwxyzabcdefghijklmnopqrstu'
+target_id = '801905592334942248'               
 
 # Replace this with the testing channel's ID
-channel_id = '123456789012345678'
+channel_id = '853346992986128414'
+
+prefix = '!test'
              
