@@ -13,23 +13,18 @@ from discord import Embed, Member, Status
 # credentials
 from bot_setup import (
   token,
-  prefix,
-  embedColor
+  embedColor,
 )
 
 from tester_setup import (
+  prefix,
   target_id,
-  tester_token,
   channel_id,
-  ploudos_ip
 )
 
 
 # The tests themselves
-
 test_collector = TestCollector()
-
-
 
 # test `ping` command 
 @test_collector()
@@ -68,15 +63,6 @@ async def test_invalid_start(interface):
   await interface.assert_reply_contains(prefix + " start 69", "Invalid")
 
 
-# test valid start command
-@test_collector()
-async def test_start(interface):  
-  await interface.assert_reply_contains(prefix + " start 1", "Nuremberg")
-  await interface.get_delayed_reply(7, interface.assert_message_contains, 'Activation successful')
-
-
-
-
 # test reset command with embed check
 @test_collector()
 async def test_reset(interface):
@@ -92,7 +78,7 @@ async def test_invalid_setup(interface):
   # embed replies
   patterns = {"title": "Incorrect server IP."}  
   await interface.send_message(prefix + " setup justarandomIP.ploudos.me")
-  await interface.get_delayed_reply(7, interface.assert_embed_regex, patterns)
+  await interface.get_delayed_reply(10, interface.assert_embed_regex, patterns)
   # await interface.assert_reply_contains(prefix + " setup justarandomIP.ploudos.me", "Running setup... please wait.")
 
 
@@ -100,8 +86,23 @@ async def test_invalid_setup(interface):
 @test_collector()
 async def test_setup(interface):
   patterns = {"title": "Setup successful!"}  
-  await interface.send_message(prefix + " setup " + ploudos_ip)
-  await interface.get_delayed_reply(7, interface.assert_embed_regex, patterns)
+  await interface.send_message(prefix + " setup " + sys.argv[2])
+  await interface.get_delayed_reply(10, interface.assert_embed_regex, patterns)
+
+# test valid start command
+@test_collector()
+async def test_start(interface):  
+  await interface.assert_reply_contains(prefix + " start 1", "Nuremberg")
+  await interface.get_delayed_reply(10, interface.assert_message_contains, 'Activation successful')
+
+
+# test exit command
+@test_collector()
+async def test_exit(interface):  
+  await asyncio.sleep(10)
+  await interface.assert_reply_contains(prefix + " exit", "queue")
+  await interface.get_delayed_reply(15, interface.assert_message_contains, 'Successfully left the queue')
+
 
 
 # Actually run the bot
@@ -109,7 +110,7 @@ async def test_setup(interface):
 if __name__ == "__main__":  
   run_command_line_bot(    
     target      = int(target_id),
-    token       = tester_token,
+    token       = sys.argv[1],
     channel_id  = int(channel_id),
     tests       = 'all',
     stats       = True,
