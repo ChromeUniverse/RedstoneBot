@@ -81,11 +81,9 @@ jobs:
       # SSH commands
       - name: Restart bot      
 
-        run: |
-          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'cd ~/RedstoneBot/code'
-          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'pwd'
+        run: |          
           ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'killall python3'      
-          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'nohup bot.py &"
+          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'nohup python3 ~/RedstoneBot/code/bot.py &"
      
 
 
