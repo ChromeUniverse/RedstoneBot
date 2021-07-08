@@ -46,26 +46,26 @@ jobs:
           python3 ./code/tester.py $TESTER_TOKEN $PLOUDOS_IP
 
       # Creating SSH private key
-    - name: Create SSH identity file
+      - name: Create SSH identity file
 
-      # Get BASE64-encoded private key stored in repo secret
-      env:        
-        DEPLOYMENTKEY: ${{ secrets.DEPLOYKEY }}
+        # Get BASE64-encoded private key stored in repo secret
+        env:        
+          DEPLOYMENTKEY: ${{ secrets.DEPLOYKEY }}
 
-      # Decode with BASE64, change permissions with chmod        
-      run: | 
-        echo "$DEPLOYMENTKEY" | base64 --decode  >deployment.key
-        chmod 400 deployment.key
+        # Decode with BASE64, change permissions with chmod        
+        run: | 
+          echo "$DEPLOYMENTKEY" | base64 --decode  >deployment.key
+          chmod 400 deployment.key
 
-    # Rsync over SSH
-    - name: Sync files with AWS Lightsail      
+      # Rsync over SSH
+      - name: Sync files with AWS Lightsail      
 
-      # Login with deployment.key
-      run: |
-        # tranfer files 
-        rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64: /home/ubuntu/RedstoneBot
-        # restart bot
-        ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 "pm2 restart bot"
+        # Login with deployment.key
+        run: |
+          # tranfer files 
+          rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64: /home/ubuntu/RedstoneBot
+          # restart bot
+          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 "pm2 restart bot"
      
 
 
