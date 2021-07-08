@@ -1,6 +1,6 @@
 # module imports
 import asyncio
-import sys
+import os
 
 # distest function/class imports
 from distest import TestInterface
@@ -10,18 +10,13 @@ from distest import run_command_line_bot
 # Discord class imports
 from discord import Embed, Member, Status
 
-# credentials
-from bot_setup import (
-  token,
-  embedColor,
-)
-
 from tester_setup import (
   prefix,
   target_id,
   channel_id,
 )
 
+ploudos_ip = os.environ.get('PLOUDOS_IP')
 
 # The tests themselves
 test_collector = TestCollector()
@@ -86,7 +81,7 @@ async def test_invalid_setup(interface):
 @test_collector()
 async def test_setup(interface):
   patterns = {"title": "Setup successful!"}  
-  await interface.send_message(prefix + " setup " + sys.argv[2])
+  await interface.send_message(prefix + " setup " + ploudos_ip)
   await interface.get_delayed_reply(10, interface.assert_embed_regex, patterns)
 
 # test valid start command
@@ -110,7 +105,7 @@ async def test_exit(interface):
 if __name__ == "__main__":  
   run_command_line_bot(    
     target      = int(target_id),
-    token       = sys.argv[1],
+    token       = os.environ.get('TESTER_TOKEN'),
     channel_id  = int(channel_id),
     tests       = 'all',
     stats       = True,
