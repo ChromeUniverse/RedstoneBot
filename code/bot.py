@@ -5,7 +5,7 @@
 Copyright (C) 2021 Lucca Rodrigues - All Rights Reserved
 
 You may use, distribute and modify this code under the terms
-of the GNU CPL v3.0 license. You should have received a copy 
+of the GNU GPL v3.0 license. You should have received a copy 
 of the license with this file and accompanying source code. 
 If not, please visit:
 
