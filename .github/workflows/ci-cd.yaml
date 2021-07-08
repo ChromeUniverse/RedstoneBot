@@ -71,19 +71,15 @@ jobs:
           echo "$DEPLOYMENTKEY" | base64 --decode  >deployment.key
           chmod 400 deployment.key
 
-      # Rsync over SSH
-      - name: Sync files with AWS Lightsail      
-
-        # tranfer files  with deployment.key and restart bot
+      # Rsync over SSH - tranfer files with deployment.key
+      - name: Sync files with AWS Lightsail             
         run:           
           rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64:~/RedstoneBot/    
 
-      # SSH commands
+      # SSH command
       - name: Restart bot      
-
-        run: |          
-          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'killall python3'      
-          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'nohup python3 ~/RedstoneBot/code/bot.py &"
+        run:                     
+          ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 bash /home/ubuntu/RedstoneBot/update.sh
      
 
 
