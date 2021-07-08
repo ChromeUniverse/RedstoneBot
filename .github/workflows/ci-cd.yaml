@@ -56,7 +56,7 @@ jobs:
 
         # run testing script
         run: |
-          python3 ./code/tester.py $TESTER_TOKEN $PLOUDOS_IP
+          python3 ./code/tester.py
 
       # Creating SSH private key
       - name: Create SSH identity file
@@ -79,7 +79,7 @@ jobs:
 
       # SSH commands
       - name: Restart bot      
-              
+
         run: |
           ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'cd /home/ubuntu/RedstoneBot/code'
           ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 'pwd'
