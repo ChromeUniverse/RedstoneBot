@@ -8,7 +8,7 @@ token = '1234567890abcdefghijklmn.opqrst.uvwxyzabcdefghijklmnopqrstu'
 
 # Replace this with your choice of bot prefix:
 
-prefix = '!redstone'
+prefix = '!ci'
 
 # Replace this with your choice of Rich Embed color highlight: 
 # (Note: must be an 8-bit RGB color formatted as a tuple!)
