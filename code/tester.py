@@ -34,36 +34,6 @@ async def test_help(interface):
   await interface.assert_reply_embed_regex(prefix + " help", patterns)
 
 
-# test `time` command with embed check
-@test_collector()
-async def test_time(interface):
-  patterns = {"title": "Server locations & Queue waiting times"}
-  await interface.assert_reply_embed_regex(prefix + " time", patterns)
-  
-
-
-# test status command with embed check
-@test_collector()
-async def test_status(interface):
-  patterns = {"description": "Server name:"}
-  await interface.assert_reply_embed_regex(prefix + " status", patterns)
-
-
-
-# test invalid start commands
-@test_collector()
-async def test_invalid_start(interface):
-  await interface.assert_reply_contains(prefix + " start", "Invalid")
-  await interface.assert_reply_contains(prefix + " start 2", "Invalid")
-  await interface.assert_reply_contains(prefix + " start 69", "Invalid")
-
-
-# test reset command with embed check
-@test_collector()
-async def test_reset(interface):
-  await interface.assert_reply_contains(prefix + " reset", "Successfully unlinked")
-
-
 # test invalid setup commands
 @test_collector()
 async def test_invalid_setup(interface):
@@ -84,6 +54,29 @@ async def test_setup(interface):
   await interface.send_message(prefix + " setup " + ploudos_ip)
   await interface.get_delayed_reply(10, interface.assert_embed_regex, patterns)
 
+
+# test `time` command with embed check
+@test_collector()
+async def test_time(interface):
+  patterns = {"title": "Server locations & Queue waiting times"}
+  await interface.assert_reply_embed_regex(prefix + " time", patterns)
+
+
+# test status command with embed check
+@test_collector()
+async def test_status(interface):
+  patterns = {"description": "Server name:"}
+  await interface.assert_reply_embed_regex(prefix + " status", patterns)
+
+
+# test invalid start commands
+@test_collector()
+async def test_invalid_start(interface):
+  await interface.assert_reply_contains(prefix + " start", "Invalid")
+  await interface.assert_reply_contains(prefix + " start 2", "Invalid")
+  await interface.assert_reply_contains(prefix + " start 69", "Invalid")
+
+
 # test valid start command
 @test_collector()
 async def test_start(interface):  
@@ -98,6 +91,11 @@ async def test_exit(interface):
   await interface.assert_reply_contains(prefix + " exit", "queue")
   await interface.get_delayed_reply(15, interface.assert_message_contains, 'Successfully left the queue')
 
+
+# test reset command with embed check
+@test_collector()
+async def test_reset(interface):
+  await interface.assert_reply_contains(prefix + " reset", "Successfully unlinked")
 
 
 # Actually run the bot
