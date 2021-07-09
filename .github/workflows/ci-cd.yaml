@@ -43,6 +43,8 @@ jobs:
         # run in the background
         run: |          
           cd ./code/
+          touch db.csv
+          echo '123123123,dummyaddress.ploudos.me,False' >> db.csv
           nohup python3 bot.py &
           cd ..
 
