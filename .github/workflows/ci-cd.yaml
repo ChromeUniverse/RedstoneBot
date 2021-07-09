@@ -58,8 +58,11 @@ jobs:
           PLOUDOS_IP: ${{ secrets.PLOUDOS_IP }}
 
         # run testing script
-        run: |
+        run: 
           python3 ./code/tester.py
+
+      - name: Delete dummy database
+        run:
           rm ./code/db.csv
 
       # Creating SSH private key
