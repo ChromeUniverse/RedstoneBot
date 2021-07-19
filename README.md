@@ -21,6 +21,9 @@ Note: This bot was built for educational purposes.
 
 ```
 .
+├── .github/workflows                  
+|   └── ci-cd.yaml          # build/test/deploy workflow
+|
 ├── code                    # source code
 ├── experiments             # Python files for experiments
 |
