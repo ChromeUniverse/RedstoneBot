@@ -4,11 +4,11 @@ A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https:/
 
 This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
 
-_**Want to add this bot to your Discord server?**_ [Now you can!](https://chromeuniverse.github.io/RedstoneBot/manual) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
+_**Want to add this bot to your Discord server?**_ [Now you can!](http://34.200.98.64/redstone-quickstart) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
 
 _**Want to create you own clone of this bot?**_ Head over to the `USAGE` section below.
 
-More non-technical info available at [RedstoneBot's official website](https://chromeuniverse.github.io/RedstoneBot/).
+More non-technical info available at [RedstoneBot's official webpage](http://34.200.98.64/redstone).
 
 Note: This bot was built for educational purposes.
 
@@ -19,28 +19,14 @@ Note: This bot was built for educational purposes.
 
 ## Folder Structure 
 
-### DEPRECATED
-
 ```
 .
 ├── code                    # source code
-|   ├── bot.py              # Discord commands, Requests session
-|   ├── credentials.py      # PloudOS credentials, Discord token
-|   ├── urls.py             # list of URLs
-|   ├── login.py            # logs in to ploudos.com
-|   ├── functions.py        # main async function definitions
-|   └── format.py           # formats Rich Embeds
-|
 ├── experiments             # Python files for experiments
-|   ├── api_request.py      # testing requests and API calls
-|   ├── autostart.py        # automatically enters queue and starts server
-|   ├── queuetime.py        # scrapes ploudos.com for queue waiting times
-|   ├── credentials.py      # see 'code' folder above
-|   └── format.py           # see 'code' folder above
 |
 ├── api.json                # collection of API calls and JSON responses
 ├── requests.txt            # PloudOS network sniffing analysis report
-├── requirements.txt        # pip packages
+├── requirements.txt        # list of pip packages
 |
 ├── LICENSE                 # GNU GPL v3.0 License
 └── README.md               # you're reading this right now!
@@ -49,19 +35,11 @@ Note: This bot was built for educational purposes.
 
 ## Usage (Ubuntu Linux)
 
-### DEPRECATED
-
 Follow these steps to create a clone of RedstoneBot.
 
-**0. Register your bot app in the [Discord Developers Portal](https://discord.com/developers/applications)** 
+**0. Register your bot app in the [Discord Developers Portal](https://discord.com/developers/applications) and create a new account for your bot in the [PloudOS registration page](https://ploudos.com/register/).** 
 
-**1. Make sure you have Python 3 and Pip installed on your machine**
-
-`python3 --version`
-
-`pip3 --version`
-
-If you don't, install them:
+**1. Install Python 3 and Pip**
 
 `sudo apt update`
 
@@ -73,72 +51,81 @@ If you don't, install them:
 
 `git clone https://github.com/ChromeUniverse/RedstoneBot.git`
 
-**3. Install and set up dependencies with Pip**
+**3. Install dependencies with Pip**
   
 `pip3 install -r requirements.txt`
 
-**5. Change directory**
+**4. `cd` into the source code folder**
 
 `cd RedstoneBot/code/`
 
-**6. Edit your credentials in `credentials.py`**
+**5. Set environment variables**
 
-`nano credentials.py`
+Open the `/etc/environment` file with your preferred editor and set the following global environment variables.
+
+`vim /etc/environment`
 
 ```
-# Change these placeholders with your actual PloudOS credentials
-username = "ChromeUniverse"
-password = "12345678"
+# required
 
-# The secret bot token!
-token = 'abcdefgh_12345678'
+PLOUDOS_USERNAME='MyRedstoneBotClone'
+PLOUDOS_PASSWORD='123456'
+BOT_TOKEN='secret_discord_bot_token_goes_here'
+BOT_PREFIX='!test'
+
+# optional - CI/CD, testing, etc.
+
+PLOUDOS_IP='verycoolserver.ploudos.me'
+CI_TOKEN='secret_discord_bot_token_goes_here'
+TESTER_TOKEN='secret_discord_bot_token_goes_here'
+REDSTONE_TOKEN='secret_discord_bot_token_goes_here'
 ```
 
-**7. Run the Bash script with `nohup`**
+### Brief explanation
 
-`nohup bash script.sh`
+* Required environment variables:
 
+  * `PLOUDOS_USERNAME` and `PLOUDOS_PASSWORD` are the credentials for the bot account you created in step 0.
 
-## Progress
+  * `BOT_TOKEN` is the Discord bot token and `BOT_PREFIX` is your choice of bot prefix.
 
-* Created `api_request.py` to test the Requests module on PloudOS.com
-  * Succesfully logs in
-  * Gets response from internal PloudOS API
-  * Decodes response using JSON
-  * Can deal with "Currently in maintenance mode, check back later" errors/messages
+* Optional anevironment variables - useful for local development: making CI/CD workflows, writing tests with [distest](https://distest.readthedocs.io/), etc.
 
-* Updated `bot.py`.
-  * Now handles all actions with calls to internal PloudOS API
-  * Async functions/API calls _(needs refinement)_
-  * Added foolproofness - commands are only executed if server is in the appropriate state (i.e. the bot won't try to open the server once it's already online)
-  * Auto-confirm on `!redstone start`
-  * Server location selector
-  * Displays queue waiting times
-  * Add Discord to PloudOS server linking (only one PloudOS server per guild, currently)
-  * Async requests with AIOHTTP
-  * Separate files for most important functions
+  * `PLOUDOS_IP` is the address of your server.
+  * `CI_TOKEN` is the token of a Discord bot app for running a CI version of your code.
+  * `TESTER_TOKEN` is the token of a Discord bot for running tests against your CI bot.
+  * `REDSTONE_TOKEN` is the token of a Discord bot app for deploying your code.
 
-* Credentials now stored in separate file
+Remember to log out and log back in for these changes to take effect.
 
-* Added new project folder structure - Special thanks to Kriasoft and their [Folder Structure Conventions](https://github.com/KriaSoft/Folder-Structure-Conventions)
+**6. Run your bot**
 
+A simple way to run your bot in your machine's background is to use `nohup`:
 
-## To-do List
+`nohup bot.py &`
 
-* Add some CI/CD
-  * Bot testing
-  * GitHub Actions?
-  * Automatically deploy code to Lightsail VPS 
-* In `bot.py`:
-  * Refine some stuff here and there - mostly Async code and auto-confirm
-    * Async JSON parsing?
-    * Async CSV/Database reading/writing?
-  * Add multiple activation loops - one per Discord guild
-* Switch databases from CSV to SQLite3 (would this make sense?)
-* Add a log file
-* Commands to add:
-  * `!redstone info` - displays important server info, such as name, version, IP, port, resources and more.
+But a more reliable way to do this is with the [PM2](https://pm2.keymetrics.io/) process manager for Node.js:
 
+`sudo apt install nodejs`
+
+`sudo apt install npm`
+
+`sudo npm install -g pm2`
+
+Run [bot.py with PM2](https://stackoverflow.com/questions/49109069/running-a-python-script-with-pm2-error):
+
+`pm2 start bot.py --interpreter python3`
+
+```
+[PM2] Applying action restartProcessId on app [bot](ids: [ 1 ])
+[PM2] [bot](1) ✓
+[PM2] Process successfully started
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ bot                │ fork     │ 10   │ online    │ 0%       │ 34.0mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+```
 
 ## License
 
