@@ -1,10 +1,10 @@
 # RedstoneBot
 
-_[**Join the RedstoneBot Discord now!**](https://discord.gg/HDkaQu8Rdt) Get the latest news on the development of RedstoneBot, chat with the developers, report issues/bugs, suggest new features, and more!_
-
-A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR Discord community.
+**A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR Discord community.**
 
 This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
+
+_[**Join the RedstoneBot Discord now!**](https://discord.gg/HDkaQu8Rdt) Get the latest news on the development of RedstoneBot, chat with the developers, report issues/bugs, suggest new features, and more!_
 
 _**Want to add this bot to your Discord server?**_ [Now you can!](http://34.200.98.64/redstone-quickstart) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
 
