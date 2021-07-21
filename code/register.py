@@ -50,9 +50,9 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
                         # couldn't match user input IP and IPs on server list
                         title = '**Incorrect server IP.**'
                         content = ''
-                        content += "This IP wasn't found in Redstone's server list.\n\n"
-                        content += 'Make sure that Redstone has permissions to open and close this server.\n\n'
-                        content += 'Learn more here: https://chromeuniverse.github.io/RedstoneBot/manual.html\n\n'
+                        content += "This IP wasn't found in RedstoneBot's server list.\n\n"
+                        content += 'Make sure that RedstoneBot has permissions to control your server.\n\n'
+                        content += 'Learn more here: http://34.200.98.64/redstone-quickstart\n\n'
                         content += '**Please try again.**'
 
                         return title, content
@@ -60,8 +60,8 @@ async def register(ctx, session, guildID, guildName, is_admin, setupIP):
         else:
             # invalid argument!
             message = ''
-            message += 'Invalid IP. The syntax for this command is:\n'
-            message += '```!redstone setup [IP address]\n\n[IP address] 🠖 mycoolserver.ploudos.me```'
+            message += 'Invalid server address. The syntax for this command is:\n'
+            message += '```!redstone setup [IP address]\n\n[IP address] -> mycoolserver.ploudos.me```'
 
             await ctx.channel.send(message)
             return None, None
