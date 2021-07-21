@@ -283,7 +283,7 @@ async def start(ctx):
         except:
           msg = ''
           msg += 'Invalid location. The syntax for this command is:'
-          msg += '```!redstone start [location]\n\n[location] = 1 🠖 Nuremberg, Germany```'
+          msg += '```!redstone start [location]\n\n[location] = 1 -> Nuremberg, Germany```'
 
           await ctx.channel.send(msg)
           return
@@ -406,8 +406,8 @@ async def setup(ctx):
   
   except:
     msg = ''
-    msg += 'Invalid location. The syntax for this command is:'
-    msg += '```!redstone setup [IP address]\n\n[IP address] 🠖 mycoolserver.ploudos.me```'
+    msg += 'Invalid server address. The syntax for this command is:'
+    msg += '```!redstone setup [IP address]\n\n[IP address] -> mycoolserver.ploudos.me```'
 
     await ctx.channel.send(msg)
     return
