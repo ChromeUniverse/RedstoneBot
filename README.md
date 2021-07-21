@@ -13,7 +13,7 @@ This bot was built with [Python 3](http://python.org/), [AIOHTTP](https://docs.a
 
 Get the latest news on the development of RedstoneBot, chat with the developers, report issues/bugs, suggest new features, and more!
 
-### _Want to create you own clone of this bot?_
+### _Want to create your own clone of this bot?_
 
 Then head over to the [Usage](#usage) section below.
 
