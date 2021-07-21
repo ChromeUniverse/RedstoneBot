@@ -1,18 +1,25 @@
 # RedstoneBot
 
-**A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/), originally built for the SMP BR Discord community.**
+A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/).
 
-This bot was built with [Python 3.8](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [discord.py](https://github.com/Rapptz/discord.py).
+This bot was built with [Python 3](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/), [discord.py](https://github.com/Rapptz/discord.py), and [distest](https://distest.readthedocs.io/).
 
-_[**Join the RedstoneBot Discord now!**](https://discord.gg/HDkaQu8Rdt) Get the latest news on the development of RedstoneBot, chat with the developers, report issues/bugs, suggest new features, and more!_
 
-_**Want to add this bot to your Discord server?**_ [Now you can!](http://34.200.98.64/redstone-quickstart) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
+### _Want to add this bot to your Discord server?_
 
-_**Want to create you own clone of this bot?**_ Head over to the `USAGE` section below.
+[Now you can!](http://34.200.98.64/redstone-quickstart) Redstone is now hosted on AWS Lightsail and runs non-stop, 24/7.
+
+### _Join the [RedstoneBot Discord](https://discord.gg/HDkaQu8Rdt) now!_
+
+Get the latest news on the development of RedstoneBot, chat with the developers, report issues/bugs, suggest new features, and more!
+
+### _Want to create you own clone of this bot?_
+
+Then head over to the [Usage](#usage) section below.
 
 More non-technical info available at [RedstoneBot's official webpage](http://34.200.98.64/redstone).
 
-Note: This bot was built for educational purposes.
+**Note**: This project was made exclusively for educational purposes.
 
 ## Gallery
 
@@ -38,9 +45,11 @@ Note: This bot was built for educational purposes.
 ```
 
 
-## Usage (Ubuntu Linux)
+## Usage
 
-Follow these steps to create a clone of RedstoneBot.
+Follow these steps to create and host a clone of RedstoneBot.
+
+Please note: the following procesures are optimized for Ubuntu Linux and similar distros.
 
 **0. Register your bot app in the [Discord Developers Portal](https://discord.com/developers/applications) and create a new account for your bot in the [PloudOS registration page](https://ploudos.com/register/).** 
 
