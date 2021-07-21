@@ -6,7 +6,15 @@
 
 name: RedstoneBot CI/CD
 
-on: [push]
+on: 
+  push:
+    branches: 
+      - main
+
+    paths: 
+      - '.github/workflows/**'
+      - 'code/**'
+      - 'requirements.txt'
 
 jobs:
 
