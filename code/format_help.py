@@ -1,11 +1,14 @@
 def format_help():
 
     title = 'Help Page'
-
     content = ''
-    content = 'RedstoneBot is a Discord bot for interacting with Minecraft servers hosted by PloudOS, originally built for the SMP BR Discord community.'
 
-    content += "\n\n**Redstone's Commands**\n\n"
+    content += "\n\n**About**\n\n"
+    content += 'RedstoneBot is a Discord bot for interacting with Minecraft servers hosted by PloudOS.\n'
+
+    content += "\n\n**RedstoneBot's Commands**\n\n"
+    content += '_Please note: running most of these commands requires the **Redstone User** role._\n\n'
+
     content += '`!redstone help`\n\n'
     content += 'Shows this page.\n\n'
 
@@ -25,13 +28,15 @@ def format_help():
     content += '`!redstone start [location]`\n\n'
     content += 'Puts your server in the activation queue.\n\n'
     content += 'Specify the server location with `[1]` (Nuremberg).\n\n'
-    content += 'You only need to run this once: it automatically sends user confirmation when you reach the top spot of the queue.\n\n'
+    content += 'You only need to run this once: RedstoneBot automatically sends user confirmation when you reach the top spot of the queue.\n\n'
 
     content += '`!redstone exit`\n\n'
     content += 'Exits the activation queue.\n\n'
+    content += '**NOTE:** only members with the **Redstone Admin** role can use this command.\n\n'
 
     content += '`!redstone stop`\n\n'
     content += 'If the server is "Online", this will deactivate the server.\n\n'
+    content += '**NOTE:** only members with the **Redstone Admin** role can use this command.\n\n'
 
     content += '`!redstone restart`\n\n'
     content += 'If the server is "Stopped", this will reactivate the server.\n\n'
@@ -39,16 +44,24 @@ def format_help():
     content += '`!redstone setup [IP]`\n\n'
     content += 'Configuration command.\n\n'
     content += 'Links your Discord server to the PloudOS server with the specified IP address.\n\n'
-    content += '_**NOTE:** user must have admin permissions to run this command._\n\n'
+    content += '**NOTE:** only members with the **Redstone Admin** role can use this command.\n\n'
 
     content += '`!redstone reset`\n\n'
     content += 'Resets the setup process.\n\n'
     content += 'Can come in handy if you ever change the IP of your PloudOS server.\n\n'
-    content += '_**NOTE:** user must have admin permissions to run this command._\n\n'
+    content += '**NOTE:** only members with the **Redstone Admin** role can use this command.\n\n'
 
 
+    content += "\n**Additional Resources**"
 
-    content += "\n\nFor more information, visit RedstoneBot's GitHub repo:\n"
-    content += 'https://github.com/ChromeUniverse/RedstoneBot'
+    content += "\n\nFor more information, visit RedstoneBot's official webpage:\n"
+    content += 'http://34.200.98.64/redstone'
+
+    content += "\n\nIf you need help setting up RedstoneBot, please refer to the quickstart guide:\n"
+    content += 'http://34.200.98.64/redstone-quickstart'
+
+    content += "\n\nIf you're having trouble with RedstoneBot, please create a new issue on GitHub:\n"
+    content += 'https://github.com/ChromeUniverse/RedstoneBot/issues/'
+
 
     return title, content
