@@ -42,8 +42,9 @@ def format_help():
     content += 'If the server is "Stopped", this will reactivate the server.\n\n'
 
     content += '`!redstone setup [IP]`\n\n'
-    content += 'Configuration command.\n\n'
-    content += 'Links your Discord server to the PloudOS server with the specified IP address.\n\n'
+    content += 'A configuration command - this will link your Discord server to the PloudOS server with the specified IP address.\n\n'
+    content += 'Specify your server address with the following format:\n\n'
+    content += '`[IP] -> myverycoolserver.ploudos.me`\n\n'
     content += '**NOTE:** only members with the **Redstone Admin** role can use this command.\n\n'
 
     content += '`!redstone reset`\n\n'
