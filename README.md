@@ -1,6 +1,6 @@
 # RedstoneBot
 
-A Discord bot for interacting with Minecraft servers hosted by [PloudOS](https://ploudos.com/).
+A Discord bot for interacting with Minecraft servers hosted at [PloudOS](https://ploudos.com/).
 
 This bot was built with [Python 3](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/), [discord.py](https://github.com/Rapptz/discord.py), and [distest](https://distest.readthedocs.io/).
 
@@ -73,7 +73,20 @@ Please note: the following procesures are optimized for Ubuntu Linux and similar
 
 `cd RedstoneBot/code/`
 
-**5. Set environment variables**
+**5. Create a CSV database**
+
+`vim db.csv`
+
+This database need at least one row of dummy data so that the bot can work properly.
+
+Enter the following line and save the file.
+
+```mumbojumbo
+1, 1, 1, 1
+```
+
+
+**6. Set environment variables**
 
 Open the `/etc/environment` file with your preferred editor and set the following global environment variables.
 
@@ -112,7 +125,7 @@ REDSTONE_TOKEN='secret_discord_bot_token_goes_here'
 
 Remember to log out and log back in for these changes to take effect.
 
-**6. Run your bot**
+**7. Run your bot**
 
 A simple way to run your bot in your machine's background is to use `nohup`:
 
@@ -140,6 +153,90 @@ Run [bot.py with PM2](https://stackoverflow.com/questions/49109069/running-a-pyt
 │ 0  │ bot                │ fork     │ 10   │ online    │ 0%       │ 34.0mb   │
 └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
 ```
+
+**8. Test your bot**
+
+* Create a new bot application on the [Discord Developers Portal](https://discord.com/developers/applications) that will serve as your **tester bot**.
+
+* Before configuring the tester bot, setup the (not so) optional (right now) environment variables described in **step 5**.
+
+* Edit `tester_setup.py`.
+
+  `vim tester_setup.py`
+
+  ```py3
+  # Replace this with the RedstoneBot clone's ID
+  target_id = '862776943522611201'               
+
+  # Replace this with the testing channel's ID
+  channel_id = '853346992986128414'
+
+  prefix = '!ci'       
+  ```
+
+  Notes: 
+
+  * `target_id` - this is the ID of your main bot.
+
+  * `channel_id` - this is the ID of the channel in which you will run your tester bot and your main bot.
+
+  * `prefix` - this is the command prefix that the tester bot will use to send test commands.
+
+* Run the tester bot:
+
+  `python3 tester.py`
+
+**9. Automate build, testing and deployment**
+
+_Please note_: the following steps are optimized for automating workflows on GitHub Actions.
+
+The repo you cloned already comes with a `.github/workflows` directory and a functional workflow for building, running tests, and deploying the bot to a remote host.
+
+I deploy RedstoneBot through GitHub Actions to an AWS Lightsail virtual machine running Ubuntu Linux, but since this might not your case, chances are you'll need to modify the workflow file and add repo secrets.
+
+**Prerequisites:**
+
+* Make sure you have SSH access configured on the VPS that you'll deploy your bot to.
+
+* Create a new bot application at the [Discord Developers Portal](https://discord.com/developers/applications) that will run your CI code.
+
+* Create a new repo on GitHub for your clone bot.
+
+* Add the following repo secrets:
+
+  * `CI_TOKEN` - Discord bot token for your continuous integration bot.
+
+  * `DEPLOYKEY` - Your SSH private key encoded as Base64
+
+  * `PLOUDOS_IP` - The IP address of your PloudOS server
+
+  * `PLOUDOS_USERNAME` - Your bot account's PloudOS username.
+
+  * `PLOUDOS_PASSWORD` - Your bot account's PloudOS password.
+
+  * `TESTER_TOKEN` - Discord bot token for your tester bot.
+
+**Steps:**
+
+* Modify the last two commands from the workflow file to your needs:
+
+  ```yaml
+  # Rsync over SSH - tranfer files with deployment.key
+  - name: Sync files with AWS Lightsail             
+    run:           
+      rsync -zaPv -e "ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key" ./ ubuntu@34.200.98.64:~/RedstoneBot/    
+
+  # SSH command
+  - name: Restart bot      
+    run:                     
+      ssh -v -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i deployment.key ubuntu@34.200.98.64 bash /home/ubuntu/RedstoneBot/update.sh
+  ```
+
+* Now push your code to your new GitHub repo.
+
+* Follow **Steps 1 through 7** on your VPS, if you haven't already.
+
+* Finally, re-run any Actions jobs if you need to.
 
 ## License
 
