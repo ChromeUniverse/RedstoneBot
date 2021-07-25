@@ -1,5 +1,8 @@
 # RedstoneBot
 
+[![](https://github.com/ChromeUniverse/RedstoneBot/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/ChromeUniverse/RedstoneBot/actions/workflows/ci-cd.yaml)
+[![](https://discord.com/api/guilds/853346901545844736/embed.png?style=shield)](https://discord.gg/HDkaQu8Rdt)
+
 A Discord bot for interacting with Minecraft servers hosted at [PloudOS](https://ploudos.com/).
 
 This bot was built with [Python 3](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/), [discord.py](https://github.com/Rapptz/discord.py), and [distest](https://distest.readthedocs.io/).
