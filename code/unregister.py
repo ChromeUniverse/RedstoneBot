@@ -14,7 +14,7 @@ async def unregister(guildID, guildName, is_admin):
 
     else:
 
-        message = 'Only users with admin permissions can use this command.'
+        message = 'Only members with the `Redstone Admin` role can use this command.'
         # user doesn't have admin permissions.
 
     return message
