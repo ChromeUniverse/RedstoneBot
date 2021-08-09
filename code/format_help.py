@@ -3,6 +3,8 @@ def format_help():
     title = 'Help Page'
     content = ''
 
+    content += '\n\n**Redstone will be shut down, permanently, no later than August 14, 2021.**'
+
     content += "\n\n**About**\n\n"
     content += 'RedstoneBot is a Discord bot for interacting with Minecraft servers hosted by PloudOS.\n'
 
@@ -63,6 +65,11 @@ def format_help():
 
     content += "\n\nIf you're having trouble with RedstoneBot, please create a new issue on GitHub:\n"
     content += 'https://github.com/ChromeUniverse/RedstoneBot/issues/'
+
+    content += "\n\n**RedstoneBot will be shut down, permanently, no later than August 14, 2021.**\n"
+    content += "For more information, please read this post:\n"
+    content += "http://34.200.98.64/redstone-shutdown";
+
 
 
     return title, content

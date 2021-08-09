@@ -16,6 +16,7 @@ https://github.com/ChromeUniverse/RedstoneBot/
 
 # module imports
 import asyncio
+from logging import shutdown
 import aiohttp
 import discord
 import os
@@ -85,7 +86,7 @@ async def on_ready():
   print('Bot is ready to roll!\n')
 
 
-
+shutdown_warn = "\n\n**RedstoneBot will be shut down, permanently, no later than August 14, 2021.**\n For more information, please read this post:\n http://34.200.98.64/redstone-shutdown"
 
 
 # -----------------------------------------------------------------
@@ -189,7 +190,7 @@ async def status(message):
 
     page=discord.Embed(
         title=title,
-        description=content,
+        description=content + shutdown_warn,
         colour=embedColor
     )
     await message.channel.send(embed=page)
@@ -242,7 +243,7 @@ async def time(message):
         # format and send rich embed
         page=discord.Embed(
             title=title,
-            description=content,
+            description=content + shutdown_warn,
             colour=embedColor
         )
         await message.channel.send(embed=page)
@@ -419,7 +420,7 @@ async def setup(ctx):
     # format and send rich embed
     page=discord.Embed(
       title=title,
-      description=content,
+      description=content + shutdown_warn,
       colour=embedColor
     )
     await ctx.channel.send(embed=page)
