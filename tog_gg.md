@@ -2,10 +2,14 @@
 
 # RedstoneBot
 
-# DEPRECATION NOTICE
+# SHUTDOWN NOTICE
 
 ### RedstoneBot will be shut down, permanently, no later than August 14, 2021.
 **[For more information, please click here.](http://34.200.98.64/redstone-shutdown)**
+
+**Thank you for using RedstoneBot!**
+
+---
 
 
 A Discord bot for interacting with Minecraft servers hosted at [PloudOS](https://ploudos.com/).
