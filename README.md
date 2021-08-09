@@ -3,6 +3,21 @@
 [![](https://github.com/ChromeUniverse/RedstoneBot/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/ChromeUniverse/RedstoneBot/actions/workflows/ci-cd.yaml)
 [![](https://discord.com/api/guilds/853346901545844736/embed.png?style=shield)](https://discord.gg/HDkaQu8Rdt)
 
+
+## DEPRECATION NOTICE
+
+### RedstoneBot will be shut down, permanently, no later than August 14, 2021.
+
+All RedstoneBot-related development activities have been ceased and this repo will soon be archived.
+
+Documentation for RedstoneBot (including technical docs, guides, etc.) will still be available for the foresseable future.
+
+**For more information, please read[ this post](http://34.200.98.64/redstone-shutdown).**
+
+Thank you for using RedstoneBot!
+
+---
+
 A Discord bot for interacting with Minecraft servers hosted at [PloudOS](https://ploudos.com/).
 
 This bot was built with [Python 3](http://python.org/), [AIOHTTP](https://docs.aiohttp.org/en/stable/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/), [discord.py](https://github.com/Rapptz/discord.py), and [distest](https://distest.readthedocs.io/).
